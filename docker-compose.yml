@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
   db:
-    image: mariadb
+    image: mariadb:10.6.4
     restart: always
     environment:
       TZ: America/New_York
