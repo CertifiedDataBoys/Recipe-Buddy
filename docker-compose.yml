@@ -1,41 +1,74 @@
-version: '3'
+# Specify the docker-compose format version we will be using
+version: "3"
+
+# Define the services that this application will need to run
 services:
+  # Define the Recipe Buddy service
   recipe_buddy:
+    # Build using our Dockerfile from app/Dockerfile
     build:
       context: ./app
       dockerfile: Dockerfile
+    # Name the container
     container_name: Recipe-Buddy
+    # Restart unless the user specifies to stop the container
     restart: unless-stopped
+    # Forward port 5000 in the container to port 5000 on the host machine
     ports:
       - 5000:5000
+    # Set our environment variables
     environment:
+      # Set our timezone
       TZ: America/New_York
+      # Set the hostname of the MariaDB instance
       MARIADB_HOST: db
+      # Set the database name of the MariaDB instance
       MARIADB_DATABASE: recipebuddy
+      # Set the username of the MariaDB instance
       MARIADB_USER: recipebuddy
+      # Set the password of the MariaDB instance
       MARIADB_PASSWORD: recipebuddy
+      # Set Flask to use development mode
       FLASK_ENV: development
+    # Define volumes (directories) that our container will use
     volumes:
+      # Mount the host directory "data/recipe_buddy" to "/data" in the container
       - ./data/recipe_buddy:/data
+      # Mount the project host directory to "/usr/src" in the container
       - .:/usr/src
+    # Use the network created at the bottom of the file to connect our Recipe Buddy container to the MariaDB container
     networks:
       - recipe-buddy-backend-network
+    # This container depends on the MariaDB container, do not start if MariaDB is not online and stop the process if MariaDB goes offline
     depends_on:
       - db
+  # Define our MariaDB service
   db:
+    # Use the official MariaDB image from Docker Hub
     image: mariadb:10.6.4
-    restart: always
+    # Restart unless the user specifies to stop the container
+    restart: unless-stopped
+    # Set our environment variables
     environment:
+      # Set our timezone
       TZ: America/New_York
+      # Use a random MariaDB root password, we won't be needing it, but it shouldn't be left as default
       MARIADB_RANDOM_ROOT_PASSWORD: 1
+      # Set the database name of the MariaDB instance
       MARIADB_DATABASE: recipebuddy
+      # Set the username of the MariaDB instance
       MARIADB_USER: recipebuddy
+      # Set the password of the MariaDB instance
       MARIADB_PASSWORD: recipebuddy
+    # Define volumes (directories) that our container will use
     volumes:
+      # Mount the host directory "data/mariadb" to "/var/lib/mysql" in the container
       - ./data/mariadb:/var/lib/mysql
+    # Use the network created at the bottom of the file to connect our Recipe Buddy container to the MariaDB container
     networks:
       - recipe-buddy-backend-network
 
+# Create a custom bridged network to allow the two containers to communicate using a secured private virtual network
 networks:
   recipe-buddy-backend-network:
     driver: bridge
