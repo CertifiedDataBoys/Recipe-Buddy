@@ -18,6 +18,8 @@ services:
       - ./data/recipe_buddy:/data
     networks:
       - recipe-buddy-backend-network
+    depends_on:
+      - db
   db:
     image: mariadb
     restart: always
