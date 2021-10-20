@@ -14,8 +14,10 @@ services:
       MARIADB_DATABASE: recipebuddy
       MARIADB_USER: recipebuddy
       MARIADB_PASSWORD: recipebuddy
+      FLASK_ENV: development
     volumes:
       - ./data/recipe_buddy:/data
+      - .:/usr/src
     networks:
       - recipe-buddy-backend-network
     depends_on:
