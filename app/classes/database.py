@@ -1,7 +1,5 @@
-# Module Imports
 import mariadb
 import sys
-
 
 class database:
     def __init__(database, host, port, user, password, database_name):
