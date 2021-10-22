@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r pip-requirements.txt
 COPY . .
 
 # Set the default start command of the container (to run our application)
-CMD [ "flask", "run" ]
+CMD [ "flask", "run", "--host=0.0.0.0" ]
