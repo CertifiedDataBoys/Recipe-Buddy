@@ -32,6 +32,8 @@ services:
       MARIADB_PASSWORD: recipebuddy
       # Set Flask to use development mode
       FLASK_ENV: development
+      # Set Flask app path
+      FLASK_APP: .
     # Define volumes (directories) that our container will use
     volumes:
       # Mount the host directory "data/recipe_buddy" to "/data" in the container
