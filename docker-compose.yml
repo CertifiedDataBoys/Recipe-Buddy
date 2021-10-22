@@ -39,7 +39,7 @@ services:
       # Mount the host directory "data/recipe_buddy" to "/data" in the container
       - ./data/recipe_buddy:/data
       # Mount the project host directory to "/usr/src" in the container
-      - .:/usr/src
+      - ./app:/app
     # Use the network created at the bottom of the file to connect our Recipe Buddy container to the MariaDB container
     networks:
       - recipe-buddy-backend-network
