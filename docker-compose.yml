@@ -12,7 +12,7 @@ services:
     # Name the container
     container_name: Recipe-Buddy
     # Restart unless the user specifies to stop the container
-    restart: unless-stopped
+    # restart: unless-stopped
     # Forward port 5000 in the container to port 5000 on the host machine
     ports:
       - 5000:5000
