@@ -35,4 +35,4 @@ class Database(object):
 
     def __str__(self):
 
-        return "{0.user}@{0.host}:{0.port} on DB {0.database_name}".format(self)
+        return "{0}:{1}@{2}:{3}/{4}".format(self)

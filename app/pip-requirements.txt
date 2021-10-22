@@ -1,4 +1,5 @@
 Flask==2.0.2
+Flask-SQLAlchemy==2.5.1
 mariadb==1.0.7
 pdocs==1.1.1
 pygments==2.10.0
