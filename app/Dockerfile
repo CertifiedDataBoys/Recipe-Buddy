@@ -1,8 +1,8 @@
 # User official python base image
 FROM python:3.10.0
 
-# Set our container's working directory to /usr/src/app
-WORKDIR /usr/src/app
+# Set our container's working directory to /app
+WORKDIR /app
 
 # Copy pip-requirements.txt into the root of our container's working directory
 COPY pip-requirements.txt ./
