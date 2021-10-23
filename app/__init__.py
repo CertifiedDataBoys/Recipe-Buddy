@@ -1,11 +1,17 @@
+"""
+    This is the module that represents the Recipe Buddy app.
+    Flask should initialize from this file.
+"""
+
+
 from .blueprints import ALL_BLUEPRINTS
 from .models import db
 from flask import Flask
 import os
 
 
-import sys
 # Remove later!
+import sys
 try:
     from .testing import drop_db_tables, create_db_tables, create_db_test_data
 except Exception as e:
@@ -14,6 +20,9 @@ except Exception as e:
 
 
 def create_app():
+    """
+        Create and run the Recipe Buddy app.
+    """
 
     app = Flask(__name__)
 

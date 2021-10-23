@@ -3,6 +3,17 @@ from datetime import datetime
 
 
 def drop_db_tables(app, db):
+    """
+        Drop our database tables that we are testing.
+        This means that we need to drop the Recipe, Ingredient, and
+            IngredientInRecipe tables.
+
+        Args:
+            app (Flask):
+                        The Flask app representing Recipe Buddy
+            db (SQLAlchemy):
+                        The SQLAlchemy object we use to connect to our database
+    """
 
     with app.app_context():
 
@@ -13,6 +24,17 @@ def drop_db_tables(app, db):
 
 
 def create_db_tables(app, db):
+    """
+        Create the database tables that we are testing.
+        This means that we need to create the Recipe, Ingredient, and
+            IngredientInRecipe tables.
+
+        Args:
+            app (Flask):
+                        The Flask app representing Recipe Buddy
+            db (SQLAlchemy):
+                        The SQLAlchemy object we use to connect to our database
+    """
 
     with app.app_context():
 
@@ -21,6 +43,17 @@ def create_db_tables(app, db):
 
 
 def create_db_test_data(app, db):
+    """
+        Populate the database tables that we are testing with some dummy data.
+        This means that we need to populate the Recipe, Ingredient, and
+            IngredientInRecipe tables.
+
+        Args:
+            app (Flask):
+                        The Flask app representing Recipe Buddy
+            db (SQLAlchemy):
+                        The SQLAlchemy object we use to connect to our database
+    """
 
     with app.app_context():
 

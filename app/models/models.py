@@ -9,11 +9,13 @@ class Ingredient(db.Model):
         This model represents an ingredient.
 
         Attributes:
-            pk:         Primary key
-            name:       The name of the ingredient
-            unit_of_measure:
+            pk (db.Integer):
+                        Primary key
+            name (db.String(64)):
+                        The name of the ingredient
+            unit_of_measure (db.String(32)):
                         What is our unit of measure for this ingredient?
-            units_plural:
+            units_plural (db.String(32)):
                         What is the plural version of our unit of measure?
     """
 
@@ -28,9 +30,12 @@ class Recipe(db.Model):
         This model represents a recipe.
 
         Attributes:
-            pk:         Primary key
-            title:      The title of the recipe
-            uploaded:   A DateTime object showing when this recipe was uploaded
+            pk (db.Integer):
+                        Primary key
+            title (db.String(64)):
+                        The title of the recipe
+            uploaded (db.DateTime):
+                        A DateTime object showing when this recipe was uploaded
     """
 
     pk = db.Column(db.Integer, primary_key=True)
@@ -44,13 +49,17 @@ class IngredientInRecipe(db.Model):
         ingredients to recipes using their primary keys.
 
         Attributes:
-            pk:         Primary key
-            ingredient_key:
+            pk (db.Integer):
+                        Primary key
+            ingredient_key (db.Integer):
                         The primary key of a given ingredient
-            recipe_key: The primary key of a given recipe
-            optional:   Boolean representing if this ingredient is optional or
+            recipe_key (db.Integer):
+                        The primary key of a given recipe
+            optional (db.Boolean):
+                        Boolean representing if this ingredient is optional or
                         not
-            count:      Represents how much of the ingredient we should use.
+            count (db.Integer):
+                        Represents how much of the ingredient we should use.
                         Can be left blank.
     """
 
