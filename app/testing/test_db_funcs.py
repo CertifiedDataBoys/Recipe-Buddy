@@ -25,29 +25,28 @@ def create_db_test_data(app, db):
     with app.app_context():
 
         ingredients = [
-            Ingredient(pk=1, name="Bread"),
-            Ingredient(pk=2, name="Bacon"),
-            Ingredient(pk=3, name="Lettuce"),
-            Ingredient(pk=4, name="Tomato",),
-            Ingredient(pk=5, name="Garnish",)
+            Ingredient(pk=1, name="Bread",
+                       unit_of_measure="slice", units_plural="slices"),
+            Ingredient(pk=2, name="Bacon",
+                       unit_of_measure="strip", units_plural="strips"),
+            Ingredient(pk=3, name="Lettuce",
+                       unit_of_measure="leaf", units_plural="leaves"),
+            Ingredient(pk=4, name="Tomato",
+                       unit_of_measure="slice", units_plural="slices"),
+            Ingredient(pk=5, name="Garnish")
         ]
         recipe = Recipe(pk=1, title="BLT", uploaded=datetime.now())
         ingredients_in_recipe = [
             IngredientInRecipe(pk=1, ingredient_key=1, recipe_key=1,
-                               optional=False, count=2,
-                               unit_of_measure="slice", units_plural="slices"),
+                               optional=False, count=2),
             IngredientInRecipe(pk=2, ingredient_key=2, recipe_key=1,
-                               optional=False, count=3,
-                               unit_of_measure="strip", units_plural="strips"),
+                               optional=False, count=3),
             IngredientInRecipe(pk=3, ingredient_key=3, recipe_key=1,
-                               optional=False, count=2,
-                               unit_of_measure="leaf", units_plural="leaves"),
+                               optional=False, count=2),
             IngredientInRecipe(pk=4, ingredient_key=4, recipe_key=1,
-                               optional=False, count=1,
-                               unit_of_measure="slice", units_plural="slices"),
+                               optional=False, count=1),
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
-                               optional=True, count=None,
-                               unit_of_measure=None)
+                               optional=True)
         ]
 
         db.session.add_all(ingredients)
