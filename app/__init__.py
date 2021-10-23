@@ -5,7 +5,7 @@
 
 
 from .blueprints import ALL_BLUEPRINTS
-from .models import db
+from .models import db, migrate
 from flask import Flask
 import os
 
@@ -45,6 +45,9 @@ def create_app():
 
     # Initialize our database
     db.init_app(app)
+
+    # Initialize our migration object
+    migrate.init_app(app, db)
 
     # Comment / uncomment the following line to delete the SQL tables we are
     # testing
