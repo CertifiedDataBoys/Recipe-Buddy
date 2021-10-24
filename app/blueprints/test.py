@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_sqlalchemy import SQLAlchemy
-from ..models import db, Ingredient, Recipe, IngredientInRecipe
+from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 
 
 bp = Blueprint("test", __name__)
@@ -16,7 +16,14 @@ def test():
 
 
     # The test recipe is the recipe where recipe.pk = 1
-    recipe = Recipe.query.filter_by(pk=1).first()
+    recipe_query = db.session.query(Recipe, User) \
+        .join(User, User.uid == Recipe.uploaded_by) \
+        .filter(Recipe.pk == 1) \
+        .first()
+        
+    recipe = recipe_query[0]
+    user = recipe_query[1]
+
     ingredients_query = db.session.query(Ingredient, IngredientInRecipe) \
         .join(IngredientInRecipe, IngredientInRecipe.recipe_key == recipe.pk) \
         .filter(Ingredient.pk == IngredientInRecipe.ingredient_key) \
@@ -42,4 +49,5 @@ def test():
             ingredient_in_recipe.optional
         ])
 
-    return render_template("test.html", recipe=recipe, ingredients_list=ingredients)
+    return render_template("test.html", recipe=recipe, user=user,
+                           ingredients_list=ingredients)

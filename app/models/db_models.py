@@ -1,6 +1,30 @@
 from .database import db
 
 
+class User(db.Model):
+    """
+        This model represents a Recipe Buddy user.
+
+        Attributes:
+            uid (db.Integer):
+                        Unique user ID. This is our primary key
+            username (db.String(32)):
+                        A user's unique username
+            email (db.String(64)):
+                        A user's unique email
+            verified (db.Boolean):
+                        Boolean representing if this user is verified or not
+            password_hash (db.String(256)):
+                        The hash of a user's password
+    """
+
+    uid = db.Column(db.Integer, primary_key=True, nullable=False)
+    username = db.Column(db.String(32), unique=True, nullable=False)
+    email = db.Column(db.String(64), unique=True, nullable=False)
+    verified = db.Column(db.Boolean, nullable=False)
+    password_hash = db.Column(db.String(256), unique=False, nullable=False)
+
+
 class Ingredient(db.Model):
     """
         This model represents an ingredient.
@@ -11,9 +35,9 @@ class Ingredient(db.Model):
             name (db.String(64)):
                         The name of the ingredient
             unit_of_measure (db.String(32)):
-                        What is our unit of measure for this ingredient?
+                        The unit of measure for this ingredient
             units_plural (db.String(32)):
-                        What is the plural version of our unit of measure?
+                        The plural version of our unit of measure
     """
 
     pk = db.Column(db.Integer, primary_key=True)
@@ -33,18 +57,23 @@ class Recipe(db.Model):
                         The title of the recipe
             uploaded (db.DateTime):
                         A DateTime object showing when this recipe was uploaded
+            uploaded_by (db.Integer):
+                        The primary key of the user who uploaded this recipe
     """
 
     pk = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), unique=False, nullable=False)
     uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
+    uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
+                            nullable=False)
 
 
 class IngredientInRecipe(db.Model):
     """
         This model represents the ingredients that go into a recipe. It links
         ingredients to recipes using their primary keys.
-
+iven ingredient
+            recipe_key (db.Integer):
         Attributes:
             pk (db.Integer):
                         Primary key

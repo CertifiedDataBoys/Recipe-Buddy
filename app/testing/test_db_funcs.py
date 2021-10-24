@@ -1,11 +1,12 @@
-from ..models import Ingredient, Recipe, IngredientInRecipe
+from ..models import User, Ingredient, Recipe, IngredientInRecipe
 from datetime import datetime
+import hashlib
 
 
 def drop_db_tables(app, db):
     """
         Drop our database tables that we are testing.
-        This means that we need to drop the Recipe, Ingredient, and
+        This means that we need to drop the User, Recipe, Ingredient, and
             IngredientInRecipe tables.
 
         Args:
@@ -20,13 +21,38 @@ def drop_db_tables(app, db):
         IngredientInRecipe.__table__.drop(db.engine)
         Ingredient.__table__.drop(db.engine)
         Recipe.__table__.drop(db.engine)
+        User.__table__.drop(db.engine)
+        db.session.commit()
+
+
+def delete_db_entries(app, db):
+    """
+        Drop our database testing data, but keep the tables intact.
+
+        Args:
+            app (Flask):
+                        The Flask app representing Recipe Buddy
+            db (SQLAlchemy):
+                        The SQLAlchemy object we use to connect to our database
+    """
+
+    with app.app_context():
+
+        IngredientInRecipe.query.delete()
+        db.session.commit()
+
+        Ingredient.query.delete()
+        Recipe.query.delete()
+        db.session.commit()
+
+        User.query.delete()
         db.session.commit()
 
 
 def create_db_tables(app, db):
     """
         Create the database tables that we are testing.
-        This means that we need to create the Recipe, Ingredient, and
+        This means that we need to create the User, Recipe, Ingredient, and
             IngredientInRecipe tables.
 
         Args:
@@ -45,7 +71,7 @@ def create_db_tables(app, db):
 def create_db_test_data(app, db):
     """
         Populate the database tables that we are testing with some dummy data.
-        This means that we need to populate the Recipe, Ingredient, and
+        This means that we need to populate the User, Recipe, Ingredient, and
             IngredientInRecipe tables.
 
         Args:
@@ -57,6 +83,12 @@ def create_db_test_data(app, db):
 
     with app.app_context():
 
+        user = User(uid=1, username="big_sean_banerjee",
+                    email="sean@k.banerjee.net",
+                    verified=True,
+                    password_hash=hashlib.pbkdf2_hmac("sha512",
+                        b"YouShouldHaveStartedCodingByNow",
+                        b"SaltKBanerjee", 100000, dklen=128).hex())
         ingredients = [
             Ingredient(pk=1, name="Bread",
                        unit_of_measure="slice", units_plural="slices"),
@@ -68,7 +100,8 @@ def create_db_test_data(app, db):
                        unit_of_measure="slice", units_plural="slices"),
             Ingredient(pk=5, name="Garnish")
         ]
-        recipe = Recipe(pk=1, title="BLT", uploaded=datetime.now())
+        recipe = Recipe(pk=1, title="BLT",
+                        uploaded=datetime.now(), uploaded_by=1)
         ingredients_in_recipe = [
             IngredientInRecipe(pk=1, ingredient_key=1, recipe_key=1,
                                optional=False, count=2),
@@ -81,6 +114,9 @@ def create_db_test_data(app, db):
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
                                optional=True)
         ]
+
+        db.session.add(user)
+        db.session.commit()
 
         db.session.add_all(ingredients)
         db.session.add(recipe)

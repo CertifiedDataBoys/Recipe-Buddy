@@ -4,5 +4,5 @@
 """
 
 from .test_db_funcs import (
-    drop_db_tables, create_db_tables, create_db_test_data
+    drop_db_tables, create_db_tables, delete_db_entries, create_db_test_data
 )

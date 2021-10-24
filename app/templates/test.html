@@ -17,27 +17,30 @@
             {{ recipe.title }}
           </h4>
           <h6 class="card-subtitle text-muted text-center mb-2">
-            {{ recipe.uploaded }}
+            Uploaded on: <i>{{ recipe.uploaded }}</i>
+          </h6>
+          <h6 class="card-subtitle text-muted text-center mb-2">
+            Uploaded by: <b>{{ user.username }}</b>
           </h6>
           <p class="card-text">
             {% for ingredient in ingredients_list %}
-  
+
               {% if ingredient[0] != None  %}
                 <i>{{ ingredient[0] }}</i>
               {% endif %}
-  
+
               {% if ingredient[1] != None %}
                 <i>{{ ingredient[1] }}</i>
               {% endif %}
-  
+
               {{ ingredient[2] }}
-  
+
               {% if ingredient[3] == True %}
                 &nbsp;&nbsp; (Optional)
               {% endif %}
-  
+
               <br>
-  
+
             {% endfor %}
           </p>
         </div>

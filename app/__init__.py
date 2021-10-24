@@ -5,7 +5,7 @@
 
 
 from .blueprints import ALL_BLUEPRINTS
-from .models import db, migrate
+from .models import *
 from flask import Flask
 import os
 
@@ -13,10 +13,16 @@ import os
 # Remove later!
 import sys
 try:
-    from .testing import drop_db_tables, create_db_tables, create_db_test_data
+    from .testing import (
+        drop_db_tables, create_db_tables,
+        delete_db_entries, create_db_test_data
+    )
 except Exception as e:
     print(e, file=sys.stderr)
     exit(1)
+
+# Also remove later! We want to hide this!
+SECRET_KEY = "cdcc3854dbb850aaa6ee671f337589743b820faa249140f64c7757f3c990b657"
 
 
 def create_app():
@@ -26,6 +32,10 @@ def create_app():
 
     app = Flask(__name__)
 
+    @app.shell_context_processor
+    def make_shell_context():
+        return {'db': db, 'ALL_BLUEPRINTS': ALL_BLUEPRINTS}
+
     # Sign into our MariaDB database
     app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+mariadbconnector://{0}:{1}@{2}:{3}/{4}".format(
         os.getenv("MARIADB_USER"),
@@ -34,9 +44,13 @@ def create_app():
         os.getenv("MARIADB_PORT"),
         os.getenv("MARIADB_DATABASE")
     )
+
     # Don't track modifications --- this will be removed from SQLAlchemy in a
     # future update
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    # Set our secret key
+    app.config["SECRET_KEY"] = SECRET_KEY
 
     # Load all blueprints into our app
     for blueprint in ALL_BLUEPRINTS:
@@ -46,17 +60,20 @@ def create_app():
     # Initialize our database
     db.init_app(app)
 
-    # Initialize our migration object
-    migrate.init_app(app, db)
-
     # Comment / uncomment the following line to delete the SQL tables we are
     # testing
     drop_db_tables(app, db)
     # Comment / uncomment the following line to create SQL database tables from
     # scratch when we run Recipe Buddy
     create_db_tables(app, db)
+    # Comment / uncomment the following line to remove test data in our SQL
+    # database
+    delete_db_entries(app, db)
     # Comment / uncomment the following line to create test data in our SQL
     # database
     create_db_test_data(app, db)
+
+    # Initialize our login manager
+    # login_manager.init_app(app)
 
     return app
