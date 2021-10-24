@@ -3,4 +3,5 @@
 """
 
 from .database import db
-from .db_models import *
+from .food import *
+from .user import *

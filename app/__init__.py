@@ -6,6 +6,7 @@
 
 from .blueprints import ALL_BLUEPRINTS
 from .models import *
+from .security.logins import login_manager
 from flask import Flask
 import os
 
@@ -74,6 +75,7 @@ def create_app():
     create_db_test_data(app, db)
 
     # Initialize our login manager
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "login"
 
     return app

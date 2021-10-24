@@ -85,10 +85,8 @@ def create_db_test_data(app, db):
 
         user = User(uid=1, username="big_sean_banerjee",
                     email="sean@k.banerjee.net",
-                    verified=True,
-                    password_hash=hashlib.pbkdf2_hmac("sha512",
-                        b"YouShouldHaveStartedCodingByNow",
-                        b"SaltKBanerjee", 100000, dklen=128).hex())
+                    verified=True)
+        user.set_password("YouShouldHaveStartedCodingByNow")
         ingredients = [
             Ingredient(pk=1, name="Bread",
                        unit_of_measure="slice", units_plural="slices"),

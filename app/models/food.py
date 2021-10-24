@@ -1,30 +1,6 @@
 from .database import db
 
 
-class User(db.Model):
-    """
-        This model represents a Recipe Buddy user.
-
-        Attributes:
-            uid (db.Integer):
-                        Unique user ID. This is our primary key
-            username (db.String(32)):
-                        A user's unique username
-            email (db.String(64)):
-                        A user's unique email
-            verified (db.Boolean):
-                        Boolean representing if this user is verified or not
-            password_hash (db.String(256)):
-                        The hash of a user's password
-    """
-
-    uid = db.Column(db.Integer, primary_key=True, nullable=False)
-    username = db.Column(db.String(32), unique=True, nullable=False)
-    email = db.Column(db.String(64), unique=True, nullable=False)
-    verified = db.Column(db.Boolean, nullable=False)
-    password_hash = db.Column(db.String(256), unique=False, nullable=False)
-
-
 class Ingredient(db.Model):
     """
         This model represents an ingredient.
