@@ -2,4 +2,5 @@
     This module is where our Flask models reside.
 """
 
-from .models import *
+from .database import db, migrate
+from .db_models import *
