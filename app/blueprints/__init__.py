@@ -2,10 +2,10 @@
     This module is where our Flask blueprints reside.
 """
 
-from . import index, test, login
+from . import index, recipe, login
 
-ALL_BLUEPRINTS = [
+ALL_BLUEPRINTS = (
     index.bp,
-    test.bp,
+    recipe.bp,
     login.bp
-]
+)

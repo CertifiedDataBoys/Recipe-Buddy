@@ -5,6 +5,7 @@
 
 
 from .blueprints import ALL_BLUEPRINTS
+from .errors import ALL_ERROR_HANDLERS
 from .models import *
 from .security.logins import login_manager
 from flask import Flask
@@ -57,6 +58,11 @@ def create_app():
     for blueprint in ALL_BLUEPRINTS:
 
         app.register_blueprint(blueprint)
+
+    # Load all error handlers into our app:
+    for err in ALL_ERROR_HANDLERS:
+
+        app.register_error_handler(*err)
 
     # Initialize our database
     db.init_app(app)

@@ -7,7 +7,7 @@ bp = Blueprint("test", __name__)
 
 
 @bp.route("/recipe/<pk>")
-def test(pk="0"):
+def recipe(pk="0"):
     """
         Create a blueprint to display a test page.
         This should only display the recipe with the primary key of 1.
@@ -20,11 +20,11 @@ def test(pk="0"):
         .join(User, User.uid == Recipe.uploaded_by) \
         .filter(Recipe.pk == pk) \
         .first()
-    
+
     # Did our recipe query return anything?
     if not recipe_query:
         return render_template("404.html")
-    
+
     recipe = recipe_query[0]
     user = recipe_query[1]
 
