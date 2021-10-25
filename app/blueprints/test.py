@@ -6,8 +6,8 @@ from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 bp = Blueprint("test", __name__)
 
 
-@bp.route("/test")
-def test():
+@bp.route("/recipe/<pk>")
+def test(pk="0"):
     """
         Create a blueprint to display a test page.
         This should only display the recipe with the primary key of 1.
@@ -18,9 +18,13 @@ def test():
     # The test recipe is the recipe where recipe.pk = 1
     recipe_query = db.session.query(Recipe, User) \
         .join(User, User.uid == Recipe.uploaded_by) \
-        .filter(Recipe.pk == 1) \
+        .filter(Recipe.pk == pk) \
         .first()
-        
+    
+    # Did our recipe query return anything?
+    if not recipe_query:
+        return render_template("404.html")
+    
     recipe = recipe_query[0]
     user = recipe_query[1]
 
@@ -49,5 +53,5 @@ def test():
             ingredient_in_recipe.optional
         ])
 
-    return render_template("test.html", recipe=recipe, user=user,
+    return render_template("recipe.html", recipe=recipe, user=user,
                            ingredients_list=ingredients)

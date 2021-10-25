@@ -35,4 +35,4 @@ def test():
             ingredient_in_recipe.optional
         ])
 
-    return render_template("test.html", recipe=recipe, ingredients_list=ingredients)
+    return render_template("recipe.html", recipe=recipe, ingredients_list=ingredients)
