@@ -1,3 +1,6 @@
+"""
+    This module is where our Flask error handlers reside.
+"""
 from . import page_not_found, teapot
 
 ALL_ERROR_HANDLERS = (
