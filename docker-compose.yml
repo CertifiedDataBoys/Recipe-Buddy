@@ -34,6 +34,8 @@ services:
       FLASK_ENV: development
       # Set Flask app path
       FLASK_APP: .
+      # Set the secret key (remove this in production)
+      SECRET_KEY: cdcc3854dbb850aaa6ee671f337589743b820faa249140f64c7757f3c990b657
     # Define volumes (directories) that our container will use
     volumes:
       # Mount the host directory "data/recipe_buddy" to "/data" in the container

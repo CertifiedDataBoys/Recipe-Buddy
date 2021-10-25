@@ -23,9 +23,7 @@ except Exception as e:
     print(e, file=sys.stderr)
     exit(1)
 
-# Also remove later! We want to hide this!
-SECRET_KEY = "cdcc3854dbb850aaa6ee671f337589743b820faa249140f64c7757f3c990b657"
-
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 def create_app():
     """
