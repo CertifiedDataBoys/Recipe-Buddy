@@ -23,8 +23,6 @@ except Exception as e:
     print(e, file=sys.stderr)
     exit(1)
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-
 def create_app():
     """
         Create and run the Recipe Buddy app.
@@ -50,7 +48,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # Set our secret key
-    app.config["SECRET_KEY"] = SECRET_KEY
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
     # Load all blueprints into our app
     for blueprint in ALL_BLUEPRINTS:
