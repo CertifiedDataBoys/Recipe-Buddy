@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import abort, Blueprint, render_template
 from flask_sqlalchemy import SQLAlchemy
 from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 
@@ -23,7 +23,7 @@ def recipe(pk="0"):
 
     # Did our recipe query return anything?
     if not recipe_query:
-        return render_template("404.html")
+        return abort(404)
 
     recipe = recipe_query[0]
     user = recipe_query[1]
