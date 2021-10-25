@@ -15,7 +15,7 @@ def login():
 
     if current_user.is_authenticated:
 
-        return redirect(url_for("test.test"))
+        return redirect(url_for('index.index'))
 
 
     form = LoginForm()
@@ -30,7 +30,7 @@ def login():
             return redirect(url_for("login.login"))
 
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for("test.test"))
+        return redirect(url_for('index.index'))
 
     return render_template("login.html", title="Login", form=form)
 
@@ -39,4 +39,4 @@ def login():
 def logout():
 
     logout_user()
-    return(redirect(url_for("test.test")))
+    return(redirect(url_for('index.index')))
