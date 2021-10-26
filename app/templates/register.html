@@ -7,29 +7,29 @@
         body {
             font-family: "Lato", sans-serif;
         }
-        
+
         .main-head {
             height: 150px;
             background: #FFF;
         }
-        
+
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
         }
-        
+
         .main {
             padding: 0px 10px;
         }
-        
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
         }
-        
+
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -38,7 +38,7 @@
                 margin-top: 10%;
             }
         }
-        
+
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -57,17 +57,17 @@
                 margin-top: 20%;
             }
         }
-        
+
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #fff;
         }
-        
+
         .login-main-text h2 {
             font-weight: 300;
         }
-        
+
         .btn-black {
             background-color: #000 !important;
             color: #fff;
@@ -99,7 +99,7 @@
                         </div>
                         <div style="margin-left: 50%; height: 100px;">
                             Username Requirements:<br>
-                            <span id="user-restriction-length">•</span> Be between 4-32 characters in length
+                            <span class="align-middle" id="user-restriction-length">•</span> Be between 4-32 characters in length
                         </div>
                     </div>
                     <div style="width: 200%;">
@@ -119,6 +119,18 @@
                     <div style="width: 200%;">
                         <div style="width: 50%; height: 100px; float: left;">
                             <div class="form-group">
+                                <label>{{ form.confirm_email.label }}</label> {{ form.confirm_email(class="form-control", size=32) }} {% if form.confirm_email.errors %}
+                                <p class="text-danger">{{ form.confirm_email.errors[0] }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div style="margin-left: 50%; height: 100px;">
+                            <span id="email-confirm-match">•</span> Emails are matching<br>
+                        </div>
+                    </div>
+                    <div style="width: 200%;">
+                        <div style="width: 50%; height: 100px; float: left;">
+                            <div class="form-group">
                                 <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }} {% if form.password.errors %}
                                 <p class="text-danger">{{ form.password.errors[0] }}</p>
                                 {% endif %}
@@ -131,6 +143,18 @@
                             <br>
                             <span id="pwd-restriction-number">•</span> Contain at least 1 number (0–9)<br>
                             <span id="pwd-restriction-special">•</span> Contain at least 1 special character (!@#$%^&()'[]"?+-/*)
+                        </div>
+                    </div>
+                    <div style="width: 200%;">
+                        <div style="width: 50%; height: 100px; float: left;">
+                            <div class="form-group">
+                                <label>{{ form.confirm_password.label }}</label> {{ form.confirm_password(class="form-control", size=32) }} {% if form.confirm_password.errors %}
+                                <p class="text-danger">{{ form.confirm_password.errors[0] }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div style="margin-left: 50%; height: 100px;">
+                            <span id="pwd-confirm-match">•</span> Passwords are matching<br>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-black">Next</button>

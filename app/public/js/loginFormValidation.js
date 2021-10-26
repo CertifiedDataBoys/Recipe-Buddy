@@ -26,6 +26,15 @@ $(document).ready(function() {
             $('#email-restriction-valid').text("•");
         }
     });
+    $('#confirm_email').keyup(function() {
+        const s = $('#email').val();
+        const confirm =  $('#confirm_email').val();
+        if (s === confirm) {
+            $('#email-confirm-match').text("✓");
+        } else {
+            $('#email-confirm-match').text("•");
+        }
+    });
     $('#password').keyup(function() {
         const pwdLength = /^.{8,}$/;
         const pwdUpper = /[A-Z]+/;
@@ -53,6 +62,15 @@ $(document).ready(function() {
             $('#pwd-restriction-special').text("✓");
         } else {
             $('#pwd-restriction-special').text("•");
+        }
+    });
+    $('#confirm_password').keyup(function() {
+        const s = $('#password').val();
+        const confirm =  $('#confirm_password').val();
+        if (s === confirm) {
+            $('#pwd-confirm-match').text("✓");
+        } else {
+            $('#pwd-confirm-match').text("•");
         }
     });
 });
