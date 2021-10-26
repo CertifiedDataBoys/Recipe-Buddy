@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
     $('#confirm_email').keyup(function() {
         const s = $('#email').val();
-        const confirm =  $('#confirm_email').val();
+        const confirm = $('#confirm_email').val();
         if (s === confirm) {
             $('#email-confirm-match').text("✓");
         } else {
@@ -66,11 +66,19 @@ $(document).ready(function() {
     });
     $('#confirm_password').keyup(function() {
         const s = $('#password').val();
-        const confirm =  $('#confirm_password').val();
+        const confirm = $('#confirm_password').val();
         if (s === confirm) {
             $('#pwd-confirm-match').text("✓");
         } else {
             $('#pwd-confirm-match').text("•");
         }
     });
+
+    setTimeout(function() {
+        $('#username').trigger('keyup');
+        $('#email').trigger('keyup');
+        $('#confirm_email').trigger('keyup');
+        $('#password').trigger('keyup');
+        $('#confirm_password').trigger('keyup');
+    }, 250);
 });
