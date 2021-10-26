@@ -14,10 +14,7 @@ $(document).ready(function() {
     function updateValid(id, test) {
         test ? $('#' + id).text("✓") : $('#' + id).text("•");
         tests[id.replace(/-/g, "_")] = test;
-        if (Object.values(tests).every(Boolean))
-            $('#submit').removeAttr('disabled');
-        else
-            $('#submit').attr("disabled", "disabled");
+        Object.values(tests).every(Boolean) ? $('#submit').removeAttr('disabled') : $('#submit').attr('disabled', 'disabled');
     }
 
     $('#username').keyup(function() {
