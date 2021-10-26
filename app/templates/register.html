@@ -7,29 +7,29 @@
         body {
             font-family: "Lato", sans-serif;
         }
-
+        
         .main-head {
             height: 150px;
             background: #FFF;
         }
-
+        
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
         }
-
+        
         .main {
             padding: 0px 10px;
         }
-
+        
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
         }
-
+        
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -38,7 +38,7 @@
                 margin-top: 10%;
             }
         }
-
+        
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -57,17 +57,17 @@
                 margin-top: 20%;
             }
         }
-
+        
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #fff;
         }
-
+        
         .login-main-text h2 {
             font-weight: 300;
         }
-
+        
         .btn-black {
             background-color: #000 !important;
             color: #fff;
@@ -157,7 +157,7 @@
                             <span id="pwd-confirm-match">•</span> Passwords are matching<br>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-black">Next</button>
+                    <button type="submit" class="btn btn-black" id="submit" disabled>Next</button>
                 </form>
             </div>
             <div class="py-2">
