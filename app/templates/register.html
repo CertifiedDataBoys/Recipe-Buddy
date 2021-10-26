@@ -9,29 +9,29 @@
         body {
             font-family: "Lato", sans-serif;
         }
-        
+
         .main-head {
             height: 150px;
             background: #FFF;
         }
-        
+
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
         }
-        
+
         .main {
             padding: 0px 10px;
         }
-        
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
         }
-        
+
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -40,7 +40,7 @@
                 margin-top: 10%;
             }
         }
-        
+
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -59,17 +59,17 @@
                 margin-top: 20%;
             }
         }
-        
+
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #fff;
         }
-        
+
         .login-main-text h2 {
             font-weight: 300;
         }
-        
+
         .btn-black {
             background-color: #000 !important;
             color: #fff;
@@ -89,21 +89,48 @@
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
+                <div class="py-2">
+                    <p class="font-weight light"><center>
+                      The username must be at least 4 characters long, and no
+                        longer than 32 characters long.
+                      <br><br>
+                      The email cannot be more than 64 characters long.
+                      <br><br>
+                      The password must be at least 8 characters long, and it must
+                        contain at least one lowercase letter, uppercase letter,
+                        digit, and special symbol (ex:  ., !, ?, $, @, #, %).
+                    </center></p>
+                </div>
                 <form action="" method="post">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
                         <label>{{ form.username.label }}</label> {{ form.username(class="form-control", size=32) }}
+                        {% if form.username.errors %}
+                          <p class="text-danger">{{ form.username.errors[0] }}</p>
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         <label>{{ form.email.label }}</label> {{ form.email(class="form-control", size=32) }}
+                        {% if form.email.errors %}
+                          <p class="text-danger">{{ form.email.errors[0] }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.confirm_email.label }}</label> {{ form.email(class="form-control", size=32) }}
                     </div>
                     <div class="form-group">
                         <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }}
+                        {% if form.password.errors %}
+                          <p class="text-danger">{{ form.password.errors[0] }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.confirm_password.label }}</label> {{ form.password(class="form-control", size=32) }}
                     </div>
                     <button type="submit" class="btn btn-black">Next</button>
                 </form>
             </div>
-            <div>
+            <div class="py-2">
                 {% with messages = get_flashed_messages()%} {% if messages %}
                 <ul>
                     {% for message in messages %}
