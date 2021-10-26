@@ -87,15 +87,6 @@
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
-                <div class="py-2">
-                    <p class="font-weight light">
-                        <center>
-                            The username must be at least 4 characters long, and no longer than 32 characters long.
-                            <br><br> The email cannot be more than 64 characters long.
-                            <br><br> The password must be at least 8 characters long, and it must contain at least one lowercase letter, uppercase letter, digit, and special symbol (ex: ., !, ?, $, @, #, %).
-                        </center>
-                    </p>
-                </div>
                 <form action="" method="post">
                     {{ form.hidden_tag() }}
                     <div style="width: 200%;">
@@ -121,7 +112,8 @@
                         </div>
                         <div style="margin-left: 50%; height: 100px;">
                             Email Requirements:<br>
-                            <span id="email-restriction-length">•</span> Be between 1-64 characters in length
+                            <span id="email-restriction-length">•</span> Be between 1-64 characters in length<br>
+                            <span id="email-restriction-valid">•</span> Username of at least 1 character, @ symbol, domain of at least 1 character, TLD ending of at least 2 characters
                         </div>
                     </div>
                     <div style="width: 200%;">
@@ -157,7 +149,7 @@
     </div>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/js/passwordChecker.js"></script>
+    <script src="/js/loginFormValidation.js"></script>
 </body>
 {% endblock %}
 

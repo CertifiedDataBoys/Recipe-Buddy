@@ -11,12 +11,19 @@ $(document).ready(function() {
     });
     $('#email').keyup(function() {
         const emailLength = /^.{1,64}$/;
+        const validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // https://stackoverflow.com/a/46181/5871303
         const s = $('#email').val();
 
         if (emailLength.test(s)) {
             $('#email-restriction-length').text("✓");
         } else {
             $('#email-restriction-length').text("•");
+        }
+
+        if (validEmail.test(s)) {
+            $('#email-restriction-valid').text("✓");
+        } else {
+            $('#email-restriction-valid').text("•");
         }
     });
     $('#password').keyup(function() {
