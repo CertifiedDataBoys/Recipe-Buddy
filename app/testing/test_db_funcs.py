@@ -86,7 +86,7 @@ def create_db_test_data(app, db):
         user = User(uid=1, username="big_sean_banerjee",
                     email="sean@k.banerjee.net",
                     verified=True)
-        user.set_password("YouShouldHaveStartedCodingByNow")
+        user.set_password("CS350-Project")
         ingredients = [
             Ingredient(pk=1, name="Bread 🍞",
                        unit_of_measure="slice", units_plural="slices"),
