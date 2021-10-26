@@ -4,6 +4,7 @@
 """
 
 
+from flask.helpers import send_from_directory
 from .blueprints import ALL_BLUEPRINTS
 from .errors import ALL_ERROR_HANDLERS
 from .models import *
@@ -29,6 +30,10 @@ def create_app():
     """
 
     app = Flask(__name__)
+
+    @app.route('/<path:path>')
+    def send_public(path):
+        return send_from_directory('public', path)
 
     @app.shell_context_processor
     def make_shell_context():
