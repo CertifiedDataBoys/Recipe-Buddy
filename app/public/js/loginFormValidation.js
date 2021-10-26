@@ -1,9 +1,5 @@
 $(document).ready(function() {
     var tests = {
-        allValid: function() {
-            // Try to make this more elegant if possible
-            return this.user_restriction_length && this.email_restriction_length && this.email_restriction_valid && this.email_confirm_match && this.pwd_restriction_length && this.pwd_restriction_upperlower && this.pwd_restriction_number && this.pwd_restriction_special && this.pwd_confirm_match;
-        },
         user_restriction_length: false,
         email_restriction_length: false,
         email_restriction_valid: false,
@@ -18,7 +14,7 @@ $(document).ready(function() {
     function updateValid(id, test) {
         test ? $('#' + id).text("✓") : $('#' + id).text("•");
         tests[id.replace(/-/g, "_")] = test;
-        if (tests.allValid())
+        if (Object.values(tests).every(Boolean))
             $('#submit').removeAttr('disabled');
         else
             $('#submit').attr("disabled", "disabled");
