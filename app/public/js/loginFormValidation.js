@@ -12,7 +12,7 @@ $(document).ready(function() {
     };
 
     function updateValid(id, test) {
-        test ? $('#' + id).text("✓") : $('#' + id).text("•");
+        test ? ($('#' + id).text("✓"), $('#' + id + '-color').css('color', 'green')) : ($('#' + id).text("•"), $('#' + id + '-color').css('color', 'red'));
         tests[id.replace(/-/g, "_")] = test;
         Object.values(tests).every(Boolean) ? $('#submit').removeAttr('disabled') : $('#submit').attr('disabled', 'disabled');
     }
