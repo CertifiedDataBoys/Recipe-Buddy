@@ -113,20 +113,14 @@
                         <div style="margin-left: 50%; height: 100px;">
                             Email Requirements:<br>
                             <span id="email-restriction-length">•</span> Be between 1-64 characters in length<br>
-                            <span id="email-restriction-valid">•</span> Username of at least 1 character, @ symbol, domain of at least 1 character, TLD ending of at least 2 characters
-                        </div>
-                    </div>
-                    <div style="width: 200%;">
-                        <div style="width: 50%; height: 100px; float: left;">
-                            <div class="form-group">
-                                <label>{{ form.confirm_email.label }}</label> {{ form.confirm_email(class="form-control", size=32) }} {% if form.confirm_email.errors %}
-                                <p class="text-danger">{{ form.confirm_email.errors[0] }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div style="margin-left: 50%; height: 100px;">
+                            <span id="email-restriction-valid">•</span> Username of at least 1 character, @ symbol, domain of at least 1 character, TLD ending of at least 2 characters<br>
                             <span id="email-confirm-match">•</span> Emails are matching<br>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.confirm_email.label }}</label> {{ form.confirm_email(class="form-control", size=32) }} {% if form.confirm_email.errors %}
+                        <p class="text-danger">{{ form.confirm_email.errors[0] }}</p>
+                        {% endif %}
                     </div>
                     <div style="width: 200%;">
                         <div style="width: 50%; height: 100px; float: left;">
@@ -143,19 +137,14 @@
                             <br>
                             <span id="pwd-restriction-number">•</span> Contain at least 1 number (0–9)<br>
                             <span id="pwd-restriction-special">•</span> Contain at least 1 special character (!@#$%^&()'[]"?+-/*)
-                        </div>
-                    </div>
-                    <div style="width: 200%;">
-                        <div style="width: 50%; height: 100px; float: left;">
-                            <div class="form-group">
-                                <label>{{ form.confirm_password.label }}</label> {{ form.confirm_password(class="form-control", size=32) }} {% if form.confirm_password.errors %}
-                                <p class="text-danger">{{ form.confirm_password.errors[0] }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div style="margin-left: 50%; height: 100px;">
+                            <br>
                             <span id="pwd-confirm-match">•</span> Passwords are matching<br>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.confirm_password.label }}</label> {{ form.confirm_password(class="form-control", size=32) }} {% if form.confirm_password.errors %}
+                        <p class="text-danger">{{ form.confirm_password.errors[0] }}</p>
+                        {% endif %}
                     </div>
                     <button type="submit" class="btn btn-black" id="submit" disabled>Next</button>
                 </form>
