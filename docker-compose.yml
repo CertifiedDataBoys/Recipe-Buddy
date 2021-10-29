@@ -54,6 +54,9 @@ services:
     image: mariadb:10.6.4
     # Restart unless the user specifies to stop the container
     restart: unless-stopped
+    # Forward port 3306 in our container to port 5001 on the host machine
+    ports:
+        - 5001:3306
     # Set our environment variables
     environment:
       # Set our timezone
