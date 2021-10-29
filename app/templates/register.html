@@ -72,6 +72,10 @@
             background-color: #000 !important;
             color: #fff;
         }
+        
+        .restriction-color {
+            color: red;
+        }
     </style>
 </head>
 
@@ -99,7 +103,9 @@
                         </div>
                         <div style="margin-left: 50%; height: 100px;">
                             Username Requirements:<br>
-                            <span class="align-middle" id="user-restriction-length">•</span> Be between 4-32 characters in length
+                            <span class="align-middle" id="user-restriction-length">•</span> <span class="restriction-color" id="user-restriction-length-color">Be between 4-32 characters
+                                in length</span>
+                            </span>
                         </div>
                     </div>
                     <div style="width: 200%;">
@@ -112,9 +118,10 @@
                         </div>
                         <div style="margin-left: 50%; height: 100px;">
                             Email Requirements:<br>
-                            <span id="email-restriction-length">•</span> Be between 1-64 characters in length<br>
-                            <span id="email-restriction-valid">•</span> Username of at least 1 character, @ symbol, domain of at least 1 character, TLD ending of at least 2 characters<br>
-                            <span id="email-confirm-match">•</span> Emails are matching<br>
+                            <span id="email-restriction-length">•</span> <span class="restriction-color" id="email-restriction-length-color">Be between 1-64 characters in length</span><br>
+                            <span id="email-restriction-valid">•</span> <span class="restriction-color" id="email-restriction-valid-color">Username of at least 1 character, @ symbol, domain of
+                                at least 1 character, TLD ending of at least 2 characters</span><br>
+                            <span id="email-confirm-match">•</span> <span class="restriction-color" id="email-confirm-match-color">Emails are matching</span><br>
                         </div>
                     </div>
                     <div class="form-group">
@@ -132,13 +139,15 @@
                         </div>
                         <div style="margin-left: 50%; height: 100px;">
                             Password Requirements:<br>
-                            <span id="pwd-restriction-length">•</span> Be at least 8 characters in length<br>
-                            <span id="pwd-restriction-upperlower">•</span> Contain at least 1 lowercase and 1 uppercase letter
+                            <span id="pwd-restriction-length">•</span> <span class="restriction-color" id="pwd-restriction-length-color">Be at least 8 characters in length</span><br>
+                            <span id="pwd-restriction-upperlower">•</span> <span class="restriction-color" id="pwd-restriction-upperlower-color">Contain at least 1 lowercase and 1 uppercase
+                                letter</span>
                             <br>
-                            <span id="pwd-restriction-number">•</span> Contain at least 1 number (0–9)<br>
-                            <span id="pwd-restriction-special">•</span> Contain at least 1 special character (!@#$%^&()'[]"?+-/*)
+                            <span id="pwd-restriction-number">•</span> <span class="restriction-color" id="pwd-restriction-number-color">Contain at least 1 number (0–9)</span><br>
+                            <span id="pwd-restriction-special">•</span> <span class="restriction-color" id="pwd-restriction-special-color">Contain at least 1 special character
+                                (!@#$%^&()'[]"?+-/*)</span>
                             <br>
-                            <span id="pwd-confirm-match">•</span> Passwords are matching<br>
+                            <span id="pwd-confirm-match">•</span> <span class="restriction-color" id="pwd-confirm-match-color">Passwords are matching</span><br>
                         </div>
                     </div>
                     <div class="form-group">
