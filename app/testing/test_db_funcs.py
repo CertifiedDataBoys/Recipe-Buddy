@@ -1,4 +1,8 @@
-from ..models import User, Ingredient, Recipe, IngredientInRecipe
+from ..models import (
+    ALL_TABLES, DROP_ORDER,
+    User, Ingredient, Recipe, IngredientInRecipe, Kitchenware,
+    KitchenwareInRecipe
+)
 from datetime import datetime
 import hashlib
 
@@ -18,10 +22,9 @@ def drop_db_tables(app, db):
 
     with app.app_context():
 
-        IngredientInRecipe.__table__.drop(db.engine)
-        Ingredient.__table__.drop(db.engine)
-        Recipe.__table__.drop(db.engine)
-        User.__table__.drop(db.engine)
+        for table in DROP_ORDER:
+            print(table.__table__)
+            table.__table__.drop(db.engine)
         db.session.commit()
 
 
@@ -38,15 +41,19 @@ def delete_db_entries(app, db):
 
     with app.app_context():
 
-        IngredientInRecipe.query.delete()
+        for table in DROP_ORDER:
+            table.query.delete()
         db.session.commit()
 
-        Ingredient.query.delete()
-        Recipe.query.delete()
-        db.session.commit()
-
-        User.query.delete()
-        db.session.commit()
+        # IngredientInRecipe.query.delete()
+        # db.session.commit()
+        #
+        # Ingredient.query.delete()
+        # Recipe.query.delete()
+        # db.session.commit()
+        #
+        # User.query.delete()
+        # db.session.commit()
 
 
 def create_db_tables(app, db):
@@ -112,13 +119,19 @@ def create_db_test_data(app, db):
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
                                optional=True)
         ]
+        kitchenware = Kitchenware(pk=1, name="Knife")
+        kitchenware_in_recipe = KitchenwareInRecipe(
+            pk=1, kitchenware_key=1, recipe_key=1, optional=False
+        )
 
         db.session.add(user)
         db.session.commit()
 
         db.session.add_all(ingredients)
+        db.session.add(kitchenware)
         db.session.add(recipe)
         db.session.commit()
 
         db.session.add_all(ingredients_in_recipe)
+        db.session.add(kitchenware_in_recipe)
         db.session.commit()

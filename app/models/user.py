@@ -43,3 +43,11 @@ class User(UserMixin, db.Model):
     def get_id(self):
 
         return str(self.uid)
+
+
+class UserProfile(db.Model):
+
+    uid = db.Column(db.Integer, db.ForeignKey("user.uid"), primary_key=True)
+    favorite_recipe = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
+                                nullable=False)
+    has_profile_photo = db.Column(db.Boolean, nullable=False)

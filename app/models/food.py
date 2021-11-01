@@ -22,6 +22,12 @@ class Ingredient(db.Model):
     units_plural = db.Column(db.String(32), unique=False, nullable=True)
 
 
+class Kitchenware(db.Model):
+
+    pk = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+
+
 class Recipe(db.Model):
     """
         This model represents a recipe.
@@ -72,3 +78,13 @@ iven ingredient
                                nullable=False)
     optional = db.Column(db.Boolean, nullable=False)
     count = db.Column(db.Integer, nullable=True)
+
+
+class KitchenwareInRecipe(db.Model):
+
+    pk = db.Column(db.Integer, primary_key=True)
+    kitchenware_key = db.Column(db.Integer, db.ForeignKey("kitchenware.pk"),
+                                nullable=False)
+    recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
+                           nullable=False)
+    optional = db.Column(db.Boolean, nullable=False)
