@@ -14,11 +14,13 @@ ALL_TABLES = (
     food.Kitchenware,
     food.Recipe,
     food.IngredientInRecipe,
+    food.KitchenwareInRecipe,
     user.User,
     user.UserProfile,
     pantry.PantryIngredient,
     pantry.PantryKitchenware,
     interactions.UserInteractionIngredient,
+    interactions.UserInteractionKitchenware,
     interactions.UserInteractionRecipe,
     interactions.UserInteractionSearch,
     interactions.UserInteractionProfile
