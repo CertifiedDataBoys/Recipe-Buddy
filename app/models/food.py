@@ -23,6 +23,15 @@ class Ingredient(db.Model):
 
 
 class Kitchenware(db.Model):
+    """
+        This model represents kitchenware.
+
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            name (db.String(64)):
+                        The name of the kitchenware
+    """
 
     pk = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
@@ -54,8 +63,7 @@ class IngredientInRecipe(db.Model):
     """
         This model represents the ingredients that go into a recipe. It links
         ingredients to recipes using their primary keys.
-iven ingredient
-            recipe_key (db.Integer):
+
         Attributes:
             pk (db.Integer):
                         Primary key
@@ -81,7 +89,21 @@ iven ingredient
 
 
 class KitchenwareInRecipe(db.Model):
+    """
+        This model represents the ingredients that go into a recipe. It links
+        kitchenware to recipes using their primary keys.
 
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            kitchenware_key (db.Integer):
+                        The primary key of some given kitchenware
+            recipe_key (db.Integer):
+                        The primary key of a given recipe
+            optional (db.Boolean):
+                        Boolean representing if this ingredient is optional or
+                        not
+    """
     pk = db.Column(db.Integer, primary_key=True)
     kitchenware_key = db.Column(db.Integer, db.ForeignKey("kitchenware.pk"),
                                 nullable=False)
