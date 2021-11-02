@@ -46,6 +46,11 @@ class Recipe(db.Model):
                         Primary key
             title (db.String(64)):
                         The title of the recipe
+            subtitle (db.String(64)):
+                        The subtitle of the recipe (optional)
+            description (db.String(4096)):
+                        The description of the recipe. Instructions are
+                            separate.
             uploaded (db.DateTime):
                         A DateTime object showing when this recipe was uploaded
             uploaded_by (db.Integer):
@@ -54,9 +59,35 @@ class Recipe(db.Model):
 
     pk = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), unique=False, nullable=False)
+    subtitle = db.Column(db.String(64), unique=False, nullable=True)
+    description = db.Column(db.String(4096), unique=False, nullable=False)
     uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
     uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
                             nullable=False)
+
+class InstructionInRecipe(db.Model):
+    """
+        This model represents an instruction in a recipe.
+
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            recipe_key (db.Integer):
+                        The primary key of a given recipe
+            description (db.String(2048)):
+                        The description of this instruction
+            instruction_number (db.Integer):
+                        Number signifying which step this is in our process
+            optional (db.Boolean):
+                        Is this instruction optional or not?
+    """
+
+    pk = db.Column(db.Integer, primary_key=True)
+    recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
+                           nullable=False)
+    description = db.Column(db.String(2048), unique=False, nullable=False)
+    instruction_number = db.Column(db.Integer, unique=False, nullable=False)
+    optional = db.Column(db.Boolean, unique=False, nullable=False)
 
 
 class IngredientInRecipe(db.Model):

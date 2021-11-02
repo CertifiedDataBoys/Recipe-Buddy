@@ -13,12 +13,15 @@ ALL_TABLES = (
     food.Ingredient,
     food.Kitchenware,
     food.Recipe,
+    food.InstructionInRecipe,
+    food.InstructionInRecipe,
     food.IngredientInRecipe,
     food.KitchenwareInRecipe,
     user.User,
     user.UserProfile,
     pantry.PantryIngredient,
     pantry.PantryKitchenware,
+    interactions.RecipeRating,
     interactions.UserInteractionIngredient,
     interactions.UserInteractionKitchenware,
     interactions.UserInteractionRecipe,
@@ -31,6 +34,8 @@ DROP_ORDER = (
                                                 # food.Ingredient
 
     interactions.UserInteractionRecipe,         # depends on user.User,
+                                                # food.Recipe
+    interactions.RecipeRating,                  # depends on user.User,
                                                 # food.Recipe
 
     interactions.UserInteractionKitchenware,    # depends on user.User,
@@ -45,7 +50,10 @@ DROP_ORDER = (
     pantry.PantryIngredient,                    # depends on user.User,
                                                 # food.Ingredient
 
-    pantry.PantryKitchenware,
+    pantry.PantryKitchenware,                   # depends on user.User,
+                                                # food.Kitchenware
+
+    food.InstructionInRecipe,                   # depends on food.Recipe
 
     interactions.UserInteractionSearch,         # depends on user.User
     interactions.UserInteractionProfile,        # depends on user.User

@@ -1,7 +1,7 @@
 from ..models import (
     ALL_TABLES, DROP_ORDER,
-    User, Ingredient, Recipe, IngredientInRecipe, Kitchenware,
-    KitchenwareInRecipe
+    User, Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
+    Kitchenware, KitchenwareInRecipe, RecipeRating
 )
 from datetime import datetime
 import hashlib
@@ -105,7 +105,13 @@ def create_db_test_data(app, db):
                        unit_of_measure="slice", units_plural="slices"),
             Ingredient(pk=5, name="Garnish 🌸")
         ]
+        kitchenware = Kitchenware(pk=1, name="Knife")
+        kitchenware_in_recipe = KitchenwareInRecipe(
+            pk=1, kitchenware_key=1, recipe_key=1, optional=False
+        )
         recipe = Recipe(pk=1, title="BLT 🥪",
+                        subtitle="Bacon lettuce & tomato sandwich",
+                        description="MM...FOOD\nYummy BLT!",
                         uploaded=datetime.now(), uploaded_by=1)
         ingredients_in_recipe = [
             IngredientInRecipe(pk=1, ingredient_key=1, recipe_key=1,
@@ -119,10 +125,37 @@ def create_db_test_data(app, db):
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
                                optional=True)
         ]
-        kitchenware = Kitchenware(pk=1, name="Knife")
-        kitchenware_in_recipe = KitchenwareInRecipe(
-            pk=1, kitchenware_key=1, recipe_key=1, optional=False
-        )
+        instructions = [
+            InstructionInRecipe(pk=1, recipe_key=1,
+                                description="Place a slab of bread on a plate.",
+                                instruction_number=1,
+                                optional=False),
+            InstructionInRecipe(pk=2, recipe_key=1,
+                                description="Fry up your (yummy) bacon until \
+                                             crispy.",
+                                instruction_number=2,
+                                optional=False),
+            InstructionInRecipe(pk=3, recipe_key=1,
+                                description="Place bacon, whole lettuce, and \
+                                             whole tomatos on your bread in \
+                                             that specific order.",
+                                instruction_number=3,
+                                optional=False),
+            InstructionInRecipe(pk=4, recipe_key=1,
+                                description="Place a slab of bread on top of \
+                                             your newly-assembled BLT.",
+                                instruction_number=4,
+                                optional=False),
+            InstructionInRecipe(pk=5, recipe_key=1,
+                                description="Garnish your sandwich as desired.",
+                                instruction_number=5,
+                                optional=True),
+            InstructionInRecipe(pk=6, recipe_key=1,
+                                description="Enjoy!",
+                                instruction_number=6,
+                                optional=False),
+        ]
+        rating = RecipeRating(pk=1, uid=1, recipe_key=1, rating=4.5)
 
         db.session.add(user)
         db.session.commit()
@@ -132,6 +165,8 @@ def create_db_test_data(app, db):
         db.session.add(recipe)
         db.session.commit()
 
+        db.session.add_all(instructions)
         db.session.add_all(ingredients_in_recipe)
         db.session.add(kitchenware_in_recipe)
+        db.session.add(rating)
         db.session.commit()
