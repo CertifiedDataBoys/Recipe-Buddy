@@ -1,10 +1,10 @@
-<!doctype html>
-<html>
+{% extends "error/error_template.html" %}
 
-<body>
-    <strong>Recipe Buddy</strong>
-    <p><b>418</b> <i>I’m a teapot.</i></p>
-    <p>I'm a teapot, not a coffee pot!</p>
-</body>
+{% block err_title %}Error 418{% endblock %}
+{% block err_subtitle %}I'm a little teapot, short and stout!{% endblock %}
 
-</html>
+{% block err_img %}
+    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/418.jpg">
+{% endblock %}
+
+{% block err_text %}I'm not a coffee pot!{% endblock %}
