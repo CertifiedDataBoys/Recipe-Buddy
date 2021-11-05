@@ -1,0 +1,10 @@
+{% extends "error/error_template.html" %}
+
+{% block err_title %}Error 403{% endblock %}
+{% block err_subtitle %}Request forbidden!{% endblock %}
+
+{% block err_img %}
+    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/403.jpg">
+{% endblock %}
+
+{% block err_text %}You are not allowed to view this page! Please log into your account first!{% endblock %}

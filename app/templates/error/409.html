@@ -1,0 +1,10 @@
+{% extends "error/error_template.html" %}
+
+{% block err_title %}Error 409{% endblock %}
+{% block err_subtitle %}Conflict!{% endblock %}
+
+{% block err_img %}
+    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/409.jpg">
+{% endblock %}
+
+{% block err_text %}Your request could not be completed. This is due to a conflict somewhere in your request.{% endblock %}
