@@ -5,6 +5,7 @@
 
 
 from flask.helpers import send_from_directory
+from .api import ALL_API_BLUEPRINTS
 from .blueprints import ALL_BLUEPRINTS
 from .errors import ALL_ERROR_HANDLERS
 from .models import *
@@ -57,6 +58,11 @@ def create_app():
 
     # Load all blueprints into our app
     for blueprint in ALL_BLUEPRINTS:
+
+        app.register_blueprint(blueprint)
+
+    # Load all API-related blueprints into our app
+    for blueprint in ALL_API_BLUEPRINTS:
 
         app.register_blueprint(blueprint)
 
