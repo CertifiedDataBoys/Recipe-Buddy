@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 
 
-bp = Blueprint("test", __name__)
+bp = Blueprint("recipe", __name__)
 
 
 @bp.route("/recipe/<pk>")
