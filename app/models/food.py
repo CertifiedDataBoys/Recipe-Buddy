@@ -1,6 +1,9 @@
 from .database import db
+from dataclasses import dataclass
+from datetime import timedelta
 
 
+@dataclass
 class Ingredient(db.Model):
     """
         This model represents an ingredient.
@@ -16,12 +19,18 @@ class Ingredient(db.Model):
                         The plural version of our unit of measure
     """
 
+    pk: int
+    name: str
+    unit_of_measure: str
+    units_plural: str
+
     pk = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     unit_of_measure = db.Column(db.String(32), unique=False, nullable=True)
     units_plural = db.Column(db.String(32), unique=False, nullable=True)
 
 
+@dataclass
 class Kitchenware(db.Model):
     """
         This model represents kitchenware.
@@ -37,6 +46,7 @@ class Kitchenware(db.Model):
     name = db.Column(db.String(64), unique=True, nullable=False)
 
 
+@dataclass
 class Recipe(db.Model):
     """
         This model represents a recipe.
@@ -57,6 +67,13 @@ class Recipe(db.Model):
                         The primary key of the user who uploaded this recipe
     """
 
+    pk: int
+    title: str
+    subtitle: str
+    description: str
+    uploaded: timedelta
+    uploaded_by: int
+
     pk = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), unique=False, nullable=False)
     subtitle = db.Column(db.String(64), unique=False, nullable=True)
@@ -65,6 +82,7 @@ class Recipe(db.Model):
     uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
                             nullable=False)
 
+@dataclass
 class InstructionInRecipe(db.Model):
     """
         This model represents an instruction in a recipe.
@@ -82,6 +100,12 @@ class InstructionInRecipe(db.Model):
                         Is this instruction optional or not?
     """
 
+    pk: int
+    recipe_key: int
+    description: str
+    instruction_number: int
+    optional: bool
+
     pk = db.Column(db.Integer, primary_key=True)
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                            nullable=False)
@@ -90,6 +114,7 @@ class InstructionInRecipe(db.Model):
     optional = db.Column(db.Boolean, unique=False, nullable=False)
 
 
+@dataclass
 class IngredientInRecipe(db.Model):
     """
         This model represents the ingredients that go into a recipe. It links
@@ -110,6 +135,12 @@ class IngredientInRecipe(db.Model):
                         Can be left blank.
     """
 
+    pk: int
+    ingredient_key: int
+    recipe_key: int
+    optional: bool
+    count: int
+
     pk = db.Column(db.Integer, primary_key=True)
     ingredient_key = db.Column(db.Integer, db.ForeignKey("ingredient.pk"),
                                nullable=False)
@@ -119,6 +150,7 @@ class IngredientInRecipe(db.Model):
     count = db.Column(db.Integer, nullable=True)
 
 
+@dataclass
 class KitchenwareInRecipe(db.Model):
     """
         This model represents the ingredients that go into a recipe. It links
@@ -135,6 +167,12 @@ class KitchenwareInRecipe(db.Model):
                         Boolean representing if this ingredient is optional or
                         not
     """
+
+    pk: int
+    kitchenware_key: int
+    recipe_key: int
+    optional: bool
+
     pk = db.Column(db.Integer, primary_key=True)
     kitchenware_key = db.Column(db.Integer, db.ForeignKey("kitchenware.pk"),
                                 nullable=False)

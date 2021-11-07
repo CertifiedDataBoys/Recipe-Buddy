@@ -1,4 +1,6 @@
 from .database import db
+from dataclasses import dataclass
+from datetime import timedelta
 from sqlalchemy.ext.declarative import declared_attr
 
 
@@ -21,6 +23,12 @@ class InteractionMixin(object):
                         When did the user last interact with this data?
     """
 
+    __tablename__: str
+    pk: int
+    times_accessed: int
+    first_accessed: timedelta
+    last_accessed: timedelta
+
     __tablename__ = "interaction"
 
     pk = db.Column(db.Integer, primary_key=True)
@@ -36,6 +44,7 @@ class InteractionMixin(object):
     last_accessed = db.Column(db.DateTime(), unique=False, nullable=False)
 
 
+@dataclass
 class RecipeRating(db.Model):
     """
         This model represents recipe ratings.
@@ -51,6 +60,11 @@ class RecipeRating(db.Model):
                         What rating did the user give to this recipe?
     """
 
+    pk: int
+    uid: int
+    recipe_key: int
+    rating: float
+
     pk = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
@@ -58,6 +72,7 @@ class RecipeRating(db.Model):
     rating = db.Column(db.Float, nullable=False)
 
 
+@dataclass
 class UserInteractionIngredient(InteractionMixin, db.Model):
     """
         This model represents user interactions with ingredients.
@@ -71,12 +86,15 @@ class UserInteractionIngredient(InteractionMixin, db.Model):
                             interacting with.
     """
 
+    ingredient_key: int
+
     __tablename__ = "user_interaction_ingredient"
 
     ingredient_key = db.Column(db.Integer, db.ForeignKey("ingredient.pk"),
                                nullable=False)
 
 
+@dataclass
 class UserInteractionKitchenware(InteractionMixin, db.Model):
     """
         This model represents user interactions with kitchenware.
@@ -90,12 +108,15 @@ class UserInteractionKitchenware(InteractionMixin, db.Model):
                             interacting with.
     """
 
+    kitchenware_key: int
+
     __tablename__ = "user_interaction_kitchenware"
 
     kitchenware_key = db.Column(db.Integer, db.ForeignKey("kitchenware.pk"),
                                 nullable=False)
 
 
+@dataclass
 class UserInteractionRecipe(InteractionMixin, db.Model):
     """
         This model represents user interactions with recipes.
@@ -109,12 +130,15 @@ class UserInteractionRecipe(InteractionMixin, db.Model):
                             interacting with.
     """
 
+    recipe_key: int
+
     __tablename__ = "user_interaction_recipe"
 
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                            nullable=False)
 
 
+@dataclass
 class UserInteractionSearch(InteractionMixin, db.Model):
     """
         This model represents user interactions with search terms.
@@ -127,11 +151,14 @@ class UserInteractionSearch(InteractionMixin, db.Model):
                         The search term that a user has input.
     """
 
+    search_term: str
+
     __tablename__ = "user_interaction_search"
 
     search_term = db.Column(db.String(256), unique=False, nullable=False)
 
 
+@dataclass
 class UserInteractionProfile(InteractionMixin, db.Model):
     """
         This model represents user A's interactions with user B's profile.
@@ -144,6 +171,8 @@ class UserInteractionProfile(InteractionMixin, db.Model):
                         The primary key of user B whose profile
                             user A has viewed.
     """
+
+    profile_accessed: int
 
     __tablename__ = "user_interaction_profile"
 

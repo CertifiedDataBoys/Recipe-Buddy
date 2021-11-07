@@ -1,8 +1,10 @@
 from .database import db
+from dataclasses import dataclass
 from flask_login import UserMixin
 import hashlib
 
 
+@dataclass
 class User(UserMixin, db.Model):
     """
         This model represents a Recipe Buddy user.
@@ -19,6 +21,12 @@ class User(UserMixin, db.Model):
             password_hash (db.String(256)):
                         The hash of a user's password
     """
+
+    uid: int
+    username: str
+    email: str
+    verified: bool
+    password_hash: str
 
     uid = db.Column(db.Integer, primary_key=True, nullable=False)
     username = db.Column(db.String(32), unique=True, nullable=False)
@@ -75,6 +83,7 @@ class User(UserMixin, db.Model):
         return str(self.uid)
 
 
+@dataclass
 class UserProfile(db.Model):
     """
         This model represents a Recipe Buddy user's profile
@@ -90,6 +99,10 @@ class UserProfile(db.Model):
                         A boolean representing whether or not this user has
                             set their profile photo.
     """
+
+    uid: int
+    favorite_recipe: int
+    has_profile_photo: bool
 
     uid = db.Column(db.Integer, db.ForeignKey("user.uid"), primary_key=True)
     favorite_recipe = db.Column(db.Integer, db.ForeignKey("recipe.pk"),

@@ -1,9 +1,11 @@
 from sqlalchemy.orm import relationship
 from .database import db
+from dataclasses import dataclass
 from .food import Ingredient
 from .user import User
 
 
+@dataclass
 class PantryIngredient(db.Model):
     """
         This model represents an ingredient in a pantry.
@@ -19,6 +21,11 @@ class PantryIngredient(db.Model):
                         The amount of this ingredient that is in the pantry.
     """
 
+    pk: int
+    uid: int
+    ingredient_key: int
+    count: int
+
     pk = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey("user.uid"),
                     nullable=False)
@@ -27,6 +34,7 @@ class PantryIngredient(db.Model):
     count = db.Column(db.Integer, nullable=False)
 
 
+@dataclass
 class PantryKitchenware(db.Model):
     """
         This model represents an ingredient in a pantry.
@@ -41,6 +49,11 @@ class PantryKitchenware(db.Model):
             in_kitchen (db.Boolean):
                         Is this kitchenware still in the kitchen?
     """
+
+    pk: int
+    uid: int
+    kitchenware_key: int
+    in_kitchen: bool
 
     pk = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey("user.uid"),
