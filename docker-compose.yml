@@ -53,6 +53,8 @@ services:
         condition: service_healthy
   # Define our MariaDB service
   db:
+    # Name our container
+    container_name: Recipe-Buddy-DB
     # Use the official MariaDB image from Docker Hub
     image: mariadb:10.6.4
     # Restart unless the user specifies to stop the container
