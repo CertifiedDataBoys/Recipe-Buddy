@@ -40,7 +40,7 @@ def recipe(pk="0"):
 
 
     ingredients_query = db.session.query(Ingredient, IngredientInRecipe) \
-        .join(IngredientInRecipe, IngredientInRecipe.recipe_key == recipe.pk) \
+        .join(IngredientInRecipe, IngredientInRecipe.recipe_key == pk) \
         .filter(Ingredient.pk == IngredientInRecipe.ingredient_key) \
         .all()
 
