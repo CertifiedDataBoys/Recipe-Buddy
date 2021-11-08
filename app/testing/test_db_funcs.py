@@ -131,19 +131,19 @@ def create_db_test_data(app, db):
                                 instruction_number=1,
                                 optional=False),
             InstructionInRecipe(pk=2, recipe_key=1,
-                                description="Fry up your (yummy) bacon until \
-                                             crispy.",
+                                description="Fry up your (yummy) bacon until" +
+                                            " crispy.",
                                 instruction_number=2,
                                 optional=False),
             InstructionInRecipe(pk=3, recipe_key=1,
-                                description="Place bacon, whole lettuce, and \
-                                             whole tomatos on your bread in \
-                                             that specific order.",
+                                description="Place bacon, whole lettuce, and" +
+                                             " whole tomatos on your bread in" +
+                                             " that specific order.",
                                 instruction_number=3,
                                 optional=False),
             InstructionInRecipe(pk=4, recipe_key=1,
-                                description="Place a slab of bread on top of \
-                                             your newly-assembled BLT.",
+                                description="Place a slab of bread on top of" +
+                                            " your newly-assembled BLT.",
                                 instruction_number=4,
                                 optional=False),
             InstructionInRecipe(pk=5, recipe_key=1,
