@@ -49,7 +49,8 @@ services:
       - recipe-buddy-backend-network
     # This container depends on the MariaDB container, do not start if MariaDB is not online and stop the process if MariaDB goes offline
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   # Define our MariaDB service
   db:
     # Use the official MariaDB image from Docker Hub
@@ -78,6 +79,10 @@ services:
     # Use the network created at the bottom of the file to connect our Recipe Buddy container to the MariaDB container
     networks:
       - recipe-buddy-backend-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 30
 
 # Create a custom bridged network to allow the two containers to communicate using a secured private virtual network
 networks:
