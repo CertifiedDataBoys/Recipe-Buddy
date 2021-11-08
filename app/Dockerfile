@@ -12,5 +12,10 @@ RUN pip install --no-cache-dir -r pip-requirements.txt
 # Copy all project files to our container's working directory
 COPY . .
 
-# Set the default start command of the container (to run our application)
-CMD [ "flask", "run", "--host=0.0.0.0" ]
+# Wait for DB to be ready
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
+# Set the default start command of the container (wait for database and run our application)
+CMD sh -c "/wait && flask run --host=0.0.0.0"

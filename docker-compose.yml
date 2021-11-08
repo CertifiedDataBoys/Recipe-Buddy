@@ -38,6 +38,11 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       # Password salt
       PASSWORD_SALT: ${PASSWORD_SALT}
+      # Wait for DB variables
+      WAIT_HOSTS: db:3306
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 30
+      WAIT_HOST_CONNECT_TIMEOUT: 30
     # Define volumes (directories) that our container will use
     volumes:
       # Mount the host directory "data/recipe_buddy" to "/data" in the container
@@ -82,9 +87,19 @@ services:
     networks:
       - recipe-buddy-backend-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "${MARIADB_USER}",
+          "-p${MARIADB_PASSWORD}",
+        ]
       timeout: 5s
-      retries: 30
+      retries: 10
 
 # Create a custom bridged network to allow the two containers to communicate using a secured private virtual network
 networks:
