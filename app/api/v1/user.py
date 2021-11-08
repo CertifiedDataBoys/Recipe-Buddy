@@ -37,7 +37,7 @@ def get_single_user():
     # nothing found
     if not u:
 
-        return jsonify([])
+        return jsonify(user = [])
 
 
     return jsonify(user = {"uid": u.uid, "username": u.username})
