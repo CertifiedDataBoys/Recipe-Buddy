@@ -1,6 +1,7 @@
 from .database import db
 from dataclasses import dataclass
 from flask_login import UserMixin
+import os
 import hashlib
 
 
@@ -62,7 +63,8 @@ class User(UserMixin, db.Model):
                         The user's unhashed password.
         """
 
-        self.password_hash = self._hash(password, "SaltKBanerjee")
+        self.password_hash = self._hash(
+            password, os.getenv("PASSWORD_SALT"))
 
     def check_password(self, password):
         """
@@ -73,7 +75,7 @@ class User(UserMixin, db.Model):
                         An unhashed password to check against.
         """
 
-        return self.password_hash == self._hash(password, "SaltKBanerjee")
+        return self.password_hash == self._hash(password, os.getenv("PASSWORD_SALT"))
 
     def get_id(self):
         """

@@ -25,17 +25,19 @@ services:
       # Set the port number of the MariaDB instance
       MARIADB_PORT: 3306
       # Set the database name of the MariaDB instance
-      MARIADB_DATABASE: recipebuddy
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
       # Set the username of the MariaDB instance
-      MARIADB_USER: recipebuddy
+      MARIADB_USER: ${MARIADB_USER}
       # Set the password of the MariaDB instance
-      MARIADB_PASSWORD: recipebuddy
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
       # Set Flask to use development mode
       FLASK_ENV: development
       # Set Flask app path
       FLASK_APP: .
-      # Set the secret key (remove this in production)
-      SECRET_KEY: cdcc3854dbb850aaa6ee671f337589743b820faa249140f64c7757f3c990b657
+      # Set the secret key
+      SECRET_KEY: ${SECRET_KEY}
+      # Password salt
+      PASSWORD_SALT: ${PASSWORD_SALT}
     # Define volumes (directories) that our container will use
     volumes:
       # Mount the host directory "data/recipe_buddy" to "/data" in the container
@@ -56,7 +58,7 @@ services:
     restart: unless-stopped
     # Forward port 3306 in our container to port 5001 on the host machine
     ports:
-        - 5001:3306
+      - 5001:3306
     # Set our environment variables
     environment:
       # Set our timezone
@@ -64,11 +66,11 @@ services:
       # Use a random MariaDB root password, we won't be needing it, but it shouldn't be left as default
       MARIADB_RANDOM_ROOT_PASSWORD: 1
       # Set the database name of the MariaDB instance
-      MARIADB_DATABASE: recipebuddy
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
       # Set the username of the MariaDB instance
-      MARIADB_USER: recipebuddy
+      MARIADB_USER: ${MARIADB_USER}
       # Set the password of the MariaDB instance
-      MARIADB_PASSWORD: recipebuddy
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     # Define volumes (directories) that our container will use
     volumes:
       # Mount the host directory "data/mariadb" to "/var/lib/mysql" in the container
