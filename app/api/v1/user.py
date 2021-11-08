@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from ...models import db, User, UserProfile
 
 
-bp = Blueprint("api_v1_user", __name__)
+bp = Blueprint("api_v1_users", __name__)
 
 
 @bp.route("/api/v1.0.0/public/user/get_single_user")
