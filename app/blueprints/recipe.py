@@ -16,7 +16,6 @@ def recipe(pk="0"):
         For testing, this is a BLT sandwich.
     """
 
-
     # The test recipe is the recipe where recipe.pk = 1
     recipe_query_url = (
         request.url_root
@@ -44,14 +43,14 @@ def recipe(pk="0"):
         + "?pk={0}".format(pk)
     )
     recipe_instructions_query_json = urllib.request \
-                                     .urlopen(recipe_instructions_query_url) \
-                                     .read()
-    recipe_instructions_json = json.loads(recipe_instructions_query_json)["instructions"]
+        .urlopen(recipe_instructions_query_url) \
+        .read()
+    recipe_instructions_json = json.loads(
+        recipe_instructions_query_json)["instructions"]
     recipe_instructions_json = sorted(
         recipe_instructions_json,
         key=lambda col: col["instruction_number"]
     )
-
 
     recipe_ingredients_query_url = (
         request.url_root
@@ -59,9 +58,10 @@ def recipe(pk="0"):
         + "?pk={0}".format(pk)
     )
     recipe_ingredients_query_json = urllib.request \
-                                    .urlopen(recipe_ingredients_query_url) \
-                                    .read()
-    recipe_ingredients_json = json.loads(recipe_ingredients_query_json)["ingredients"]
+        .urlopen(recipe_ingredients_query_url) \
+        .read()
+    recipe_ingredients_json = json.loads(
+        recipe_ingredients_query_json)["ingredients"]
 
     ingredients = []
 
@@ -74,8 +74,8 @@ def recipe(pk="0"):
             + "?pk={0}".format(ingredient_pk)
         )
         ingredient_query_json = urllib.request \
-                                .urlopen(ingredient_query_url) \
-                                .read()
+            .urlopen(ingredient_query_url) \
+            .read()
         ingredient_query_json = json.loads(ingredient_query_json)["ingredient"]
 
         unit = ""
@@ -93,4 +93,5 @@ def recipe(pk="0"):
 
     return render_template("recipe.html", recipe=recipe_json, user=user_json,
                            ingredients_list=ingredients,
-                           instructions_list=recipe_instructions_json)
+                           instructions_list=recipe_instructions_json,
+                           pk=pk)
