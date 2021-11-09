@@ -65,7 +65,7 @@ def get_single_recipe_details():
         .join(User, User.uid == Recipe.uploaded_by)
         .with_entities(
             Recipe.title, Recipe.subtitle, Recipe.description, Recipe.uploaded,
-            User.username
+            User.uid, User.username
         )
         .filter(Recipe.pk == key)
     )
@@ -109,15 +109,15 @@ def get_single_recipe_details():
     )
     recipe_kitchenware = recipe_kitchenware_query.all()
 
-    import sys
-    print(recipe_instructions_query.all(), file=sys.stderr)
-
     recipe_dict = {
         "title": recipe_details.title,
         "subtitle": recipe_details.subtitle,
         "description": recipe_details.description,
         "uploaded": recipe_details.uploaded,
-        "uploaded_by_username": recipe_details.username,
+        "user": {
+            "uid" : recipe_details.uid,
+            "username": recipe_details.username
+        },
         "instructions": sorted([
             {
                 "instruction_number": instruction.instruction_number,
