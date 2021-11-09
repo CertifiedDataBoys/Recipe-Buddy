@@ -7,7 +7,7 @@ from ...models import (
 bp = Blueprint("api_v1_food", __name__)
 
 
-@bp.route("/api/v1.0.0/public/recipe/get_ingredient")
+@bp.route("/api/v1.0.0/public/food/get_ingredient")
 def get_ingredient():
 
     key = request.args.get("pk")
@@ -23,7 +23,7 @@ def get_ingredient():
     return jsonify(ingredient = query.first())
 
 
-@bp.route("/api/v1.0.0/public/recipe/get_kitchenware")
+@bp.route("/api/v1.0.0/public/food/get_kitchenware")
 def get_kitchenware():
 
     key = request.args.get("pk")
