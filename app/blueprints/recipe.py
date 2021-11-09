@@ -38,31 +38,59 @@ def recipe(pk="0"):
     user_query_json = urllib.request.urlopen(user_query_url).read()
     user_json = json.loads(user_query_json)["user"]
 
+    recipe_instructions_query_url = (
+        request.url_root
+        + url_for("api_v1_recipes.recipe_instructions")
+        + "?pk={0}".format(pk)
+    )
+    recipe_instructions_query_json = urllib.request \
+                                     .urlopen(recipe_instructions_query_url) \
+                                     .read()
+    recipe_instructions_json = json.loads(recipe_instructions_query_json)["instructions"]
+    recipe_instructions_json = sorted(
+        recipe_instructions_json,
+        key=lambda col: col["instruction_number"]
+    )
 
-    ingredients_query = db.session.query(Ingredient, IngredientInRecipe) \
-        .join(IngredientInRecipe, IngredientInRecipe.recipe_key == pk) \
-        .filter(Ingredient.pk == IngredientInRecipe.ingredient_key) \
-        .all()
+
+    recipe_ingredients_query_url = (
+        request.url_root
+        + url_for("api_v1_recipes.recipe_ingredients")
+        + "?pk={0}".format(pk)
+    )
+    recipe_ingredients_query_json = urllib.request \
+                                    .urlopen(recipe_ingredients_query_url) \
+                                    .read()
+    recipe_ingredients_json = json.loads(recipe_ingredients_query_json)["ingredients"]
 
     ingredients = []
 
-    for i in ingredients_query:
+    for ingredient in recipe_ingredients_json:
 
-        ingredient = i[0]
-        ingredient_in_recipe = i[1]
+        ingredient_pk = ingredient["pk"]
+        ingredient_query_url = (
+            request.url_root
+            + url_for("api_v1_food.get_ingredient")
+            + "?pk={0}".format(ingredient_pk)
+        )
+        ingredient_query_json = urllib.request \
+                                .urlopen(ingredient_query_url) \
+                                .read()
+        ingredient_query_json = json.loads(ingredient_query_json)["ingredient"]
 
         unit = ""
-        if ingredient_in_recipe.count == 1:
-            unit = ingredient.unit_of_measure
+        if ingredient["count"] == 1:
+            unit = ingredient_query_json["unit_of_measure"]
         else:
-            unit = ingredient.units_plural
+            unit = ingredient_query_json["units_plural"]
 
         ingredients.append([
-            ingredient_in_recipe.count,
+            ingredient["count"],
             unit,
-            ingredient.name,
-            ingredient_in_recipe.optional
+            ingredient_query_json["name"],
+            ingredient["optional"]
         ])
 
     return render_template("recipe.html", recipe=recipe_json, user=user_json,
-                           ingredients_list=ingredients)
+                           ingredients_list=ingredients,
+                           instructions_list=recipe_instructions_json)

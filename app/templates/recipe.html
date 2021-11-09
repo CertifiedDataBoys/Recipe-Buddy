@@ -29,9 +29,30 @@
                             Uploaded by: <b>{{ user.username }}</b>
                         </h6>
                         <p class="card-text">
-                            {% for ingredient in ingredients_list %} {% if ingredient[0] != None %}
-                            <i>{{ ingredient[0] }}</i> {% endif %} {% if ingredient[1] != None %}
-                            <i>{{ ingredient[1] }}</i> {% endif %} {{ ingredient[2] }} {% if ingredient[3] == True %} &nbsp;&nbsp; (Optional) {% endif %}
+                            {% for ingredient in ingredients_list %}
+
+                                {% if ingredient[0] != None %}
+                                    <i>{{ ingredient[0] }}</i>
+                                {% endif %}
+                                {% if ingredient[1] != None %}
+                                    <i>{{ ingredient[1] }}</i>
+                                {% endif %}
+                                {{ ingredient[2] }}
+                                {% if ingredient[3] == True %}
+                                    &nbsp;&nbsp; (Optional)
+                                {% endif %}
+
+                            <br> {% endfor %}
+                        </p>
+                        <hr>
+                        <p class="card-text">
+                            {% for instruction in instructions_list %}
+
+                                &nbsp;&nbsp; <b>{{ instruction["instruction_number"] }}.</b>
+                                {% if instruction["optional"] %}
+                                    <i> &nbsp;&nbsp; (Optional) &nbsp;&nbsp; </i>
+                                {% endif %}
+                                {{ instruction["description"] }}
 
                             <br> {% endfor %}
                         </p>
