@@ -22,6 +22,7 @@ def recipe(pk="0"):
         + url_for("api_v1_recipes.get_single_recipe")
         + "?pk={0}".format(pk)
     )
+    print(recipe_query_url, flush=True)
     recipe_query_json = urllib.request.urlopen(recipe_query_url).read()
     recipe_json = json.loads(recipe_query_json)["recipe"]
 
@@ -34,6 +35,7 @@ def recipe(pk="0"):
         + url_for("api_v1_users.get_single_user")
         + "?uid={0}".format(recipe_json["uploaded_by"])
     )
+    print(user_query_url, flush=True)
     user_query_json = urllib.request.urlopen(user_query_url).read()
     user_json = json.loads(user_query_json)["user"]
 
@@ -42,6 +44,7 @@ def recipe(pk="0"):
         + url_for("api_v1_recipes.recipe_instructions")
         + "?pk={0}".format(pk)
     )
+    print(recipe_instructions_query_url, flush=True)
     recipe_instructions_query_json = urllib.request \
         .urlopen(recipe_instructions_query_url) \
         .read()
@@ -57,6 +60,7 @@ def recipe(pk="0"):
         + url_for("api_v1_recipes.recipe_ingredients")
         + "?pk={0}".format(pk)
     )
+    print(recipe_ingredients_query_url, flush=True)
     recipe_ingredients_query_json = urllib.request \
         .urlopen(recipe_ingredients_query_url) \
         .read()
@@ -73,6 +77,7 @@ def recipe(pk="0"):
             + url_for("api_v1_food.get_ingredient")
             + "?pk={0}".format(ingredient_pk)
         )
+        print(ingredient_query_url, flush=True)
         ingredient_query_json = urllib.request \
             .urlopen(ingredient_query_url) \
             .read()
