@@ -1,0 +1,5 @@
+build:
+  docker:
+    recipe-buddy: app/Dockerfile
+run:
+  recipe-buddy: /wait && flask run --host=0.0.0.0
