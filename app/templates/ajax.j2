@@ -1,35 +1,37 @@
 $(document).ready(function() {
     {% if args.get('page') is not none %}
     $.getJSON('/api/v1.0.0/public/recipe/get_single_recipe_details?pk={{ args.get('pk') }}', function(data) {
-        if (typeof data.error !== "undefined" && data.error)
+        if (typeof data.error !== "undefined" && data.error) {
             $('#recipe-body').html('<p>' + data.message + '</p>');
-        $.each(data.recipe, function(key, val) {
-            switch (key) {
-                case 'title':
-                    $('#recipe_title').html(val);
-                    $(document).attr('title', $(document).find("title").text() + ' - ' + val);
-                    break;
-                case 'user':
-                    $('#username').html(val.username);
-                    break;
-                case 'uploaded':
-                    $('#uploaded').html(val);
-                    break;
-                case 'ingredients':
-                    $.each(val, function(i, ingredient) {
-                        if (ingredient.count > 0)
-                            $('#ingredients').append('<i>' + ingredient.count + ' ' + ingredient.unit + '</i> ' + ingredient.name + '<br/>');
-                        else
-                            $('#ingredients').append(ingredient.name + ' (Optional)<br/>');
-                    });
-                    break;
-                case 'instructions':
-                    $.each(val, function(i, instruction) {
-                        $('#instructions').append('&nbsp;&nbsp;&nbsp;<strong>' + instruction.instruction_number + '.</strong> ' + instruction.description + (instruction.optional ? '(Optional)' : '') + '<br/>');
-                    });
-                    break;
-            }
-        });
+        } else {
+            $.each(data.recipe, function(key, val) {
+                switch (key) {
+                    case 'title':
+                        $('#recipe_title').html(val);
+                        $(document).attr('title', $(document).find("title").text() + ' - ' + val);
+                        break;
+                    case 'user':
+                        $('#username').html(val.username);
+                        break;
+                    case 'uploaded':
+                        $('#uploaded').html(val);
+                        break;
+                    case 'ingredients':
+                        $.each(val, function(i, ingredient) {
+                            if (ingredient.count > 0)
+                                $('#ingredients').append('<i>' + ingredient.count + ' ' + ingredient.unit + '</i> ' + ingredient.name + '<br/>');
+                            else
+                                $('#ingredients').append(ingredient.name + ' (Optional)<br/>');
+                        });
+                        break;
+                    case 'instructions':
+                        $.each(val, function(i, instruction) {
+                            $('#instructions').append('&nbsp;&nbsp;&nbsp;<strong>' + instruction.instruction_number + '.</strong> ' + instruction.description + (instruction.optional ? '(Optional)' : '') + '<br/>');
+                        });
+                        break;
+                }
+            });
+        }
     });
     {% endif %}
 });
