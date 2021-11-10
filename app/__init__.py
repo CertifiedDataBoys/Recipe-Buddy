@@ -42,13 +42,16 @@ def create_app():
         return {'db': db, 'ALL_BLUEPRINTS': ALL_BLUEPRINTS}
 
     # Sign into our MariaDB database
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+mariadbconnector://{0}:{1}@{2}:{3}/{4}".format(
-        os.getenv("MARIADB_USER"),
-        os.getenv("MARIADB_PASSWORD"),
-        os.getenv("MARIADB_HOST"),
-        os.getenv("MARIADB_PORT"),
-        os.getenv("MARIADB_DATABASE")
-    )
+    if os.getenv('SQLALCHEMY_DATABASE_URI') is not None:
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+mariadbconnector://{0}:{1}@{2}:{3}/{4}".format(
+            os.getenv("MARIADB_USER"),
+            os.getenv("MARIADB_PASSWORD"),
+            os.getenv("MARIADB_HOST"),
+            os.getenv("MARIADB_PORT"),
+            os.getenv("MARIADB_DATABASE")
+        )
 
     # Don't track modifications --- this will be removed from SQLAlchemy in a
     # future update
