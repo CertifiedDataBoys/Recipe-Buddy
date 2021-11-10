@@ -37,7 +37,7 @@ def get_single_recipe_details():
     # error handling --- improve later
     if not key:
 
-        return jsonify([])
+        return jsonify({"error": True, "message": "No recipe key provided"})
 
 
     # recipe_details_query = (
@@ -73,7 +73,7 @@ def get_single_recipe_details():
 
     # did we get anything?
     if not recipe_details:
-        return jsonify(recipe=[])
+        return jsonify({"error": True, "message": "No recipe found"})
 
 
     recipe_instructions_query = (
