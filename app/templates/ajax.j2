@@ -1,8 +1,9 @@
 $(document).ready(function() {
     {% if args.get('page') is not none %}
     $.getJSON('/api/v1.0.0/public/recipe/get_single_recipe_details?pk={{ args.get('pk') }}', function(data) {
+        if (data.recipe.length == 0)
+            $('#recipe-body').html("<p>No recipe found</p>");
         $.each(data.recipe, function(key, val) {
-            console.log(key);
             switch (key) {
                 case 'title':
                     $('#recipe_title').html(val);

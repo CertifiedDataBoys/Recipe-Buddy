@@ -16,19 +16,4 @@ def recipe(pk="0"):
         For testing, this is a BLT sandwich.
     """
 
-    # TODO: Remove these lines when 404 can be handled by the frontend.
-    # The test recipe is the recipe where recipe.pk = 1
-    recipe_query_url = (
-        "http://localhost:" + port
-        + url_for("api_v1_recipes.get_single_recipe")
-        + "?pk={0}".format(pk)
-    )
-    recipe_query_json = urllib.request.urlopen(recipe_query_url).read()
-    recipe_json = json.loads(recipe_query_json)["recipe"]
-
-    # Did our recipe query return anything?
-    if not recipe_json:
-        return abort(404)
-
-
     return render_template("recipe.html", pk=pk)
