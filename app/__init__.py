@@ -77,7 +77,7 @@ def create_app():
 
     # Comment / uncomment the following line to delete the SQL tables we are
     # testing
-    drop_db_tables(app, db)
+    # drop_db_tables(app, db)
     # Comment / uncomment the following line to create SQL database tables from
     # scratch when we run Recipe Buddy
     create_db_tables(app, db)
