@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    {% if 'recipe' in page %}
-    $.getJSON('/api/v1.0.0/public/recipe/get_single_recipe_details?pk={{pk}}', function(data) {
+    {% if args.get('page') is not none %}
+    $.getJSON('/api/v1.0.0/public/recipe/get_single_recipe_details?pk={{ args.get('pk') }}', function(data) {
         $.each(data.recipe, function(key, val) {
             console.log(key);
             switch (key) {
                 case 'title':
                     $('#recipe_title').html(val);
-                    $(document).attr('title', 'Recipe - ' + val);
+                    $(document).attr('title', $(document).find("title").text() + ' - ' + val);
                     break;
                 case 'user':
                     $('#username').html(val.username);
