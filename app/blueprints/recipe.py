@@ -98,7 +98,4 @@ def recipe(pk="0"):
             ingredient["optional"]
         ])
 
-    return render_template("recipe.html", recipe=recipe_json, user=user_json,
-                           ingredients_list=ingredients,
-                           instructions_list=recipe_instructions_json,
-                           pk=pk)
+    return render_template("recipe.html", pk=pk)
