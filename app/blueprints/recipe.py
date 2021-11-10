@@ -3,7 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 import json
 import urllib.request
+import os
 
+port = os.getenv('PORT') or "5000"
 
 bp = Blueprint("recipe", __name__)
 
@@ -18,7 +20,7 @@ def recipe(pk="0"):
 
     # The test recipe is the recipe where recipe.pk = 1
     recipe_query_url = (
-        request.url_root
+        "http://localhost:" + port
         + url_for("api_v1_recipes.get_single_recipe")
         + "?pk={0}".format(pk)
     )
@@ -31,7 +33,7 @@ def recipe(pk="0"):
         return abort(404)
 
     user_query_url = (
-        request.url_root
+        "http://localhost:" + port
         + url_for("api_v1_users.get_single_user")
         + "?uid={0}".format(recipe_json["uploaded_by"])
     )
@@ -40,7 +42,7 @@ def recipe(pk="0"):
     user_json = json.loads(user_query_json)["user"]
 
     recipe_instructions_query_url = (
-        request.url_root
+        "http://localhost:" + port
         + url_for("api_v1_recipes.recipe_instructions")
         + "?pk={0}".format(pk)
     )
@@ -56,7 +58,7 @@ def recipe(pk="0"):
     )
 
     recipe_ingredients_query_url = (
-        request.url_root
+        "http://localhost:" + port
         + url_for("api_v1_recipes.recipe_ingredients")
         + "?pk={0}".format(pk)
     )
@@ -73,7 +75,7 @@ def recipe(pk="0"):
 
         ingredient_pk = ingredient["pk"]
         ingredient_query_url = (
-            request.url_root
+            "http://localhost:" + port
             + url_for("api_v1_food.get_ingredient")
             + "?pk={0}".format(ingredient_pk)
         )
