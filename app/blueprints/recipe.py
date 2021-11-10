@@ -1,6 +1,4 @@
 from flask import abort, Blueprint, render_template, request, url_for
-from flask_sqlalchemy import SQLAlchemy
-from ..models import db, User, Ingredient, Recipe, IngredientInRecipe
 import json
 import urllib.request
 import os
