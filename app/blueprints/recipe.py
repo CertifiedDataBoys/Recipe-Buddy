@@ -16,6 +16,7 @@ def recipe(pk="0"):
         For testing, this is a BLT sandwich.
     """
 
+    # TODO: Remove these lines when 404 can be handled by the frontend.
     # The test recipe is the recipe where recipe.pk = 1
     recipe_query_url = (
         "http://localhost:" + port

@@ -11,4 +11,4 @@ def ajax():
     if not pk and not page:
         return abort(404);
 
-    return Response(render_template("ajax.js", pk=pk, page=page), mimetype='text/javascript')
+    return Response(render_template("ajax.j2", pk=pk, page=page), mimetype='text/javascript')
