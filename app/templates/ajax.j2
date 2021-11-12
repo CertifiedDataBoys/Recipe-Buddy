@@ -29,6 +29,13 @@ $(document).ready(function() {
                             $('#instructions').append('&nbsp;&nbsp;&nbsp;<strong>' + instruction.instruction_number + '.</strong> ' + instruction.description + (instruction.optional ? '(Optional)' : '') + '<br/>');
                         });
                         break;
+                    case 'comments':
+                        $.each(val, function(i, comment) {
+                            if (comment.suggestion)
+                                $('#comments').append('<strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + '<p class="text-center mb-2 text-muted">SUGGESTION</p>' + comment.contents + '<br/>')
+                            else
+                                $('#comments').append('<strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + comment.contents + '<br/>')
+                        });
                 }
             });
         }

@@ -90,6 +90,10 @@ class RecipeComment(db.Model):
             contents (db.String):
                         The contents of this comment. Can be up to 1024
                         characters long.
+            uploaded (db.DateTime):
+                        The time when this comment was uploaded.
+            suggestion (db.Boolean):
+                        Is this comment a suggestion?
     """
 
     pk: int
@@ -98,6 +102,7 @@ class RecipeComment(db.Model):
     reply_to: int
     contents: str
     uploaded: timedelta
+    suggestion: bool
 
     pk = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
@@ -106,6 +111,7 @@ class RecipeComment(db.Model):
     reply_to = db.Column(db.Integer, unique=False, nullable=True)
     contents = db.Column(db.String(1024), unique=False, nullable=False)
     uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
+    suggestion = db.Column(db.Boolean, unique=False, nullable=False)
 
 
 @dataclass

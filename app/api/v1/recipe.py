@@ -4,6 +4,7 @@ from ...models import (
     Recipe,
     InstructionInRecipe, IngredientInRecipe, KitchenwareInRecipe,
     Ingredient, Kitchenware,
+    RecipeComment,
     User
 )
 
@@ -98,6 +99,18 @@ def get_single_recipe_details():
     )
     recipe_kitchenware = recipe_kitchenware_query.all()
 
+    recipe_comment_query = (
+        db.session.query(RecipeComment)
+        .join(User, User.uid == RecipeComment.uid)
+        .with_entities(
+            RecipeComment.contents, RecipeComment.uploaded,
+            RecipeComment.suggestion,
+            User.uid, User.username
+        )
+        .filter(RecipeComment.recipe_key == key)
+    )
+    recipe_comments = recipe_comment_query.all()
+
     recipe_dict = {
         "title": recipe_details.title,
         "subtitle": recipe_details.subtitle,
@@ -132,6 +145,19 @@ def get_single_recipe_details():
                 "name": kitchenware.name
             }
             for kitchenware in recipe_kitchenware
+        ],
+        "comments": [
+            {
+                "contents": comment.contents,
+                "uploaded": comment.uploaded,
+                "suggestion": comment.suggestion,
+                "user":
+                {
+                    "uid": comment.uid,
+                    "username": comment.username
+                }
+            }
+            for comment in recipe_comments
         ]
     }
 

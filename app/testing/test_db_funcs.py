@@ -1,7 +1,7 @@
 from ..models import (
     ALL_TABLES, DROP_ORDER,
     User, Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
-    Kitchenware, KitchenwareInRecipe, RecipeRating
+    Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment
 )
 from datetime import datetime
 import hashlib
@@ -45,16 +45,6 @@ def delete_db_entries(app, db):
             table.query.delete()
         db.session.commit()
 
-        # IngredientInRecipe.query.delete()
-        # db.session.commit()
-        #
-        # Ingredient.query.delete()
-        # Recipe.query.delete()
-        # db.session.commit()
-        #
-        # User.query.delete()
-        # db.session.commit()
-
 
 def create_db_tables(app, db):
     """
@@ -90,10 +80,16 @@ def create_db_test_data(app, db):
 
     with app.app_context():
 
-        user = User(uid=1, username="big_sean_banerjee",
-                    email="sean@k.banerjee.net",
-                    verified=True)
-        user.set_password("CS350-Project")
+        users = [
+            User(uid=1, username="big_sean_banerjee",
+                 email="sean@k.banerjee.net",
+                 verified=True),
+            User(uid=2, username="KingoFan",
+                 email="kingo@fan.club",
+                 verified=True)
+        ]
+        users[0].set_password("CS350-Project")
+        users[1].set_password("IL0veKingo!")
         ingredients = [
             Ingredient(pk=1, name="Bread 🍞",
                        unit_of_measure="slice", units_plural="slices"),
@@ -156,8 +152,12 @@ def create_db_test_data(app, db):
                                 optional=False),
         ]
         rating = RecipeRating(pk=1, uid=1, recipe_key=1, rating=4.5)
+        comment = RecipeComment(pk=1, recipe_key=1, uid=2, reply_to=None,
+                                contents="in theaters November 5th",
+                                uploaded=datetime.now(),
+                                suggestion=True)
 
-        db.session.add(user)
+        db.session.add_all(users)
         db.session.commit()
 
         db.session.add_all(ingredients)
@@ -169,4 +169,5 @@ def create_db_test_data(app, db):
         db.session.add_all(ingredients_in_recipe)
         db.session.add(kitchenware_in_recipe)
         db.session.add(rating)
+        db.session.add(comment)
         db.session.commit()
