@@ -51,7 +51,7 @@ class RecipeRating(db.Model):
 
         Attributes:
             pk (db.Integer):
-                        The primary key of a given user interaction model.
+                        The primary key of a given recipe rating.
             uid (db.Integer):
                         The uid of the user who left this rating.
             recipe_key (db.Integer):
@@ -70,6 +70,42 @@ class RecipeRating(db.Model):
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                            nullable=False)
     rating = db.Column(db.Float, nullable=False)
+
+
+@dataclass
+class RecipeComment(db.Model):
+    """
+        This model represents recipe comments.
+
+        Attributes:
+            pk (db.Integer):
+                        The primary key of a given recipe comment.
+            uid (db.Integer):
+                        The uid of the user who left this comment.
+            recipe_key (db.Integer):
+                        The primary key of the recipe being commented on.
+            reply_to (db.Integer):
+                        If this comment is a reply, then store the pk of the
+                        comment we are replying to. Otherwise, store None.
+            contents (db.String):
+                        The contents of this comment. Can be up to 1024
+                        characters long.
+    """
+
+    pk: int
+    uid: int
+    recipe_key: int
+    reply_to: int
+    contents: str
+    uploaded: timedelta
+
+    pk = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
+    recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
+                           nullable=False)
+    reply_to = db.Column(db.Integer, unique=False, nullable=True)
+    contents = db.Column(db.String(1024), unique=False, nullable=False)
+    uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
 
 
 @dataclass
