@@ -152,10 +152,28 @@ def create_db_test_data(app, db):
                                 optional=False),
         ]
         rating = RecipeRating(pk=1, uid=1, recipe_key=1, rating=4.5)
-        comment = RecipeComment(pk=1, recipe_key=1, uid=2, reply_to=None,
-                                contents="in theaters November 5th",
-                                uploaded=datetime.now(),
-                                suggestion=True)
+        comments = [
+            RecipeComment(pk=1, recipe_key=1, uid=2, reply_to=None,
+                          contents="in theaters November 5th",
+                          uploaded=datetime.now(),
+                          suggestion=True),
+            RecipeComment(pk=2, recipe_key=1, uid=2, reply_to=None,
+                          contents="kingokingokingokingokingo",
+                          uploaded=datetime.now(),
+                          suggestion=False),
+            RecipeComment(pk=3, recipe_key=1, uid=1, reply_to=1,
+                          contents="out now",
+                          uploaded=datetime.now(),
+                          suggestion=False),
+            RecipeComment(pk=4, recipe_key=1, uid=1, reply_to=3,
+                          contents="no way",
+                          uploaded=datetime.now(),
+                          suggestion=False),
+            RecipeComment(pk=5, recipe_key=1, uid=2, reply_to=1,
+                          contents="kingo meal @ mcdonalds",
+                          uploaded=datetime.now(),
+                          suggestion=False)
+        ]
 
         db.session.add_all(users)
         db.session.commit()
@@ -169,5 +187,5 @@ def create_db_test_data(app, db):
         db.session.add_all(ingredients_in_recipe)
         db.session.add(kitchenware_in_recipe)
         db.session.add(rating)
-        db.session.add(comment)
+        db.session.add_all(comments)
         db.session.commit()

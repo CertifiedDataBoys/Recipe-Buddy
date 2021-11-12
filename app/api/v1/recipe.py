@@ -103,8 +103,8 @@ def get_single_recipe_details():
         db.session.query(RecipeComment)
         .join(User, User.uid == RecipeComment.uid)
         .with_entities(
-            RecipeComment.contents, RecipeComment.uploaded,
-            RecipeComment.suggestion,
+            RecipeComment.pk, RecipeComment.contents, RecipeComment.uploaded,
+            RecipeComment.reply_to, RecipeComment.suggestion,
             User.uid, User.username
         )
         .filter(RecipeComment.recipe_key == key)
@@ -148,8 +148,10 @@ def get_single_recipe_details():
         ],
         "comments": [
             {
+                "pk": comment.pk,
                 "contents": comment.contents,
                 "uploaded": comment.uploaded,
+                "reply_to": comment.reply_to,
                 "suggestion": comment.suggestion,
                 "user":
                 {
