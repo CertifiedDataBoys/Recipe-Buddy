@@ -18,4 +18,5 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERS
 RUN chmod +x /wait
 
 # Set the default start command of the container (wait for database and run our application)
-CMD sh -c "/wait && flask run --host=0.0.0.0"
+#CMD sh -c "/wait && flask run --host=0.0.0.0"
+CMD sh -c "/wait && python /app"

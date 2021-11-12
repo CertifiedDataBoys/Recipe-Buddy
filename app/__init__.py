@@ -13,7 +13,6 @@ from .security.logins import login_manager
 from flask import Flask
 import os
 
-
 # Remove later!
 import sys
 try:
