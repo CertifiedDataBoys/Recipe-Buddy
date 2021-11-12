@@ -7,6 +7,10 @@ bp = Blueprint("api_v1_users", __name__)
 
 @bp.route("/api/v1.0.0/public/user/get_single_user")
 def get_single_user():
+    """
+        Create a blueprint to get a single user as a JSON file.
+        This takes in a user's uid (?uid=<...>) and/or username (username=<...>).
+    """
 
     key = request.args.get("uid")
     username = request.args.get("username")

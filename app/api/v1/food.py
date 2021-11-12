@@ -9,6 +9,10 @@ bp = Blueprint("api_v1_food", __name__)
 
 @bp.route("/api/v1.0.0/public/food/get_ingredient")
 def get_ingredient():
+    """
+        Create a blueprint to get a single ingredient as a JSON file.
+        This takes in an ingredient's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -25,6 +29,10 @@ def get_ingredient():
 
 @bp.route("/api/v1.0.0/public/food/get_kitchenware")
 def get_kitchenware():
+    """
+        Create a blueprint to get a single kitchenware item as a JSON file.
+        This takes in a kitchenware item's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 

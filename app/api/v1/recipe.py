@@ -13,6 +13,11 @@ bp = Blueprint("api_v1_recipes", __name__)
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe")
 def get_single_recipe():
+    """
+        Create a blueprint to get a single recipe as a JSON file.
+        This takes in a recipe's primary key (?pk=<...>).
+    """
+
 
     key = request.args.get("pk")
 
@@ -30,6 +35,10 @@ def get_single_recipe():
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_details")
 def get_single_recipe_details():
+    """
+        Create a blueprint to get a single recipe's details as a JSON file.
+        This takes in a recipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -40,26 +49,6 @@ def get_single_recipe_details():
         return jsonify({"error": True, "message": "No recipe key provided"})
 
 
-    # recipe_details_query = (
-    #     db.session.query(Recipe) \
-    #     .join(InstructionInRecipe, InstructionInRecipe.recipe_key == key) \
-    #     .join(IngredientInRecipe, IngredientInRecipe.recipe_key == key) \
-    #     .join(Ingredient, Ingredient.pk == IngredientInRecipe.ingredient_key) \
-    #     .join(KitchenwareInRecipe, KitchenwareInRecipe.recipe_key == key) \
-    #     .join(Kitchenware, Kitchenware.pk == KitchenwareInRecipe.kitchenware_key) \
-    #     .join(User, User.uid == Recipe.uploaded_by) \
-    #     .with_entities(
-    #         Recipe.title, Recipe.subtitle, Recipe.description, Recipe.uploaded,
-    #         InstructionInRecipe.instruction_number,
-    #         InstructionInRecipe.description, InstructionInRecipe.optional,
-    #         IngredientInRecipe.count, IngredientInRecipe.optional,
-    #         Ingredient.name, Ingredient.unit_of_measure, Ingredient.units_plural,
-    #         KitchenwareInRecipe.optional,
-    #         Kitchenware.name,
-    #         User.username
-    #     ) \
-    #     .filter(Recipe.pk == key)
-    # )
     recipe_details_query = (
         db.session.query(Recipe)
         .join(User, User.uid == Recipe.uploaded_by)
@@ -151,6 +140,22 @@ def get_single_recipe_details():
 
 @bp.route("/api/v1.0.0/public/recipe/get_recipes")
 def get_recipes():
+    """
+        Create a blueprint to multiple recipes as a JSON file.
+        This takes in a recipe's title (?title=<...>) and/or a
+        recipe's uploader (uploaded_by=<...>). Note that titles are
+        case sensitive and must match a recipe's title completely.<br>
+
+        <b>Examples:</b>
+
+        <tt>/api/v1.0.0/public/recipe/get_recipes?title=Lemon%20Macarons</tt>
+        gets all recipes with title="Lemon Macarons"<br>
+        <tt>/api/v1.0.0/public/recipe/get_recipes?uploaded_by=1</tt>
+        gets all recipes uploaded by the user with uid=1<br>
+        <tt>/api/v1.0.0/public/recipe/get_recipes?title=Lemon%20Macarons&uid=1</tt>
+        gets all recipes with title="Lemon Macarons" uploaded by the user with
+        uid=1.
+    """
 
     title = request.args.get("title")
     uploaded_by = request.args.get("uploaded_by")
@@ -178,6 +183,10 @@ def get_recipes():
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_instructions")
 def recipe_instructions():
+    """
+        Create a blueprint to get a single recipe's instructions as a JSON file.
+        This takes in a recipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -198,6 +207,10 @@ def recipe_instructions():
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_instruction")
 def single_recipe_instruction():
+    """
+        Create a blueprint to get a single instruction a JSON file.
+        This takes in an InstructionInRecipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -217,6 +230,10 @@ def single_recipe_instruction():
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_ingredients")
 def recipe_ingredients():
+    """
+        Create a blueprint to get a single recipe's ingredients as a JSON file.
+        This takes in a recipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -236,6 +253,10 @@ def recipe_ingredients():
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_ingredient")
 def single_recipe_ingredient():
+    """
+        Create a blueprint to get a single ingredient a JSON file.
+        This takes in an IngredientInRecipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -255,6 +276,10 @@ def single_recipe_ingredient():
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_kitchenware")
 def recipe_kitchenware():
+    """
+        Create a blueprint to get a single recipe's kitchenware as a JSON file.
+        This takes in a recipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
@@ -274,6 +299,10 @@ def recipe_kitchenware():
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_kitchenware")
 def single_recipe_kitchenware():
+    """
+        Create a blueprint to get a single kitchenware item a JSON file.
+        This takes in a KitchenwareInRecipe's primary key (?pk=<...>).
+    """
 
     key = request.args.get("pk")
 
