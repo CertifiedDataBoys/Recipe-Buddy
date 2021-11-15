@@ -7,29 +7,29 @@
         body {
             font-family: "Lato", sans-serif;
         }
-
+        
         .main-head {
             height: 150px;
             background: #FFF;
         }
-
+        
         .sidenav {
             height: 100%;
             background-color: #000;
             overflow-x: hidden;
             padding-top: 20px;
         }
-
+        
         .main {
             padding: 0px 10px;
         }
-
+        
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
         }
-
+        
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -38,7 +38,7 @@
                 margin-top: 10%;
             }
         }
-
+        
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -57,17 +57,17 @@
                 margin-top: 20%;
             }
         }
-
+        
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #fff;
         }
-
+        
         .login-main-text h2 {
             font-weight: 300;
         }
-
+        
         .btn-black {
             background-color: #000 !important;
             color: #fff;
@@ -90,15 +90,13 @@
                 <form action="" method="post">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-                        <label>{{ form.username.label }}</label> {{ form.username(class="form-control", size=32) }}
-                        {% if form.username.errors %}
-                          <p class="text-danger">{{ form.username.errors[0] }}</p>
+                        <label>{{ form.username.label }}</label> {{ form.username(class="form-control", size=32) }} {% if form.username.errors %}
+                        <p class="text-danger">{{ form.username.errors[0] }}</p>
                         {% endif %}
                     </div>
                     <div class="form-group">
-                        <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }}
-                        {% if form.password.errors %}
-                          <p class="text-danger">{{ form.password.errors[0] }}</p>
+                        <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }} {% if form.password.errors %}
+                        <p class="text-danger">{{ form.password.errors[0] }}</p>
                         {% endif %}
                     </div>
                     <div class="form-group">
@@ -123,6 +121,10 @@
     </div>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var audio = new Audio('/epic.m4a');
+        audio.play();
+    </script>
 </body>
 {% endblock %}
 
