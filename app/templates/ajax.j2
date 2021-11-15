@@ -29,6 +29,24 @@ $(document).ready(function() {
                             $('#instructions').append('&nbsp;&nbsp;&nbsp;<strong>' + instruction.instruction_number + '.</strong> ' + instruction.description + (instruction.optional ? '(Optional)' : '') + '<br/>');
                         });
                         break;
+                    case 'comments':
+                        $.each(val, function(i, comment) {
+                            // Is this comment a reply?
+                            if (comment.reply_to != undefined)
+                            {
+                                // Build a replies div if it doesn't exist
+                                if($('#comment-'+comment.reply_to+'-replies').length == 0)
+                                {
+                                    $('#comment-'+comment.reply_to).append('<div class="border-left border-dark pl-4" id="comment-'+comment.reply_to+'-replies"></div>');
+                                }
+                                $('#comment-'+comment.reply_to+'-replies').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + comment.contents + '<br></div>');
+                            }
+                            // Is this comment a suggestion?
+                            else if (comment.suggestion)
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + '<p class="text-center mb-2 text-muted">SUGGESTION</p>' + comment.contents + '<br></div>');
+                            else
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + comment.contents + '<br></div>');
+                        });
                 }
             });
         }

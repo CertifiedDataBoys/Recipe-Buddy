@@ -22,6 +22,7 @@ ALL_TABLES = (
     pantry.PantryIngredient,
     pantry.PantryKitchenware,
     interactions.RecipeRating,
+    interactions.RecipeComment,
     interactions.UserInteractionIngredient,
     interactions.UserInteractionKitchenware,
     interactions.UserInteractionRecipe,
@@ -36,6 +37,8 @@ DROP_ORDER = (
     interactions.UserInteractionRecipe,         # depends on user.User,
                                                 # food.Recipe
     interactions.RecipeRating,                  # depends on user.User,
+                                                # food.Recipe
+    interactions.RecipeComment,                 # depends on user.User,
                                                 # food.Recipe
 
     interactions.UserInteractionKitchenware,    # depends on user.User,
