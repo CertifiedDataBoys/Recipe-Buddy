@@ -39,15 +39,26 @@ $(document).ready(function() {
                                 {
                                     $('#comment-'+comment.reply_to).append('<div class="border-left border-dark pl-4" id="comment-'+comment.reply_to+'-replies"></div>');
                                 }
-                                $('#comment-'+comment.reply_to+'-replies').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + comment.contents + '<br></div>');
+                                $('#comment-'+comment.reply_to+'-replies').append('<div id="comment-' + comment.pk + '"><div id = "comment-'+comment.pk+'-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><div id = "comment-'+comment.pk+'-contents"></div><br></div>');
                             }
                             // Is this comment a suggestion?
                             else if (comment.suggestion)
-                                $('#comments').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + '<p class="text-center mb-2 text-muted">SUGGESTION</p>' + comment.contents + '<br></div>');
+                            {
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-'+comment.pk+'-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><p class="text-center mb-2 text-muted">SUGGESTION</p><div id = "comment-'+comment.pk+'-contents"></div><br></div>');
+                            }
                             else
-                                $('#comments').append('<div id="comment-' + comment.pk + '"><strong>' + comment.user.username + '</strong> <small>' + comment.uploaded + '</small><br>' + comment.contents + '<br></div>');
+                            {
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-'+comment.pk+'-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><div id = "comment-'+comment.pk+'-contents"></div><br></div>');
+                            }
+                            // Display our username and comment contents
+                            $(document.createTextNode(
+                                comment.user.username
+                            )).appendTo('#comment-'+comment.pk+'-username');
+                            $(document.createTextNode(
+                                comment.contents
+                            )).appendTo('#comment-'+comment.pk+'-contents');
                         });
-                }
+                    }
             });
         }
     });

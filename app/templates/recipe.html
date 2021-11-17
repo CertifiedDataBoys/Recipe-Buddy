@@ -36,7 +36,31 @@
                         <hr>
                         <h4 class="card-title text-center">Comments</h4>
                         <p class="card-text">
-                            <div id="comments"></div>
+                            {% if not current_user.is_anonymous %}
+                                <form action="" method="post">
+                                    {{ form.hidden_tag() }}
+                                    <div class="py-1 row justify-content-center">
+                                        <div class="input-group mb-3">
+                                            <!--
+                                            <textarea class="form-control" id="comment-textarea"
+                                            rows="6" placeholder="Write your comment here. . ."
+                                            maxlength="1024"
+                                            style="resize:none;"></textarea>
+                                            -->
+                                            {{ form.contents(
+                                                class="form-control", rows="6",
+                                                placeholder="Write your comment here. . .",
+                                                maxlength="1024",
+                                                style="resize:none;"
+                                            ) }}
+                                            <div class="input-group-prepend">
+                                                <button type="submit" class="btn btn-black">Post comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% endif %}
+                            <div class="py-2 column" id="comments"></div>
                         </p>
                     </div>
                 </div>
