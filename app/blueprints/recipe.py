@@ -5,8 +5,8 @@ from flask import (
 from flask_login import current_user
 from ..forms import CommentForm
 import json
-import urllib.request
 import os
+import urllib.request
 
 
 port = os.getenv('PORT') or "5000"
