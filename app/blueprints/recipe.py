@@ -26,11 +26,16 @@ def recipe(pk="0"):
 
     if comment_form.validate_on_submit():
 
+        # Sanitize contents
+        contents = comment_form.contents.data
+        contents = contents.replace("\r\n", "\n")
+        contents = contents.replace("\r", "\n")
+
         comment_request = {
             "uid": current_user.uid,
             "recipe_key": pk,
             "reply_to": None,
-            "contents": comment_form.contents.data,
+            "contents": contents,
             "suggestion": False
         }
 

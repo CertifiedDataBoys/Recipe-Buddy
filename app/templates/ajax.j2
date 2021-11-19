@@ -55,7 +55,8 @@ $(document).ready(function() {
                                 comment.user.username
                             )).appendTo('#comment-'+comment.pk+'-username');
                             $(document.createTextNode(
-                                comment.contents.replace(/\n\n\n+/g, '\n\n').trim()
+                                comment.contents.replace(/\n\n\n+/g, '\n\n')
+                                    .trim()
                             )).appendTo('#comment-'+comment.pk+'-contents');
                         });
                     }
