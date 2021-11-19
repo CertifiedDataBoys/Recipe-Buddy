@@ -1,6 +1,7 @@
 from ..models import (
     ALL_TABLES, DROP_ORDER,
-    User, Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
+    User, UserProfile,
+    Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
     Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment
 )
 from datetime import datetime
@@ -175,6 +176,11 @@ def create_db_test_data(app, db):
                           suggestion=False)
         ]
 
+        user_profiles = [
+            UserProfile(uid=1, favorite_recipe=1, has_profile_photo=False),
+            UserProfile(uid=2, favorite_recipe=1, has_profile_photo=False)
+        ]
+
         db.session.add_all(users)
         db.session.commit()
 
@@ -188,4 +194,5 @@ def create_db_test_data(app, db):
         db.session.add(kitchenware_in_recipe)
         db.session.add(rating)
         db.session.add_all(comments)
+        db.session.add_all(user_profiles)
         db.session.commit()
