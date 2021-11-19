@@ -9,7 +9,8 @@ bp = Blueprint("api_v1_users", __name__)
 def get_single_user():
     """
         Create a blueprint to get a single user as a JSON file.
-        This takes in a user's uid (?uid=<...>) and/or username (username=<...>).
+        This takes in a user's uid (?uid=<...>) and/or username
+        (username=<...>).
     """
 
     key = request.args.get("uid")
@@ -19,11 +20,11 @@ def get_single_user():
     # error handling --- improve later
     if not key and not username:
 
-        return jsonify([])
+        return jsonify(user = [])
 
 
-    query = User.query \
-        .with_entities(User.uid, User.username)
+    query = db.session.query(User) \
+            .join(UserProfile, UserProfile.uid == User.uid)
 
 
     if key:
@@ -33,6 +34,11 @@ def get_single_user():
     if username:
 
         query = query.filter(User.username == username)
+
+    query = query.with_entities(
+        User.uid, User.username, User.verified,
+        UserProfile.favorite_recipe, UserProfile.has_profile_photo
+    )
 
 
     u = query.first()
@@ -44,4 +50,12 @@ def get_single_user():
         return jsonify(user = [])
 
 
-    return jsonify(user = {"uid": u.uid, "username": u.username})
+    return jsonify(user =
+        {
+            "uid": u.uid,
+            "username": u.username,
+            "verified": u.verified,
+            "favorite_recipe": u.favorite_recipe,
+            "has_profile_photo": u.has_profile_photo
+        }
+    )
