@@ -92,12 +92,17 @@ def post_recipe_comment():
 
     comment = request.json
 
+    # Sanitize contents
+    contents = comment["contents"]
+    contents = contents.replace("\r\n", "\n")
+    contents = contents.replace("\r", "\n")
+
     db.session.add(
         RecipeComment(
             uid=comment["uid"],
             recipe_key=comment["recipe_key"],
             reply_to=comment["reply_to"],
-            contents=comment["contents"],
+            contents=contents,
             uploaded=datetime.now(),
             suggestion=comment["suggestion"]
         )
