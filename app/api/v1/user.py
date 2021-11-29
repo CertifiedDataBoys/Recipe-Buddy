@@ -59,3 +59,68 @@ def get_single_user():
             "has_profile_photo": u.has_profile_photo
         }
     )
+
+
+@bp.route("/api/v1.0.0/public/user/get_user_profile_photo")
+def get_user_profile_photo():
+    """
+        Return the URL to a user's profile photo.
+        If the user does not have a profile photo, return the URL
+        or the default profile photo.
+        This takes in a user's uid (?uid=<...>) and/or username
+        (username=<...>).
+    """
+
+    key = request.args.get("uid")
+    username = request.args.get("username")
+
+
+    # error handling --- improve later
+    if not key and not username:
+
+        return jsonify(user = [])
+
+
+    query = db.session.query(User) \
+            .join(UserProfile, UserProfile.uid == User.uid)
+
+
+    if key:
+
+        query = query.filter(User.uid == key)
+
+    if username:
+
+        query = query.filter(User.username == username)
+
+    query = query.with_entities(
+        User.uid,
+        UserProfile.has_profile_photo
+    )
+
+
+    u = query.first()
+
+
+    # nothing found
+    if not u:
+
+        return jsonify(user = [])
+
+
+    profile_photo_url = ""
+
+    # something found
+    if u.has_profile_photo:
+
+        profile_photo_url = "/res/profile_photos/{0}.png".format(u.uid)
+
+    else:
+
+        profile_photo_url = "/res/profile_photos/default.png"
+
+    return jsonify(user = {
+        "uid": u.uid,
+        "has_profile_photo": u.has_profile_photo,
+        "profile_photo_url": profile_photo_url
+    })
