@@ -4,3 +4,4 @@ __pycache__/
 docs/
 diagrams/
 .env
+app/public/res/profile_photos/[0-9].png
