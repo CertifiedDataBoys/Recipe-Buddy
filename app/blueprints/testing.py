@@ -1,4 +1,5 @@
 from flask import abort, Blueprint, render_template, request
+from ..forms import ImageUploadForm
 
 
 bp = Blueprint("testing", __name__)
@@ -29,3 +30,11 @@ def err_page():
         abort(int(err))
     except (LookupError, ValueError):
         abort(400)
+
+
+@bp.route("/testing/upload_profile_photo")
+def upload_profile_photo():
+
+    form = ImageUploadForm()
+
+    return render_template("testing_image_uploads.html", form=form)
