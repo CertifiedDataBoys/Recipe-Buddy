@@ -37,6 +37,10 @@ def create_app():
     def send_public(path):
         return send_from_directory('public', path)
 
+    @app.route('/<path:path>')
+    def send_profile_photos(path):
+        return send_from_directory('/data/profile_photos', path)
+
     @app.shell_context_processor
     def make_shell_context():
         return {'db': db, 'ALL_BLUEPRINTS': ALL_BLUEPRINTS}

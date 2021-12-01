@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from ...models import db, User, UserProfile
 from werkzeug.utils import secure_filename
-
+import os
 
 bp = Blueprint("api_v1_users", __name__)
 
@@ -18,16 +18,13 @@ def get_single_user():
     key = request.args.get("uid")
     username = request.args.get("username")
 
-
     # error handling --- improve later
     if not key and not username:
 
-        return jsonify(user = [])
-
+        return jsonify(user=[])
 
     query = db.session.query(User) \
             .join(UserProfile, UserProfile.uid == User.uid)
-
 
     if key:
 
@@ -42,18 +39,14 @@ def get_single_user():
         UserProfile.favorite_recipe, UserProfile.has_profile_photo
     )
 
-
     u = query.first()
-
 
     # nothing found
     if not u:
 
-        return jsonify(user = [])
+        return jsonify(user=[])
 
-
-    return jsonify(user =
-        {
+    return jsonify(user={
             "uid": u.uid,
             "username": u.username,
             "verified": u.verified,
@@ -76,16 +69,13 @@ def get_user_profile_photo():
     key = request.args.get("uid")
     username = request.args.get("username")
 
-
     # error handling --- improve later
     if not key and not username:
 
-        return jsonify(user = [])
-
+        return jsonify(user=[])
 
     query = db.session.query(User) \
             .join(UserProfile, UserProfile.uid == User.uid)
-
 
     if key:
 
@@ -100,15 +90,12 @@ def get_user_profile_photo():
         UserProfile.has_profile_photo
     )
 
-
     u = query.first()
-
 
     # nothing found
     if not u:
 
-        return jsonify(user = [])
-
+        return jsonify(user=[])
 
     profile_photo_url = ""
 
@@ -121,7 +108,7 @@ def get_user_profile_photo():
 
         profile_photo_url = "/res/profile_photos/default.png"
 
-    return jsonify(user = {
+    return jsonify(user={
         "uid": u.uid,
         "has_profile_photo": u.has_profile_photo,
         "profile_photo_url": profile_photo_url
@@ -133,7 +120,7 @@ def upload_user_profile_photo():
 
     # Is this user not logged in?
     if not current_user.is_authenticated:
-        return jsonify(user = [])
+        return jsonify(user=[])
 
     if request.method == "POST":
 
@@ -153,7 +140,7 @@ def upload_user_profile_photo():
         print(request.files, file=sys.stderr)
         if "image_field" not in request.files:
 
-            return jsonify(user = {
+            return jsonify(user={
                 "uid": u.uid,
                 "username": u.username,
                 "has_profile_photo": u.has_profile_photo,
@@ -165,7 +152,7 @@ def upload_user_profile_photo():
         # No filename
         if file.filename == "":
 
-            return jsonify(user = {
+            return jsonify(user={
                 "uid": u.uid,
                 "username": u.username,
                 "has_profile_photo": u.has_profile_photo,
@@ -176,17 +163,24 @@ def upload_user_profile_photo():
         if file and "." in file.filename \
                 and file.filename.rsplit('.', 1)[1].lower() == "png":
 
+
+            # Check whether the specified path exists or not
+            if not os.path.exists("/data/profile_photos/"):
+                # Create a new directory because it does not exist
+                os.makedirs("/data/profile_photos/")
+
             final_filename = uid + ".png"
-            file.save("./public/res/profile_photos/" + final_filename)
+            file.save("/data/profile_photos/" + final_filename)
 
             user = User.query.filter(User.uid == uid).first()
 
-            user_profile = UserProfile.query.filter(UserProfile.uid == uid).first()
+            user_profile = UserProfile.query.filter(
+                UserProfile.uid == uid).first()
             user_profile.has_profile_photo = True
 
             db.session.commit()
 
-            return jsonify(user = {
+            return jsonify(user={
                 "uid": user.uid,
                 "username": user.username,
                 "has_profile_photo": user_profile.has_profile_photo,
