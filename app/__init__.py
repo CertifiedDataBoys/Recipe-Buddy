@@ -37,7 +37,7 @@ def create_app():
     def send_public(path):
         return send_from_directory('public', path)
 
-    @app.route('/<path:path>')
+    @app.route('/profile-photos/<path:path>')
     def send_profile_photos(path):
         return send_from_directory('/data/profile_photos', path)
 
