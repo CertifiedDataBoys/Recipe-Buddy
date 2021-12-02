@@ -30,8 +30,8 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       # Set the password of the MariaDB instance
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      # Set Flask to use development mode
-      FLASK_ENV: development
+      # Set Flask to use production mode
+      FLASK_ENV: production
       # Set Flask app path
       FLASK_APP: .
       # Set the secret key
@@ -45,8 +45,6 @@ services:
       WAIT_HOST_CONNECT_TIMEOUT: 30
     # Define volumes (directories) that our container will use
     volumes:
-      # Mount the host directory "data/recipe_buddy" to "/data" in the container
-      - ./data/recipe_buddy:/data
       # Mount the project host directory to "/usr/src" in the container
       - ./app:/app
     # Use the network created at the bottom of the file to connect our Recipe Buddy container to the MariaDB container
