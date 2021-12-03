@@ -21,9 +21,6 @@
                         Upload image
                     </div>
                     <div class="card-body" id="recipe-body">
-                        <!--form action="{{ url_for('api_v1_users.upload_user_profile_photo') }}" method="post" enctype="multipart/form-data">
-                            {{ form.hidden_tag() }} {{ form.image_field }} {{ form.submit }}
-                        </form-->
                         <input id="image_field" name="image_field" required="" type="file">
                         <button id="upload_button" class="btn btn-primary" onclick="upload_image();">Upload</button>
                     </div>
