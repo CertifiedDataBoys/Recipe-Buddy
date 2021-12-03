@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from ...models import db, User, UserProfile
 from werkzeug.utils import secure_filename
+import os
 import base64
 
 bp = Blueprint("api_v1_users", __name__)
@@ -117,84 +118,56 @@ def get_user_profile_photo():
 
 @bp.route("/api/v1.0.0/public/user/upload_user_profile_photo", methods=['GET', 'POST'])
 def upload_user_profile_photo():
-
-    # base64 = request.json["profile_image"]
-
     # Is this user not logged in?
-    # if not current_user.is_authenticated:
-    #     return jsonify(user=[])
+    if not current_user.is_authenticated:
+        return jsonify(user=[])
 
-    # if request.method == "POST":
+    if request.method == "POST":
 
-    #     uid = current_user.get_id()
+        uid = current_user.get_id()
 
-    #     query = db.session.query(User) \
-    #             .join(UserProfile, UserProfile.uid == User.uid) \
-    #             .filter(User.uid == uid) \
-    #             .with_entities(
-    #                 User.uid, User.username,
-    #                 UserProfile.has_profile_photo
-    #             )
-    #     u = query.first()
+        query = db.session.query(User) \
+                .join(UserProfile, UserProfile.uid == User.uid) \
+                .filter(User.uid == uid) \
+                .with_entities(
+                    User.uid, User.username,
+                    UserProfile.has_profile_photo
+                )
+        u = query.first()
 
-    #     # No file uploaded
-    #     import sys
-    #     print(request.files, file=sys.stderr)
-    #     if "image_field" not in request.files:
+        # No file uploaded
+        if "profile_image" not in request.json:
 
-    #         return jsonify(user={
-    #             "uid": u.uid,
-    #             "username": u.username,
-    #             "has_profile_photo": u.has_profile_photo,
-    #             "upload_successful": False
-    #         })
+            return jsonify(user={
+                "uid": u.uid,
+                "username": u.username,
+                "has_profile_photo": u.has_profile_photo,
+                "upload_successful": False
+            })
 
-    #     file = request.files["image_field"]
+        # Check whether the specified path exists or not
+        if not os.path.exists("/data/profile_photos/"):
+            # Create a new directory because it does not exist
+            os.makedirs("/data/profile_photos/")
 
-    #     # No filename
-    #     if file.filename == "":
+        if request.json["profile_image"].startswith("data:image/png;base64,"):
+            request.json["profile_image"] = request.json["profile_image"][22:]
+        imgdata = base64.b64decode(request.json["profile_image"])
+        with open("/data/profile_photos/" + uid + ".png", 'wb') as f:
+            f.write(imgdata)
 
-    #         return jsonify(user={
-    #             "uid": u.uid,
-    #             "username": u.username,
-    #             "has_profile_photo": u.has_profile_photo,
-    #             "upload_successful": False
-    #         })
+        user = User.query.filter(User.uid == uid).first()
 
-    #     # File given, filename is good
-    #     if file and "." in file.filename \
-    #             and file.filename.rsplit('.', 1)[1].lower() == "png":
+        user_profile = UserProfile.query.filter(
+            UserProfile.uid == uid).first()
+        user_profile.has_profile_photo = True
 
+        db.session.commit()
 
-    #         # Check whether the specified path exists or not
-    #         if not os.path.exists("/data/profile_photos/"):
-    #             # Create a new directory because it does not exist
-    #             os.makedirs("/data/profile_photos/")
+        return jsonify(user={
+            "uid": user.uid,
+            "username": user.username,
+            "has_profile_photo": user_profile.has_profile_photo,
+            "upload_successful": True
+        })
 
-    #         final_filename = uid + ".png"
-    #         file.save("/data/profile_photos/" + final_filename)
-
-    #         user = User.query.filter(User.uid == uid).first()
-
-    #         user_profile = UserProfile.query.filter(
-    #             UserProfile.uid == uid).first()
-    #         user_profile.has_profile_photo = True
-
-    #         db.session.commit()
-
-    #         return jsonify(user={
-    #             "uid": user.uid,
-    #             "username": user.username,
-    #             "has_profile_photo": user_profile.has_profile_photo,
-    #             "upload_successful": True
-    #         })
-
-    #     # Something wen wrong
-    #     else:
-
-    #         return jsonify(user = {
-    #             "uid": u.uid,
-    #             "username": u.username,
-    #             "has_profile_photo": u.has_profile_photo,
-    #             "upload_successful": False
-    #         })
