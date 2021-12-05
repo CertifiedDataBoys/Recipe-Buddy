@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main page left bar</title>
     <!--link rel="icon" type="image/png" href="/favicon.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -10,6 +11,7 @@
     <style>
         #topBar {
             height: 10%;
+            position: fixed;
         }
         .sidebar {
             float: left;
@@ -17,6 +19,7 @@
             height: 90%;
             position: fixed; /* Stay in place */
             left: 0;
+            top: 10%;
             background-color: white;
             overflow-x: hidden; /* Disable horizontal scroll */
             padding-top: 20px;
@@ -53,45 +56,114 @@
         #main {
             margin-left: 18%;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div id="topBar">
-                <p>Topbar goes here . . .</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="sidebar">
-                    <div class="sideBarCategory"><p>Filter by Type</p></div>
-                    <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
-                    <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
-                    <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
-                    <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
-                    <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
-                    <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
-                    <div class="sidebarBreakLine"></div>
-                    <div class="sideBarCategory"><p>Filter by Kitchenware</p></div>
-                    <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
-                    <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
-                    <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
-                    <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
-                    <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
-                    <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
-                    <div class="sidebarBreakLine"></div>
+    <div id="topBar">
+        <p>Topbar goes here . . .</p>
+    </div>
+    <div class="sidebar">
+        <div class="sideBarCategory"><p>Filter by Type</p></div>
+        <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
+        <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
+        <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
+        <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
+        <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
+        <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
+        <div class="sidebarBreakLine"></div>
+        <div class="sideBarCategory"><p>Filter by Kitchenware</p></div>
+        <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
+        <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
+        <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
+        <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
+        <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
+        <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
+        <div class="sidebarBreakLine"></div>
+    </div>
+    <div id="main">
+        <div class="container-fluid py-4">
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <h2>Trending :)</h2>
                 </div>
             </div>
-            <div class="col">
-                <div id="main">
-                    <p>Main content goes here</p>
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <div class="display-card card w-500 shadow-sm border-0">
+                        <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                        <div class="card-body" id="recipe-body">
+                            <h4 class="card-title text-center" id="recipe_title">No Horse Meat Burger</h4>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="container-fluid">
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-md-10">
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Half chewed gum</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Yummy hot dog vodka #3</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <h2>Recommended for you</h2>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <div class="display-card card w-500 shadow-sm border-0">
+                        <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                        <div class="card-body" id="recipe-body">
+                            <h4 class="card-title text-center" id="recipe_title">Horse Meat Burger</h4>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="container-fluid">
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-md-10">
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Pickle juice</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Burnt pizza</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>
