@@ -1,31 +1,102 @@
 <!doctype html>
 
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" integrity="sha512-zxBiDORGDEAYDdKLuYU9X/JaJo/DPzE42UubfBw9yg8Qvb2YRRIQ8v4KsGHOx2H1/+sdSXyXxLXv5r7tHc9ygg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
     <title>Home</title>
     <style>
         body {
+			margin: 0%;
+			color: white;
+			background: #111111;
             font-family: "Lato", sans-serif;
         }
+		.navbar { 
+			border: 0;
+			border-radius: 0;
+			background: linear-gradient(to right, #fcba03, #fc9003);
+			
+			.nav li > a, .navbar-brand{
+				max-height: 75px;
+				width: auto;
+				background: transparent !important;
+				font-size: 24px
+				transition: 0.2s ease-in-out
+				
+				&:hover{
+					background-color: rgba(255,255,255,0.2);
+					font-size: 18px;
+					
+					.link{
+						width: 100%;
+						padding: 0 5px 0 5px;
+						visibility: visible
+						font-size: 14px
+					}
+				}
+			}
+			.d-flex button {
+				background-color: orange;
+				color: #111111
+			}
+		}
+		.orange .active .a,
+		.orange .active .a:hover {
+			background-color: #fcba03;
+		}
+		.nav-link .active {
+			color: #fcba03;
+		}
+		.search-btn {
+			background-color: #fc9003;
+			color: black;
+			border: 1px solid black
+		}
+
     </style>
 </head>
 
 <body>
-    <div class="main">
-	    <ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link active" href="#!">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#!">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#!">Disabled</a>
-  </li>
-</ul>
-	</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Recipe Buddy</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Profile</a>
+				</li>
+				<li class="navbar-item active">
+					<a class="nav-link" href='#'>New Recipe</a>
+				</li>
+			</ul>
+			<div class="col-md-10">
+				<div class="d-flex form-inputs"> 
+					<input class="form-control" type="text" placeholder="Search Recipes">
+					    <i class="bx bx-search"></i>
+						<button class="search-btn btn my-2 my-sm-0" type="submit">Search</button>
+				    </input>
+				</div>
+			</div>
+			<!--<div class="col-md-12">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</div>
+			<!--<div class="col-md-8">
+				<div class="d-flex form-inputs">
+					<form class="form-inline my-2 my-lg-0">
+						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> <i class="bx bx-search"></i>
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					</form>
+				</div>
+			</div> -->
+		</div>
+	</nav>
 </body>
 
 </html>
