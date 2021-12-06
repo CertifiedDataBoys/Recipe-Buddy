@@ -79,7 +79,6 @@ def create_db_test_data(app, db):
                         The SQLAlchemy object we use to connect to our database
     """
 
-
     with app.app_context():
 
         users = [
