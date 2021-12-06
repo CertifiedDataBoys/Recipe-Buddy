@@ -1,94 +1,249 @@
 <!doctype html>
+<html>
 
 <head>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" integrity="sha512-zxBiDORGDEAYDdKLuYU9X/JaJo/DPzE42UubfBw9yg8Qvb2YRRIQ8v4KsGHOx2H1/+sdSXyXxLXv5r7tHc9ygg==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <title>Home</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main page left bar</title>
+    <!--link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"-->
     <style>
-        body {
-			margin: 0%;
-			color: white;
-			background: #111111;
-            font-family: "Lato", sans-serif;
+        .navbar {
+            z-index: 1;
+            position: sticky;
+            top: 0px;
+            border: 0;
+            border-radius: 0;
+            background: linear-gradient(to right, #fcba03, #fc9003);
+            .nav li>a,
+            .navbar-brand {
+                max-height: 75px;
+                width: auto;
+                background: transparent !important;
+                font-size: 24px transition: 0.2s ease-in-out &:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    font-size: 18px;
+                    .link {
+                        width: 100%;
+                        padding: 0 5px 0 5px;
+                        visibility: visible font-size: 14px
+                    }
+                }
+            }
+            .d-flex button {
+                background-color: orange;
+                color: #111111
+            }
         }
-		.navbar { 
-			border: 0;
-			border-radius: 0;
-			background: linear-gradient(to right, #fcba03, #fc9003);
-			
-			.nav li > a, .navbar-brand{
-				max-height: 75px;
-				width: auto;
-				background: transparent !important;
-				font-size: 24px
-				transition: 0.2s ease-in-out
-				
-				&:hover{
-					background-color: rgba(255,255,255,0.2);
-					font-size: 18px;
-					
-					.link{
-						width: 100%;
-						padding: 0 5px 0 5px;
-						visibility: visible
-						font-size: 14px
-					}
-				}
-			}
-			.d-flex button {
-				background-color: orange;
-				color: #111111
-			}
-		}
-		.orange .active .a,
-		.orange .active .a:hover {
-			background-color: #fcba03;
-		}
-		.nav-link .active {
-			color: #fcba03;
-		}
-		.search-btn {
-			background-color: #fc9003;
-			color: black;
-			border: 1px solid black
-		}
-
+        
+        .orange .active .a,
+        .orange .active .a:hover {
+            background-color: #fcba03;
+        }
+        
+        .nav-link .active {
+            color: #fcba03;
+        }
+        
+        .search-btn {
+            background-color: #fc9003;
+            color: black;
+            border: 1px solid black
+        }
+        
+        #topBar {
+            height: 10%;
+            position: fixed;
+        }
+        
+        .sidebar {
+            float: left;
+            width: 18%;
+            height: 90%;
+            position: fixed;
+            /* Stay in place */
+            left: 0;
+            top: 10%;
+            background-color: white;
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            padding-top: 20px;
+            border-style: none solid none none;
+            border-width: 2px;
+            border-color: darkgrey;
+        }
+        
+        .sidebar a {
+            padding: 8px 8px 8px 4px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+        
+        .sideBarCategory {
+            font-size: 24px;
+            color: black;
+            text-align: center;
+        }
+        
+        .sideBarButton {
+            font-size: 14px;
+            color: blue;
+            text-align: center;
+        }
+        
+        .sideBarButton:hover {
+            font-size: 20px;
+            color: lightblue;
+        }
+        
+        .sidebarBreakLine {
+            border-style: none none solid none;
+            border-width: 2px;
+            border-color: darkgrey;
+            padding-top: 20px;
+        }
+        
+        #main {
+            margin-left: 18%;
+        }
     </style>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Recipe Buddy</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Recipe Buddy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="navbar-item active">
+                    <a class="nav-link" href='#'>New Recipe</a>
+                </li>
+            </ul>
+            <div class="col-md-10">
+                <div class="d-flex form-inputs">
+                    <input class="form-control" type="text" placeholder="Search Recipes">
+                    <i class="bx bx-search"></i>
+                    <button class="search-btn btn my-2 my-sm-0" type="submit">Search</button>
+                    </input>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="sidebar">
+        <div class="sideBarCategory">
+            <p>Filter by Type</p>
+        </div>
+        <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
+        <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
+        <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
+        <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
+        <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
+        <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
+        <div class="sidebarBreakLine"></div>
+        <div class="sideBarCategory">
+            <p>Filter by Kitchenware</p>
+        </div>
+        <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
+        <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
+        <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
+        <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
+        <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
+        <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
+        <div class="sidebarBreakLine"></div>
+    </div>
+    <div id="main">
+        <div class="container-fluid py-4">
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <h2>Trending :)</h2>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <div class="display-card card w-500 shadow-sm border-0">
+                        <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                        <div class="card-body" id="recipe-body">
+                            <h4 class="card-title text-center" id="recipe_title">No Horse Meat Burger</h4>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="container-fluid">
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-md-10">
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Half chewed gum</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Yummy hot dog vodka #3</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Profile</a>
-				</li>
-				<li class="navbar-item active">
-					<a class="nav-link" href='#'>New Recipe</a>
-				</li>
-			</ul>
-			<div class="col-md-10">
-				<div class="d-flex form-inputs"> 
-					<input class="form-control" type="text" placeholder="Search Recipes">
-					    <i class="bx bx-search"></i>
-						<button class="search-btn btn my-2 my-sm-0" type="submit">Search</button>
-				    </input>
-				</div>
-			</div>
-		</div>
-	</nav>
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <h2>Recommended for you</h2>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <div class="display-card card w-500 shadow-sm border-0">
+                        <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                        <div class="card-body" id="recipe-body">
+                            <h4 class="card-title text-center" id="recipe_title">Horse Meat Burger</h4>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="container-fluid">
+                        <div class="row mt-4">
+                            <div class="col-lg-10 col-md-10">
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Pickle juice</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="display-card card w-500 shadow-sm border-0">
+                                    <img class="display-card-img card-img-top" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg">
+                                    <div class="card-body" id="recipe-body">
+                                        <h4 class="card-title text-center" id="recipe_title">Burnt pizza</h4>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

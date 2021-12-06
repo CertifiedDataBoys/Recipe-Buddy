@@ -36,13 +36,6 @@ def upload_profile_photo():
 
     return render_template("testing_image_uploads.html")
 
-
-@bp.route("/testing/main-page-left-bar")
-def main_page_left_bar():
-
-    return render_template("main-page-left-bar.html")
-
-
 @bp.route("/testing/main_boy")
 def main_boy():
 
