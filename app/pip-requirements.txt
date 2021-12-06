@@ -5,3 +5,4 @@ Flask-WTF==0.15.1
 email-validator==1.1.3
 mariadb==1.0.7
 pdoc==8.0.0
+jinja-partials==0.1.0

@@ -11,6 +11,7 @@ from .errors import ALL_ERROR_HANDLERS
 from .models import *
 from .security.logins import login_manager
 from flask import Flask
+import jinja_partials
 import os
 
 
@@ -32,6 +33,8 @@ def create_app():
     """
 
     app = Flask(__name__)
+
+    jinja_partials.register_extensions(app)
 
     @app.route('/<path:path>')
     def send_public(path):
