@@ -41,3 +41,9 @@ def upload_profile_photo():
 def main_page_left_bar():
 
     return render_template("main-page-left-bar.html")
+
+
+@bp.route("/testing/main_boy")
+def main_boy():
+
+    return render_template("main_page.html")
