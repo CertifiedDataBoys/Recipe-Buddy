@@ -346,3 +346,16 @@ def single_recipe_kitchenware():
 
 
     return jsonify(kitchenware = query.first())
+
+@bp.route("/api/v1.0.0/public/recipe/search_recipes")
+def search_recipes():
+    """
+        Create a blueprint to search for recipes as a JSON file.
+    """
+    query = request.args.get("query")
+
+    if not query:
+        return jsonify([])
+    else:
+        query = query.lower()
+        return jsonify(recipes = Recipe.query.filter(Recipe.title.like("%" + query + "%")).all())
