@@ -39,4 +39,4 @@ def upload_profile_photo():
 @bp.route("/testing/main_boy")
 def main_boy():
 
-    return render_template("main_page.html")
+    return render_template("index.html")
