@@ -12,6 +12,35 @@
     $(".search-btn").on("click", function() {
         searchQuery();
     });
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+    $(document).ready(function() {
+        if (getUrlParameter("q")) {
+            $("#recipe-search").val(getUrlParameter("q"));
+            $("#search-term").html(getUrlParameter("q"));
+            $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + getUrlParameter("q"), function(data) {
+                var recipes = data.recipes;
+                var html = "";
+                for (var i = 0; i < recipes.length; i++) {
+                    html += "<div class='col-md-4'><div class='card'><div class='card-body'><h5 class='card-title'>" + recipes[i].title + "</h5><p class='card-text'>" + recipes[i].description + "</p><a href='/recipe/" + recipes[i].id + "' class='btn btn-primary'>View Recipe</a></div></div></div>";
+                }
+                $("#search-results").html(html);
+            });
+        }
+    });
 </script>
 </body>
 

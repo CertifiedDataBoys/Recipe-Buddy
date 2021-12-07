@@ -12,3 +12,9 @@ def index():
     """
     return render_template("index.html", user=current_user)
 
+@bp.route("/search")
+def recipe_search():
+    """
+        Create a blueprint to display a search page.
+    """
+    return render_template("search.html", user=current_user)
