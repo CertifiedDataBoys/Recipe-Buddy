@@ -28,6 +28,7 @@
         return false;
     };
     $(document).ready(function() {
+        // Search page
         if (getUrlParameter("q")) {
             $("#recipe-search").val(getUrlParameter("q"));
             $("#search-term").html(getUrlParameter("q"));
