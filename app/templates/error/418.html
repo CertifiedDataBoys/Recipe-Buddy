@@ -1,10 +1,7 @@
-{% extends "error/error_template.html" %}
-
-{% block err_title %}Error 418{% endblock %}
-{% block err_subtitle %}I'm a little teapot, short and stout!{% endblock %}
-
-{% block err_img %}
-    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/418.jpg">
-{% endblock %}
-
-{% block err_text %}I'm not a coffee pot!{% endblock %}
+{{ render_partial('partials/header.html') }}
+<div id="main">
+    <div class="container">
+        <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/418.jpg"><br>I'm not a coffee pot!
+    </div>
+</div>
+{{ render_partial('partials/footer.html') }}

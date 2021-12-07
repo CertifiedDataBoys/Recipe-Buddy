@@ -1,10 +1,7 @@
-{% extends "error/error_template.html" %}
-
-{% block err_title %}Error 404{% endblock %}
-{% block err_subtitle %}Page not found!{% endblock %}
-
-{% block err_img %}
-    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/404.jpg">
-{% endblock %}
-
-{% block err_text %}The page you are looking for is missing.{% endblock %}
+{{ render_partial('partials/header.html') }}
+<div id="main">
+    <div class="container">
+        <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/404.jpg"><br> The page you are looking for is missing.
+    </div>
+</div>
+{{ render_partial('partials/footer.html') }}

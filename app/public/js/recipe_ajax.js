@@ -53,6 +53,12 @@ $(document).ready(function() {
                                 .trim()
                             )).appendTo('#comment-' + comment.pk + '-contents');
                         });
+                        break;
+                    case 'media':
+                        $.each(val, function(i, media) {
+                            media.is_video ? $('#media-container').append('<iframe width="420" height="315" src="https://www.youtube.com/embed/' + media.media_link + '"></iframe>') : $('#media-container').append('<div class="col-sm-4"><img class="img-fluid" src="' + media.media_link + '"></div>');
+                        });
+                        break;
                 }
             });
         }

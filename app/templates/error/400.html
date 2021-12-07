@@ -1,10 +1,7 @@
-{% extends "error/error_template.html" %}
-
-{% block err_title %}Error 400{% endblock %}
-{% block err_subtitle %}Bad request!{% endblock %}
-
-{% block err_img %}
-    <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/400.jpg">
-{% endblock %}
-
-{% block err_text %}Your request cannot be fufilled due to an error in syntax.{% endblock %}
+{{ render_partial('partials/header.html') }}
+<div id="main">
+    <div class="container">
+        <img class="card-img shadow-lg border border-primary" style="width:50%" src="/res/400.jpg"><br> Your request cannot be fufilled due to an error in syntax.
+    </div>
+</div>
+{{ render_partial('partials/footer.html') }}
