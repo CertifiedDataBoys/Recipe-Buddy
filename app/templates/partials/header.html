@@ -43,6 +43,10 @@
                 background-color: orange;
                 color: #111111
             }
+            .d-flex dropdown-menu {
+                background-color: orange;
+                color: #111111
+            }
         }
         
         .orange .active .a,
@@ -116,6 +120,10 @@
         #main {
             margin-left: 18%;
         }
+        
+        .navbar-light .navbar-nav .nav-link {
+            color: #000000 !important;
+        }
     </style>
 </head>
 
@@ -127,18 +135,22 @@
             </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item dropdown">
+                    {% if not current_user.is_anonymous %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                      </a> {% endif %} {% if current_user.is_anonymous %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                          </a> {% endif %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if not current_user.is_anonymous %}
+                        <a class="dropdown-item" href="/profile">Profile Page</a>
+                        <a class="dropdown-item" href="/logout">Logout</a> {% endif %} {% if current_user.is_anonymous %}
+                        <a class="dropdown-item" href="/login">Login</a>
+                        <a class="dropdown-item" href="/register">Register</a> {% endif %}
+                    </div>
                 </li>
-                {% if not current_user.is_anonymous %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
-                {% endif %} {% if current_user.is_anonymous %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="/login">Login/Register</a>
-                </li>
-                {% endif %}
                 <li class="navbar-item active">
                     <a class="nav-link" href='/new_recipe'>New Recipe</a>
                 </li>
