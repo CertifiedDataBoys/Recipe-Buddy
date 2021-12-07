@@ -2,7 +2,8 @@ from ..models import (
     ALL_TABLES, DROP_ORDER,
     User, UserProfile,
     Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
-    Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment
+    Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment,
+    MediaInRecipe
 )
 from datetime import datetime
 import hashlib
@@ -103,9 +104,16 @@ def create_db_test_data(app, db):
             Ingredient(pk=5, name="Garnish 🌸")
         ]
         kitchenware = Kitchenware(pk=1, name="Knife")
-        kitchenware_in_recipe = KitchenwareInRecipe(
-            pk=1, kitchenware_key=1, recipe_key=1, optional=False
-        )
+        kitchenware_in_recipe = [
+            KitchenwareInRecipe(pk=1, kitchenware_key=1,
+                                recipe_key=1, optional=False),
+            KitchenwareInRecipe(pk=2, kitchenware_key=1,
+                                recipe_key=2, optional=True),
+            KitchenwareInRecipe(pk=3, kitchenware_key=1,
+                                recipe_key=3, optional=False),
+            KitchenwareInRecipe(pk=4, kitchenware_key=1,
+                                recipe_key=4, optional=False),
+        ]
         recipes = [
             Recipe(pk=1, title="BLT 🥪",
                    subtitle="Bacon lettuce & tomato sandwich",
@@ -213,6 +221,23 @@ def create_db_test_data(app, db):
                           uploaded=datetime.now(),
                           suggestion=False)
         ]
+        media_in_recipe = [
+            MediaInRecipe(pk=1, recipe_key=1,
+                          media_link="NAh9oLs67Cw",
+                          is_video=True),
+            MediaInRecipe(pk=2, recipe_key=1,
+                          media_link="https://i.imgur.com/KSDywdy.jpeg",
+                          is_video=False),
+            MediaInRecipe(pk=3, recipe_key=2,
+                          media_link="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg/800px-An_image_of_a_toast_sandwich%2C_shot_from_the_side.jpg",
+                          is_video=False),
+            MediaInRecipe(pk=4, recipe_key=3,
+                          media_link="https://i.imgur.com/2YvUswr.png",
+                          is_video=False),
+            MediaInRecipe(pk=5, recipe_key=4,
+                          media_link="GhTjEk9nr3Q",
+                          is_video=True)
+        ]
 
         user_profiles = [
             UserProfile(uid=1, favorite_recipe=1, has_profile_photo=False),
@@ -229,7 +254,8 @@ def create_db_test_data(app, db):
 
         db.session.add_all(instructions)
         db.session.add_all(ingredients_in_recipe)
-        db.session.add(kitchenware_in_recipe)
+        db.session.add_all(kitchenware_in_recipe)
+        db.session.add_all(media_in_recipe)
         db.session.add(rating)
         db.session.add_all(comments)
         db.session.add_all(user_profiles)

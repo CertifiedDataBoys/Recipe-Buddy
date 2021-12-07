@@ -17,6 +17,7 @@ ALL_TABLES = (
     food.InstructionInRecipe,
     food.IngredientInRecipe,
     food.KitchenwareInRecipe,
+    food.MediaInRecipe,
     user.User,
     user.UserProfile,
     pantry.PantryIngredient,
@@ -57,6 +58,7 @@ DROP_ORDER = (
                                                 # food.Kitchenware
 
     food.InstructionInRecipe,                   # depends on food.Recipe
+    food.MediaInRecipe,                         # depends on food.Recipe
 
     interactions.UserInteractionSearch,         # depends on user.User
     interactions.UserInteractionProfile,        # depends on user.User
