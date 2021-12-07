@@ -186,7 +186,7 @@ def create_db_test_data(app, db):
                                 instruction_number=1,
                                 optional=False),
             InstructionInRecipe(pk=10, recipe_key=4,
-                                description="Help"*25,
+                                description="DROP DATABASE recipebuddy;",
                                 instruction_number=1,
                                 optional=False),
         ]
