@@ -35,7 +35,7 @@
                 var recipes = data.recipes;
                 var html = "";
                 for (var i = 0; i < recipes.length; i++) {
-                    html += "<div class='col-md-4'><div class='card'><div class='card-body'><h5 class='card-title'>" + recipes[i].title + "</h5><p class='card-text'>" + recipes[i].description + "</p><a href='/recipe/" + recipes[i].id + "' class='btn btn-primary'>View Recipe</a></div></div></div>";
+                    html += "<div class='col-md-4'><div class='card'><div class='card-body'><h5 class='card-title'>" + recipes[i].title + "</h5><p class='card-text'>" + recipes[i].description + "</p><a href='/recipe/" + recipes[i].pk + "' class='btn btn-primary'>View Recipe</a></div></div></div>";
                 }
                 $("#search-results").html(html);
             });
