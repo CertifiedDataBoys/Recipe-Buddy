@@ -156,7 +156,7 @@ class IngredientInRecipe(db.Model):
 @dataclass
 class KitchenwareInRecipe(db.Model):
     """
-        This model represents the ingredients that go into a recipe. It links
+        This model represents the kitchenware that go into a recipe. It links
         kitchenware to recipes using their primary keys.
 
         Attributes:
@@ -182,3 +182,34 @@ class KitchenwareInRecipe(db.Model):
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                            nullable=False)
     optional = db.Column(db.Boolean, nullable=False)
+
+@dataclass
+class MediaInRecipe(db.Model):
+    """
+        This model represents the media on a recipe's page. It links
+        media to recipes using the media_link string.
+
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            recipe_key (db.Integer):
+                        The primary key of a given recipe
+            media_link (db.String):
+                        A link to some given media. Can be a direct link to an
+                        image or a youtube embed code. Can be up to 512
+                        characters long
+            is_video (db.Boolean):
+                        Boolean representing if this media is a youtube video or
+                        not
+    """
+
+    pk: int
+    recipe_key: int
+    media_link: str
+    is_video: bool
+
+    pk = db.Column(db.Integer, primary_key=True)
+    recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
+                           nullable=False)
+    media_link = db.Column(db.String(512), nullable=False)
+    is_video = db.Column(db.Boolean, nullable=False)
