@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from ...models import (
     db,
     Recipe,
-    InstructionInRecipe, IngredientInRecipe, KitchenwareInRecipe,
+    InstructionInRecipe, IngredientInRecipe, KitchenwareInRecipe, MediaInRecipe,
     Ingredient, Kitchenware,
     RecipeComment,
     User
@@ -111,6 +111,16 @@ def get_single_recipe_details():
     )
     recipe_comments = recipe_comment_query.all()
 
+    recipe_media_query = (
+        db.session.query(MediaInRecipe)
+        .join(Recipe, Recipe.pk == MediaInRecipe.recipe_key)
+        .with_entities(
+            MediaInRecipe.pk, MediaInRecipe.media_link, MediaInRecipe.is_video
+        )
+        .filter(MediaInRecipe.recipe_key == key)
+    )
+    recipe_media = recipe_media_query.all()
+
     recipe_dict = {
         "title": recipe_details.title,
         "subtitle": recipe_details.subtitle,
@@ -160,6 +170,14 @@ def get_single_recipe_details():
                 }
             }
             for comment in recipe_comments
+        ],
+        "media": [
+            {
+                "pk": media.pk,
+                "media_link": media.media_link,
+                "is_video": media.is_video
+            }
+            for media in recipe_media
         ]
     }
 
