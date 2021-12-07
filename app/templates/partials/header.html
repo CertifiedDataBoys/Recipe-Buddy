@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipe Buddy</title>
-    <!--link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"-->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <style>
+<<<<<<< HEAD
         body{
 			background-color: #262927;
 			color: white;
@@ -20,6 +21,13 @@
 			background-color: #262927;
 		}
 
+=======
+        body {
+            /*background-color: black;*/
+            overflow-x: hidden;
+        }
+        
+>>>>>>> bef714aa92beeed86fbdaf7bd848b7f771b3a3ee
         .navbar {
             z-index: 1;
             position: sticky;
@@ -46,28 +54,32 @@
                 background-color: orange;
                 color: #111111
             }
+            .d-flex dropdown-menu {
+                background-color: orange;
+                color: #111111
+            }
         }
-
+        
         .orange .active .a,
         .orange .active .a:hover {
             background-color: #fcba03;
         }
-
+        
         .nav-link .active {
             color: #fcba03;
         }
-
+        
         .search-btn {
             background-color: #fc9003;
             color: black;
             border: 1px solid black
         }
-
+        
         #topBar {
             height: 10%;
             position: fixed;
         }
-
+        
         .sidebar {
             float: left;
             width: 18%;
@@ -84,7 +96,7 @@
             border-width: 2px;
             border-color: darkgrey;
         }
-
+        
         .sidebar a {
             padding: 8px 8px 8px 4px;
             text-decoration: none;
@@ -92,27 +104,27 @@
             display: block;
             transition: 0.3s;
         }
-
+        
         .sideBarCategory {
             font-size: 24px;
             color: white;
 			background-color: #262927;
             text-align: center;
         }
-
+        
         .sideBarButton {
             font-size: 14px;
 			background-color: #262927;
             color: #fcba03;
             text-align: center;
         }
-
+        
         .sideBarButton:hover {
             font-size: 20px;
 			background-color: #262927;
             color: #fc9003;
         }
-
+        
         .sidebarBreakLine {
             border-style: none none solid none;
             border-width: 2px;
@@ -120,34 +132,48 @@
             border-color: darkgrey;
             padding-top: 20px;
         }
-
+        
         #main {
             margin-left: 18%;
+        }
+        
+        .navbar-light .navbar-nav .nav-link {
+            color: #000000 !important;
         }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Recipe Buddy</a>
+        <a class="navbar-brand" href="/">Recipe Buddy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Profile</a>
+                <li class="nav-item dropdown">
+                    {% if not current_user.is_anonymous %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                      </a> {% endif %} {% if current_user.is_anonymous %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                          </a> {% endif %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if not current_user.is_anonymous %}
+                        <a class="dropdown-item" href="/profile">Profile Page</a>
+                        <a class="dropdown-item" href="/logout">Logout</a> {% endif %} {% if current_user.is_anonymous %}
+                        <a class="dropdown-item" href="/login">Login</a>
+                        <a class="dropdown-item" href="/register">Register</a> {% endif %}
+                    </div>
                 </li>
                 <li class="navbar-item active">
-                    <a class="nav-link" href='#'>New Recipe</a>
+                    <a class="nav-link" href='/new_recipe'>New Recipe</a>
                 </li>
             </ul>
             <div class="col-md-10">
                 <div class="d-flex form-inputs">
-                    <input class="form-control" type="text" placeholder="Search Recipes">
+                    <input id="recipe-search" class="form-control" type="text" placeholder="Search Recipes">
                     <i class="bx bx-search"></i>
                     <button class="search-btn btn my-2 my-sm-0" type="submit">Search</button>
                     </input>

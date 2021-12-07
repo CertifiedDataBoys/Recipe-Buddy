@@ -106,10 +106,24 @@ def create_db_test_data(app, db):
         kitchenware_in_recipe = KitchenwareInRecipe(
             pk=1, kitchenware_key=1, recipe_key=1, optional=False
         )
-        recipe = Recipe(pk=1, title="BLT 🥪",
-                        subtitle="Bacon lettuce & tomato sandwich",
-                        description="MM...FOOD\nYummy BLT!",
-                        uploaded=datetime.now(), uploaded_by=1)
+        recipes = [
+            Recipe(pk=1, title="BLT 🥪",
+                   subtitle="Bacon lettuce & tomato sandwich",
+                   description="MM...FOOD\nYummy BLT!",
+                   uploaded=datetime.now(), uploaded_by=1),
+            Recipe(pk=2, title="Bread sandwich",
+                   subtitle="Traditional British bread sandwich",
+                   description="Enjoy this traditional British lunch sandwich!",
+                   uploaded=datetime.now(), uploaded_by=2),
+            Recipe(pk=3, title="Salad",
+                   subtitle="Gross",
+                   description="I hate salad",
+                   uploaded=datetime.now(), uploaded_by=1),
+            Recipe(pk=4, title="Help me",
+                   subtitle="I need help immediately",
+                   description="This is a cry for help.",
+                   uploaded=datetime.now(), uploaded_by=1)
+        ]
         ingredients_in_recipe = [
             IngredientInRecipe(pk=1, ingredient_key=1, recipe_key=1,
                                optional=False, count=2),
@@ -120,7 +134,15 @@ def create_db_test_data(app, db):
             IngredientInRecipe(pk=4, ingredient_key=4, recipe_key=1,
                                optional=False, count=1),
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
-                               optional=True)
+                               optional=True),
+            IngredientInRecipe(pk=6, ingredient_key=1, recipe_key=2,
+                               optional=False),
+            IngredientInRecipe(pk=7, ingredient_key=3, recipe_key=3,
+                               optional=False),
+            IngredientInRecipe(pk=8, ingredient_key=4, recipe_key=3,
+                               optional=False),
+            IngredientInRecipe(pk=9, ingredient_key=2, recipe_key=4,
+                               optional=False)
         ]
         instructions = [
             InstructionInRecipe(pk=1, recipe_key=1,
@@ -150,6 +172,22 @@ def create_db_test_data(app, db):
             InstructionInRecipe(pk=6, recipe_key=1,
                                 description="Enjoy!",
                                 instruction_number=6,
+                                optional=False),
+            InstructionInRecipe(pk=7, recipe_key=2,
+                                description="Bread sandwich lol!",
+                                instruction_number=1,
+                                optional=False),
+            InstructionInRecipe(pk=8, recipe_key=2,
+                                description="Consume.",
+                                instruction_number=2,
+                                optional=False),
+            InstructionInRecipe(pk=9, recipe_key=3,
+                                description="Seriously who eats salad lol",
+                                instruction_number=1,
+                                optional=False),
+            InstructionInRecipe(pk=10, recipe_key=4,
+                                description="DROP DATABASE recipebuddy;",
+                                instruction_number=1,
                                 optional=False),
         ]
         rating = RecipeRating(pk=1, uid=1, recipe_key=1, rating=4.5)
@@ -186,7 +224,7 @@ def create_db_test_data(app, db):
 
         db.session.add_all(ingredients)
         db.session.add(kitchenware)
-        db.session.add(recipe)
+        db.session.add_all(recipes)
         db.session.commit()
 
         db.session.add_all(instructions)

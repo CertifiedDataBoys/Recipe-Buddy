@@ -1,88 +1,76 @@
-<!doctype html>
-
-<head>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Recipe</title>
-    <!--link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"-->
-	<style>
-		
-	</style>
-</head>
-
-{% block content %}
-
-<body>
-    <div class="py-5 d-flex justify-content-center">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="card w-50 shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        Favorite recipe 🍴
-                    </div>
-                    <div class="card-body" id="recipe-body">
-                        <h4 class="card-title text-center" id="recipe_title"></h4>
-                        <h6 class="card-subtitle text-muted text-center mb-2">
-                            Uploaded on: <i><span id="uploaded"></span></i>
-                        </h6>
-                        <h6 class="card-subtitle text-muted text-center mb-2">
-                            Uploaded by: <b><span id="username"></span></b>
-                        </h6>
-                        <p class="card-text">
-                            <div id="ingredients"></div>
-                        </p>
-                        <hr>
-                        <p class="card-text">
-                            <div id="instructions"></div>
-                        </p>
-                        <hr>
-                        <h4 class="card-title text-center">Comments</h4>
-                        <p class="card-text">
-                            {% if not current_user.is_anonymous %}
-                            <form action="" method="post">
-                                {{ form.hidden_tag() }}
-                                <div class="py-1 row justify-content-center">
-                                    <div class="input-group mb-3">
-                                        <!--
-                                            <textarea class="form-control" id="comment-textarea"
-                                            rows="6" placeholder="Write your comment here. . ."
-                                            maxlength="1024"
-                                            style="resize:none;"></textarea>
-                                            -->
-                                        {{ form.contents( class="form-control", rows="6", placeholder="Write your comment here. . .", maxlength="1024", style="resize:none;" ) }}
-                                        <div class="input-group-prepend">
-                                            <button type="submit" class="btn btn-black">Post comment</button>
-                                        </div>
+{{ render_partial('partials/header.html') }}
+<!--div class="sidebar">
+    <div class="sideBarCategory">
+        <p>Filter by Type</p>
+    </div>
+    <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
+    <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
+    <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
+    <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
+    <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
+    <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
+    <div class="sidebarBreakLine"></div>
+    <div class="sideBarCategory">
+        <p>Filter by Kitchenware</p>
+    </div>
+    <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
+    <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
+    <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
+    <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
+    <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
+    <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
+    <div class="sidebarBreakLine"></div>
+</div-->
+<div id="main">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card w-50 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Favorite recipe 🍴
+                </div>
+                <div class="card-body" id="recipe-body">
+                    <h4 class="card-title text-center" id="recipe_title"></h4>
+                    <h6 class="card-subtitle text-muted text-center mb-2">
+                        Uploaded on: <i><span id="uploaded"></span></i>
+                    </h6>
+                    <h6 class="card-subtitle text-muted text-center mb-2">
+                        Uploaded by: <b><span id="username"></span></b>
+                    </h6>
+                    <p class="card-text">
+                        <div id="ingredients"></div>
+                    </p>
+                    <hr>
+                    <p class="card-text">
+                        <div id="instructions"></div>
+                    </p>
+                    <hr>
+                    <h4 class="card-title text-center">Comments</h4>
+                    <p class="card-text">
+                        {% if not current_user.is_anonymous %}
+                        <form action="" method="post">
+                            {{ form.hidden_tag() }}
+                            <div class="py-1 row justify-content-center">
+                                <div class="input-group mb-3">
+                                    <!--
+                                        <textarea class="form-control" id="comment-textarea"
+                                        rows="6" placeholder="Write your comment here. . ."
+                                        maxlength="1024"
+                                        style="resize:none;"></textarea>
+                                        -->
+                                    {{ form.contents( class="form-control", rows="6", placeholder="Write your comment here. . .", maxlength="1024", style="resize:none;" ) }}
+                                    <div class="input-group-prepend">
+                                        <button type="submit" class="btn btn-black">Post comment</button>
                                     </div>
                                 </div>
-                            </form>
-                            {% endif %}
-                            <div class="py-2 column" id="comments"></div>
-                        </p>
-                    </div>
+                            </div>
+                        </form>
+                        {% endif %}
+                        <div class="py-2 column" id="comments"></div>
+                    </p>
                 </div>
-            </div>
-            <div class="py-5 row justify-content-center">
-                {% if current_user.is_anonymous %}
-                <a href="{{ url_for('login.login') }}">
-                    <button type="button" class="btn btn-primary">
-                        Login
-                    </button>
-                </a>
-                {% else %}
-                <a href="{{ url_for('login.logout') }}">
-                    <button type="button" class="btn btn-primary">
-                        Logout
-                    </button>
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="/api/v1.0.0/public/ajax.js?page=recipe&pk={{pk}}"></script>
-</body>
-{% endblock %}
-
-</html>
+</div>
+<script src="/js/recipe_ajax.js"></script>
+{{ render_partial('partials/footer.html') }}

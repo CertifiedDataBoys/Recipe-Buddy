@@ -352,7 +352,7 @@ def search_recipes():
     """
         Create a blueprint to search for recipes as a JSON file.
     """
-    query = request.args.get("query")
+    query = request.args.get("q")
 
     if not query:
         return jsonify([])

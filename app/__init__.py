@@ -93,10 +93,10 @@ def create_app():
     # create_db_tables(app, db)
     # Comment / uncomment the following line to remove test data in our SQL
     # database
-    # delete_db_entries(app, db)
+    delete_db_entries(app, db)
     # Comment / uncomment the following line to create test data in our SQL
     # database
-    # create_db_test_data(app, db)
+    create_db_test_data(app, db)
 
     # Initialize our login manager
     login_manager.init_app(app)
