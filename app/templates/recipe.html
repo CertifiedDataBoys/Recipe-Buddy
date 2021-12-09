@@ -36,6 +36,10 @@
                     <p class="card-subtitle text-muted text-center mb-2" style="color: white !important;">
                         <span id="recipe_description"></span>
                     </p>
+
+                    <p class="card-subtitle text-muted text-center mb-2" style="color: white !important;">
+                        <span id="recipe_type"></div>
+                    </p>
                     <hr>
                     <h6 class="card-subtitle text-muted text-center mb-2" style="color: white !important;">
                         Uploaded on: <i><span id="uploaded"></span></i>
@@ -100,6 +104,9 @@
                             break;
                         case 'description':
                             $('#recipe_description').html(val);
+                            break;
+                        case 'type':
+                            $('#recipe_type').html("Type: <b>" + val + "</b>");
                             break;
                         case 'user':
                             $('#username').html(val.username);
