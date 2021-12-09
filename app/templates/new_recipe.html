@@ -82,7 +82,6 @@
         <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script>
     const ingredientExamples = [{
         "quantity": "3",
@@ -253,7 +252,6 @@
     }
 
     function submitRecipe() {
-        $.LoadingOverlay("show");
         var formValidity = formValid();
         if (formValidity.valid) {
             var recipe = {
@@ -305,7 +303,6 @@
                 }
             });
         } else {
-            $.LoadingOverlay("hide");
             alert(formValidity.msg);
         }
     }
