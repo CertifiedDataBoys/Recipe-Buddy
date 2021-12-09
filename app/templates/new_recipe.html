@@ -35,13 +35,11 @@
             <option value="Vegan">Vegan</option>
         </select><br>
         <label for="recipeKitchenware">Recipe Kitchenware</label><br>
-        <select id="recipeKitchenware" name="recipeKitchenware">
-            <option value="Air Fryer">Air Fryer</option>
-            <option value="Electric Mixer">Electric Mixer</option>
-            <option value="Food Processor">Food Processor</option>
-            <option value="Immersion Blender">Immersion Blender</option>
-            <option value="Wok">Wok</option>
-        </select><br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Air Fryer">Air Fryer<br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Electric Mixer">Electric Mixer<br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Food Processor">Food Processor<br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Immersion Blender">Immersion Blender<br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Wok">Wok<br>
         <label for="recipeDescription">Recipe Description</label><br>
         <textarea id="recipeDescription" name="recipeDescription" placeholder="mmmmmyes french frIEs!"></textarea><br>
         <label for="recipeIngredients">Recipe Ingredients</label><br>
@@ -50,12 +48,10 @@
         <textarea id="recipeInstructions" name="recipeInstructions" placeholder="🔪"></textarea><br>
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
-            <select class="recipeKitchenware">
-                <option value="youtubeVideo">Video</option>
-                <option value="imageLink">Image</option>
-            </select>
+            Image 1:
+            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br> Image 2:
+            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br> Video 1:
             <input type="text" class="recipeMedia" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-            <button>+</button>
         </div>
 
         <button id="submitRecipe">Submit Recipe</button>
