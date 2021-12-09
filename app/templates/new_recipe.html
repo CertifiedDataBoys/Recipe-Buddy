@@ -29,8 +29,11 @@
         <label for="recipeName">Recipe Name</label><br>
         <input type="text" id="recipeName" name="recipeName"><br><br>
 
-        <label for="recipeDescription">Recipe Subtitle</label><br>
-        <input type="text" id="recipeDescription" name="recipeDescription"><br><br>
+        <label for="recipeSubtitle">Recipe Subtitle</label><br>
+        <input type="text" id="recipeSubtitle" name="recipeSubtitle"><br><br>
+
+        <label for="recipeDescription">Recipe Description</label><br>
+        <textarea id="recipeDescription" name="recipeDescription" rows="10" cols="50"></textarea><br><br>
 
         <label for="recipeType">Recipe Type</label><br>
         <select id="recipeType" name="recipeType">
@@ -42,25 +45,26 @@
         </select><br><br>
 
         <label for="recipeKitchenware">Recipe Kitchenware</label><br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Air Fryer">Air Fryer<br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Electric Mixer">Electric Mixer<br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Food Processor">Food Processor<br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Immersion Blender">Immersion Blender<br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Wok">Wok<br><br>
+        <input type="checkbox" id="recipeKitchenwareAirFryer" name="recipeKitchenware" value="Air Fryer">Air Fryer<br>
+        <input type="checkbox" id="recipeKitchenwareElectricMixer" name="recipeKitchenware" value="Electric Mixer">Electric Mixer<br>
+        <input type="checkbox" id="recipeKitchenwareFoodProcessor" name="recipeKitchenware" value="Food Processor">Food Processor<br>
+        <input type="checkbox" id="recipeKitchenwareImmersionBlender" name="recipeKitchenware" value="Immersion Blender">Immersion Blender<br>
+        <input type="checkbox" id="recipeKitchenwareWok" name="recipeKitchenware" value="Wok">Wok<br><br>
 
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
             <div class="recipe-ingredient-div" id="recipe-ingredient-1">
-                <input type="text" id="recipe-ingredient-quantity-1"><input type="text" id="recipe-ingredient-ingredient-1"><input type="text" id="recipe-ingredient-units-1"><input type="checkbox" id="ingredient-1-optional"> Optional?<br>
+                <input type="text" class="recipe-ingredient-quantity" id="recipe-ingredient-quantity-1"><input type="text" class="recipe-ingredient-ingredient" id="recipe-ingredient-ingredient-1"><input type="text" class="recipe-ingredient-units" id="recipe-ingredient-units-1">
+                <input type="checkbox" class="recipe-ingredient-optional" id="ingredient-1-optional"> Optional?<br>
             </div>
         </div>
-        <button onclick="addIngredient()">Add ingredient field</button><br><br>
+        <button onclick="addIngredient();">Add ingredient field</button><br><br>
 
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <div id="recipeInstructionSelector">
-            <input type="text" id="recipeInstructions" name="recipeInstructions" placeholder="Instruction 1"><input type="checkbox" id="instruction-1-optional"> Optional?<br>
+            <input type="text" id="recipeInstructions" name="recipeInstructions" placeholder="Instruction 1" class="recipe-instruction"><input type="checkbox" id="instruction-1-optional" class="recipe-instruction-optional"> Optional?<br>
         </div>
-        <button onclick="addInstruction()">Add instruction field</button><br><br>
+        <button onclick="addInstruction();">Add instruction field</button><br><br>
 
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
@@ -72,9 +76,9 @@
                 <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
             </div>
         </div>
-        <button onclick="addMedia()">Add media field</button>
+        <button onclick="addMedia();">Add media field</button>
         <br><br>
-        <button id="submitRecipe">Submit Recipe</button>
+        <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
     </div>
 </div>
 <script>
@@ -116,7 +120,7 @@
 
         $.getJSON("/api/v1.0.0./public/recipe/get_random?quantity=1", function(data) {
             $("#recipeName").attr("placeholder", data.recipes[0].title);
-            $("#recipeDescription").attr("placeholder", data.recipes[0].subtitle);
+            $("#recipeSubtitle").attr("placeholder", data.recipes[0].subtitle);
         });
     });
 
@@ -145,7 +149,7 @@
         const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
         var html = `
             <div class="recipe-ingredient-div" id="recipe-ingredient-` + count.ingredient + `">
-                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional"> Optional?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
+                <input type="text" placeholder="` + thisIngredient.quantity + `" class="recipe-ingredient-quantity"><input type="text" placeholder="` + thisIngredient.ingredient + `" class="recipe-ingredient-ingredient"><input type="text" placeholder="` + thisIngredient.units + `" class="recipe-ingredient-units"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional" class="recipe-ingredient-optional">Optional?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeIngredientSelector").append(html);
@@ -155,10 +159,61 @@
         count.instruction++;
         var html = `
             <div class="recipe-instruction-div" id="recipe-instruction-` + count.instruction + `">
-                <input type="text" placeholder="Instruction ` + count.instruction + `"><input type="checkbox" id="instruction-` + count.instruction + `-optional"> Optional?<button onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
+                <input type="text" placeholder="Instruction ` + count.instruction + `" class="recipe-instruction"><input type="checkbox" id="instruction-` + count.instruction + `-optional" class="recipe-instruction-optional"> Optional?<button onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeInstructionSelector").append(html);
+    }
+
+    function submitRecipe() {
+        var recipe = {
+            "title": $("#recipeName").val(),
+            "subtitle": $("#recipeSubtitle").val(),
+            "description": $("#recipeDescription").val(),
+            "ingredients": [],
+            "instructions": [],
+            "media": []
+        };
+
+        for (var i = 0; i < $(".recipe-ingredient-quantity").length; i++) {
+            var ingredient = {
+                "count": $(".recipe-ingredient-quantity")[i].value,
+                "ingredient": $(".recipe-ingredient-ingredient")[i].value,
+                "units": $(".recipe-ingredient-units")[i].value,
+                "optional": $(".recipe-ingredient-optional")[i].checked
+            };
+            recipe.ingredients.push(ingredient);
+        }
+
+        for (var i = 0; i < $(".recipe-instruction").length; i++) {
+            var instruction = {
+                "description": $(".recipe-instruction")[i].value,
+                "optional": $(".recipe-instruction-optional")[i].checked,
+                "instruction_number": i + 1
+            };
+            recipe.instructions.push(instruction);
+        }
+
+        for (var i = 0; i < $(".recipeMedia").length; i++) {
+            var media = {
+                "is_video": $("#recipeType")[i].value == "video",
+                "media_link": $(".recipeMedia")[i].value
+            };
+            recipe.media.push(media);
+        }
+
+        $.ajax({
+            url: "/api/v1.0.0/public/recipe/upload_recipe",
+            type: "POST",
+            data: JSON.stringify({
+                recipe: recipe
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+            }
+        });
     }
 </script>
 {{ render_partial('partials/footer.html') }}
