@@ -153,7 +153,7 @@ def create_db_test_data(app, db):
                    uploaded=datetime.now(), uploaded_by=1),
             Recipe(pk=5, title="Popcorn Tea",
                    subtitle="Also known as Genmaicha Tea",
-                   description="A popular type of Japanese Tea, Popcorn Tea is genamicha tea (green tea with popped brown rice) brewed with popcorn!",
+                   description="A popular type of Japanese Tea, Popcorn Tea is genmaicha tea (green tea with popped brown rice) brewed with popcorn!",
                    type="Drink",
                    uploaded=datetime.now(), uploaded_by=2)
         ]
