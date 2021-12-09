@@ -1,0 +1,12 @@
+{{ render_partial('partials/header.html') }}
+<div id="main">
+    <div class="container">
+        <h1>Profile</h1>
+        <hr> {% if current_user.is_anonymous %}
+        <p>User is not currently logged in</p>
+        {% else %}
+        <p>User is currently logged in</p>
+        {% endif %}
+    </div>
+</div>
+{{ render_partial('partials/footer.html') }}

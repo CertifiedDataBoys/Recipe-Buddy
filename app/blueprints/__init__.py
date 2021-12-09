@@ -1,7 +1,7 @@
 """
     This module is where our Flask blueprints reside.
 """
-from . import index, login, search, new_recipe, register, teapot, recipe, testing
+from . import index, login, search, new_recipe, register, teapot, recipe, testing, profile
 
 ALL_BLUEPRINTS = (
     index.bp,
@@ -11,5 +11,6 @@ ALL_BLUEPRINTS = (
     register.bp,
     teapot.bp,
     recipe.bp,
-    testing.bp
+    testing.bp,
+    profile.bp
 )
