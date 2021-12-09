@@ -9,29 +9,29 @@
             background-color: #262927;
             color: white;
         }
-
+        
         .main-head {
             height: 150px;
             background: #FFF;
         }
-
+        
         .sidenav {
             height: 100%;
             background: linear-gradient(to right, #fcba03, #fc9003);
             overflow-x: hidden;
             padding-top: 20px;
         }
-
+        
         .main {
             padding: 0px 10px;
         }
-
+        
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
         }
-
+        
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -40,7 +40,7 @@
                 margin-top: 10%;
             }
         }
-
+        
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -59,22 +59,22 @@
                 margin-top: 20%;
             }
         }
-
+        
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #000;
         }
-
+        
         .login-main-text h2 {
             font-weight: 300;
         }
-
+        
         .btn-black {
             background: linear-gradient(to right, #fcba03, #fc9003) !important;
             color: #000;
         }
-
+        
         .restriction-color {
             color: red;
         }
@@ -96,7 +96,7 @@
                 <form action="" method="post">
                     {{ form.hidden_tag() }}
                     <div style="width: 200%;">
-                        <div style="width: 50%; height: 100px; float: left;">
+                        <div style="width: 50%; height: 100px; float: left; padding-right: 2vw;">
                             <div class="form-group">
                                 <label>{{ form.username.label }}</label> {{ form.username(class="form-control", size=32) }} {% if form.username.errors %}
                                 <p class="text-danger">{{ form.username.errors[0] }}</p>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div style="width: 200%;">
-                        <div style="width: 50%; height: 100px; float: left;">
+                        <div style="width: 50%; height: 100px; float: left; padding-right: 2vw;">
                             <div class="form-group">
                                 <label>{{ form.email.label }}</label> {{ form.email(class="form-control", size=32) }} {% if form.email.errors %}
                                 <p class="text-danger">{{ form.email.errors[0] }}</p>
@@ -132,7 +132,7 @@
                         {% endif %}
                     </div>
                     <div style="width: 200%;">
-                        <div style="width: 50%; height: 100px; float: left;">
+                        <div style="width: 50%; height: 100px; float: left; padding-right: 2vw;">
                             <div class="form-group">
                                 <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }} {% if form.password.errors %}
                                 <p class="text-danger">{{ form.password.errors[0] }}</p>
