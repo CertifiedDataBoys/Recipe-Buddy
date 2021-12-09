@@ -25,7 +25,8 @@
     <div class="container">
         <h1>New Recipe</h1>
         <label for="recipeName">Recipe Name</label><br>
-        <input type="text" id="recipeName" name="recipeName" placeholder="Soggy Sodexo French Fries"><br>
+        <input type="text" id="recipeName" name="recipeName" placeholder="Soggy Sodexo French Fries"><br><br>
+
         <label for="recipeType">Recipe Type</label><br>
         <select id="recipeType" name="recipeType">
             <option value="BBQ">BBQ</option>
@@ -33,24 +34,32 @@
             <option value="Roasts">Roasts</option>
             <option value="Seafood">Seafood</option>
             <option value="Vegan">Vegan</option>
-        </select><br>
+        </select><br><br>
+
         <label for="recipeKitchenware">Recipe Kitchenware</label><br>
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Air Fryer">Air Fryer<br>
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Electric Mixer">Electric Mixer<br>
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Food Processor">Food Processor<br>
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Immersion Blender">Immersion Blender<br>
-        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Wok">Wok<br>
+        <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Wok">Wok<br><br>
+
         <label for="recipeDescription">Recipe Description</label><br>
-        <textarea id="recipeDescription" name="recipeDescription" placeholder="mmmmmyes french frIEs!"></textarea><br>
+        <textarea id="recipeDescription" name="recipeDescription" placeholder="mmmmmyes french frIEs!"></textarea><br><br>
+
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
             <div class="recipe-ingredient-div" id="recipe-ingredient-1">
                 <input type="text" placeholder="1"><input type="text" placeholder="Lettuce"><input type="text" placeholder="Head"><br>
             </div>
         </div>
-        <button onclick="addIngredient()">Add ingredient field</button><br>
+        <button onclick="addIngredient()">Add ingredient field</button><br><br>
+
         <label for="recipeInstructions">Recipe Instructions</label><br>
-        <textarea id="recipeInstructions" name="recipeInstructions" placeholder="🔪"></textarea><br>
+        <div id="recipeInstructionSelector">
+            <input type="text" id="recipeInstructions" name="recipeInstructions" placeholder="Instruction 1"><br>
+        </div>
+        <button onclick="addInstruction()">Add instruction field</button><br><br>
+
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
             <div class="recipe-media-div" id="recipe-media-1">
@@ -67,8 +76,38 @@
     </div>
 </div>
 <script>
+    const ingredientExamples = [{
+        "quantity": "3",
+        "ingredient": "Lettuce",
+        "units": "Head"
+    }, {
+        "quantity": "2",
+        "ingredient": "Bread",
+        "units": "Pieces"
+    }, {
+        "quantity": "1",
+        "ingredient": "Water",
+        "units": "Tablespoon"
+    }, {
+        "quantity": "2",
+        "ingredient": "Milk",
+        "units": "Gallons"
+    }, {
+        "quantity": "3",
+        "ingredient": "Bacon",
+        "units": "Strips"
+    }, {
+        "quantity": "1",
+        "ingredient": "Tomato",
+        "units": "Slice"
+    }, {
+        "quantity": "2",
+        "ingredient": "Lettuce",
+        "units": "Leaves"
+    }]
     var mediaCount = 1;
     var ingredientCount = 1;
+    var instructionCount = 1;
 
     function addMedia() {
         mediaCount++;
@@ -86,12 +125,23 @@
 
     function addIngredient() {
         ingredientCount++;
+        const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
         var html = `
             <div class="recipe-ingredient-div" id="recipe-ingredient-` + ingredientCount + `">
-                <input type="text" placeholder="1"><input type="text" placeholder="Lettuce"><input type="text" placeholder="Head"><button onclick='$("#recipe-ingredient-` + ingredientCount + `").remove()'>X</button><br>
+                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><button onclick='$("#recipe-ingredient-` + ingredientCount + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeIngredientSelector").append(html);
+    }
+
+    function addInstruction() {
+        instructionCount++;
+        var html = `
+            <div class="recipe-instruction-div" id="recipe-instruction-` + instructionCount + `">
+                <input type="text" placeholder="Instruction ` + instructionCount + `"><button onclick='$("#recipe-instruction-` + instructionCount + `").remove()'>X</button><br>
+            </div>
+        `;
+        $("#recipeInstructionSelector").append(html);
     }
 </script>
 {{ render_partial('partials/footer.html') }}
