@@ -127,9 +127,9 @@ def create_db_test_data(app, db):
                    subtitle="Gross",
                    description="I hate salad",
                    uploaded=datetime.now(), uploaded_by=1),
-            Recipe(pk=4, title="Help me",
-                   subtitle="I need help immediately",
-                   description="This is a cry for help.",
+            Recipe(pk=4, title="Sodexo Platter",
+                   subtitle="This is a platter",
+                   description="Image definately not taken at Clarkson.",
                    uploaded=datetime.now(), uploaded_by=1)
         ]
         ingredients_in_recipe = [
@@ -149,7 +149,7 @@ def create_db_test_data(app, db):
                                optional=False),
             IngredientInRecipe(pk=8, ingredient_key=4, recipe_key=3,
                                optional=False),
-            IngredientInRecipe(pk=9, ingredient_key=2, recipe_key=4,
+            IngredientInRecipe(pk=9, ingredient_key=3, recipe_key=4,
                                optional=False)
         ]
         instructions = [
@@ -194,7 +194,7 @@ def create_db_test_data(app, db):
                                 instruction_number=1,
                                 optional=False),
             InstructionInRecipe(pk=10, recipe_key=4,
-                                description="DROP DATABASE recipebuddy;",
+                                description="Ready to go, consume",
                                 instruction_number=1,
                                 optional=False),
         ]
@@ -223,7 +223,7 @@ def create_db_test_data(app, db):
         ]
         media_in_recipe = [
             MediaInRecipe(pk=1, recipe_key=1,
-                          media_link="NAh9oLs67Cw",
+                          media_link="uOXlG8Tglc8",
                           is_video=True),
             MediaInRecipe(pk=2, recipe_key=1,
                           media_link="https://i.imgur.com/KSDywdy.jpeg",
@@ -235,7 +235,7 @@ def create_db_test_data(app, db):
                           media_link="https://i.imgur.com/2YvUswr.png",
                           is_video=False),
             MediaInRecipe(pk=5, recipe_key=4,
-                          media_link="GhTjEk9nr3Q",
+                          media_link="yJ32K5vKVfE",
                           is_video=True),
             MediaInRecipe(pk=6, recipe_key=4,
                           media_link="https://content-service.sodexomyway.com/media/healthy-food-background-autumn-fresh-vegetables-dark-stone-table-with-copy-space-top-view_127032-1954_tcm984-128711.jpg?url=https://clarksondining.com/",
