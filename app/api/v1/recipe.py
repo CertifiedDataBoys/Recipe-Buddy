@@ -7,10 +7,25 @@ from ...models import (
     RecipeComment,
     User
 )
-
+from sqlalchemy.sql import func
 
 bp = Blueprint("api_v1_recipes", __name__)
 
+
+@bp.route("/api/v1.0.0./public/recipe/get_random", methods=["GET"])
+def get_random():
+    """
+    Get multiple random recipes
+    """
+
+    quantity = request.args.get("quantity", default=10, type=int)
+
+    if request.method == "GET":
+        try:
+            recipes = Recipe.query.order_by(func.rand()).limit(quantity).all()
+            return jsonify({"recipes": recipes})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe")
 def get_single_recipe():
