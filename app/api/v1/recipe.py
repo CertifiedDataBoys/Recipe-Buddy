@@ -9,6 +9,7 @@ from ...models import (
     User
 )
 from sqlalchemy.sql import func
+from flask_login import current_user
 
 bp = Blueprint("api_v1_recipes", __name__)
 
@@ -415,13 +416,27 @@ def upload_recipe():
             })
 
         new_recipe = Recipe(title=request.json["recipe"]["title"],
-                            subtitle=request.request.json["recipe"]["subtitle"],
+                            subtitle=request.json["recipe"]["subtitle"],
                             description=request.json["recipe"]["description"],
                             uploaded=datetime.now(),
                             uploaded_by=uid)
 
         db.session.add(new_recipe)
         db.session.commit()
+
+        for ingredient in request.json["recipe"]["ingredients"]:
+            # Check to see if ingredient already exists in database
+            ingredient_in_db = Ingredient.query.filter(Ingredient.name == ingredient["name"], Ingredient.unit_of_measure == ingredient["units"]).first()
+            if ingredient_in_db:
+                ingredient["ingredient_key"] = ingredient_in_db.pk
+            else:
+                if int(ingredient["count"]) > 1:
+                    new_ingredient = Ingredient(name=ingredient["name"], units_plural=ingredient["units"])
+                else:
+                    new_ingredient = Ingredient(name=ingredient["name"], unit_of_measure=ingredient["units"])
+                db.session.add(new_ingredient)
+                db.session.commit()
+                ingredient["ingredient_key"] = new_ingredient.pk
 
         new_ingredients = [
             IngredientInRecipe(
