@@ -21,10 +21,11 @@ $(document).ready(function() {
                         break;
                     case 'ingredients':
                         $.each(val, function(i, ingredient) {
+                            const op = ingredient.optional ? " (Optional) " : "";
                             if (ingredient.count > 0)
-                                $('#ingredients').append('<i>' + ingredient.count + ' ' + ingredient.unit + '</i> ' + ingredient.name + '<br/>');
+                                $('#ingredients').append('<i>' + ingredient.count + ' ' + ingredient.unit + '</i> ' + ingredient.name + op + '<br/>');
                             else
-                                $('#ingredients').append(ingredient.name + ' (Optional)<br/>');
+                                $('#ingredients').append(ingredient.name + op + '<br/>');
                         });
                         break;
                     case 'instructions':
