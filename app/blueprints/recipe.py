@@ -35,7 +35,8 @@ def recipe(pk="0"):
         }
 
         req = urllib.request.Request(
-            request.host_url + url_for('api_v1_interactions.post_recipe_comment'),
+            request.host_url +
+            url_for('api_v1_interactions.post_recipe_comment'),
             method="POST"
         )
         req.add_header('Content-Type', 'application/json')

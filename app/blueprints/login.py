@@ -7,7 +7,7 @@ from ..models import User
 bp = Blueprint("login", __name__)
 
 
-@bp.route("/login", methods=['GET','POST'])
+@bp.route("/login", methods=['GET', 'POST'])
 def login():
     """
         Create a blueprint to handle a test page.
@@ -16,7 +16,6 @@ def login():
     if current_user.is_authenticated:
 
         return redirect(url_for('index.index'))
-
 
     form = LoginForm()
 

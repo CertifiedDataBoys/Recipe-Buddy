@@ -1,5 +1,5 @@
-<!doctype html>
-{{ render_partial('partials/header.html') }}
+<!doctype html> {{ render_partial('partials/header.html') }}
+
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <title>Register</title>
@@ -9,12 +9,12 @@
             background-color: #262927;
             color: white;
         }
-
+        
         .main-head {
             height: 150px;
             background: #FFF;
         }
-
+        
         .sidenav {
             z-index: 2;
             height: 100%;
@@ -22,18 +22,18 @@
             overflow-x: hidden;
             padding-top: 20px;
         }
-
+        
         .main {
             padding: 0px 10px;
         }
-
+        
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
                 z-index: 2;
             }
         }
-
+        
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -42,7 +42,7 @@
                 margin-top: 10%;
             }
         }
-
+        
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -62,22 +62,22 @@
                 margin-top: 20%;
             }
         }
-
+        
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #000;
         }
-
+        
         .login-main-text h2 {
             font-weight: 300;
         }
-
+        
         .btn-black {
             background: linear-gradient(to right, #fcba03, #fc9003) !important;
             color: #000;
         }
-
+        
         .restriction-color {
             color: red;
         }
@@ -138,7 +138,7 @@
                         <div style="width: 50%; height: 100px; float: left;">
                             <div class="form-group">
                                 <label>{{ form.password.label }}</label> {{ form.password(class="form-control", size=32) }} {% if form.password.errors %}
-                                  <p class="text-danger">{{ form.password.errors[0] }}</p>
+                                <p class="text-danger">{{ form.password.errors[0] }}</p>
                                 {% endif %}
                             </div>
                         </div>

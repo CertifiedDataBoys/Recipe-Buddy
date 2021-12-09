@@ -19,19 +19,16 @@ def get_single_comment():
         This takes in a comment's primary key (?pk=<...>).
     """
 
-
     key = request.args.get("pk")
-
 
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = RecipeComment.query.filter(RecipeComment.pk == key)
 
-    return jsonify(comment = query.first())
+    return jsonify(comment=query.first())
 
 
 @bp.route("/api/v1.0.0/public/recipe/get_comments_in_recipe")
@@ -42,15 +39,12 @@ def get_comments_in_recipe():
         This takes in a recipe's primary key (?pk=<...>).
     """
 
-
     key = request.args.get("pk")
-
 
     # error handling --- improve later
     if not key:
 
         return jsonify([])
-
 
     recipe_comment_query = (
         db.session.query(RecipeComment)
@@ -87,7 +81,7 @@ def get_comments_in_recipe():
 
 
 @bp.route("/api/v1.0.0/public/recipe/post_recipe_comment",
-           methods=["GET", "POST"])
+          methods=["GET", "POST"])
 def post_recipe_comment():
 
     comment = request.json

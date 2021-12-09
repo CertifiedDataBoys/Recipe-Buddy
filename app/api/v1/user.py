@@ -25,7 +25,7 @@ def get_single_user():
         return jsonify(user=[])
 
     query = db.session.query(User) \
-            .join(UserProfile, UserProfile.uid == User.uid)
+        .join(UserProfile, UserProfile.uid == User.uid)
 
     if key:
 
@@ -48,12 +48,12 @@ def get_single_user():
         return jsonify(user=[])
 
     return jsonify(user={
-            "uid": u.uid,
-            "username": u.username,
-            "verified": u.verified,
-            "favorite_recipe": u.favorite_recipe,
-            "has_profile_photo": u.has_profile_photo
-        }
+        "uid": u.uid,
+        "username": u.username,
+        "verified": u.verified,
+        "favorite_recipe": u.favorite_recipe,
+        "has_profile_photo": u.has_profile_photo
+    }
     )
 
 
@@ -76,7 +76,7 @@ def get_user_profile_photo():
         return jsonify(user=[])
 
     query = db.session.query(User) \
-            .join(UserProfile, UserProfile.uid == User.uid)
+        .join(UserProfile, UserProfile.uid == User.uid)
 
     if key:
 
@@ -127,12 +127,12 @@ def upload_user_profile_photo():
         uid = current_user.get_id()
 
         query = db.session.query(User) \
-                .join(UserProfile, UserProfile.uid == User.uid) \
-                .filter(User.uid == uid) \
-                .with_entities(
-                    User.uid, User.username,
-                    UserProfile.has_profile_photo
-                )
+            .join(UserProfile, UserProfile.uid == User.uid) \
+            .filter(User.uid == uid) \
+            .with_entities(
+            User.uid, User.username,
+            UserProfile.has_profile_photo
+        )
         u = query.first()
 
         # No file uploaded
@@ -170,4 +170,3 @@ def upload_user_profile_photo():
             "has_profile_photo": user_profile.has_profile_photo,
             "upload_successful": True
         })
-

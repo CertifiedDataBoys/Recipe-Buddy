@@ -8,7 +8,7 @@ from ..models import db, User
 bp = Blueprint("register", __name__)
 
 
-@bp.route("/register", methods=['GET','POST'])
+@bp.route("/register", methods=['GET', 'POST'])
 def register():
     """
         Create a blueprint to handle a registration page.
@@ -17,7 +17,6 @@ def register():
     if current_user.is_authenticated:
 
         return redirect(url_for('index.index'))
-
 
     form = RegisterForm()
 
@@ -32,7 +31,8 @@ def register():
                 flash("There is already a user with that username or email.")
                 return redirect(url_for("register.register"))
 
-            user = User(username=form.username.data, email=form.email.data, verified=True)
+            user = User(username=form.username.data,
+                        email=form.email.data, verified=True)
             user.set_password(form.password.data)
             # Need to add user to database, then send verification email
             # ... Maybe. We'll get to email verification later.

@@ -29,6 +29,7 @@ def get_random():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
+
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe")
 def get_single_recipe():
     """
@@ -36,19 +37,16 @@ def get_single_recipe():
         This takes in a recipe's primary key (?pk=<...>).
     """
 
-
     key = request.args.get("pk")
-
 
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = Recipe.query.filter(Recipe.pk == key)
 
-    return jsonify(recipe = query.first())
+    return jsonify(recipe=query.first())
 
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_details")
@@ -60,12 +58,10 @@ def get_single_recipe_details():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify({"error": True, "message": "No recipe key provided"})
-
 
     recipe_details_query = (
         db.session.query(Recipe)
@@ -81,7 +77,6 @@ def get_single_recipe_details():
     # did we get anything?
     if not recipe_details:
         return jsonify({"error": True, "message": "No recipe found"})
-
 
     recipe_instructions_query = (
         db.session.query(InstructionInRecipe)
@@ -144,7 +139,7 @@ def get_single_recipe_details():
         "description": recipe_details.description,
         "uploaded": recipe_details.uploaded,
         "user": {
-            "uid" : recipe_details.uid,
+            "uid": recipe_details.uid,
             "username": recipe_details.username
         },
         "instructions": sorted([
@@ -160,9 +155,9 @@ def get_single_recipe_details():
                 "count": ingredient.count,
                 "optional": ingredient.optional,
                 "name": ingredient.name,
-                "unit": ingredient.unit_of_measure \
-                        if ingredient.count == 1 \
-                        else ingredient.units_plural
+                "unit": ingredient.unit_of_measure
+                if ingredient.count == 1
+                else ingredient.units_plural
             }
             for ingredient in recipe_ingredients
         ],
@@ -223,15 +218,12 @@ def get_recipes():
     title = request.args.get("title")
     uploaded_by = request.args.get("uploaded_by")
 
-
     # error handling --- improve later
     if not uploaded_by and not title:
 
         return jsonify([])
 
-
     query = Recipe.query
-
 
     if uploaded_by:
 
@@ -241,7 +233,7 @@ def get_recipes():
 
         query = query.filter(Recipe.title == title)
 
-    return jsonify(recipes = query.all())
+    return jsonify(recipes=query.all())
 
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_instructions")
@@ -253,19 +245,15 @@ def recipe_instructions():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = InstructionInRecipe.query \
         .filter(InstructionInRecipe.recipe_key == key)
 
-
-    return jsonify(instructions = query.all())
-
+    return jsonify(instructions=query.all())
 
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_instruction")
@@ -277,18 +265,15 @@ def single_recipe_instruction():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = InstructionInRecipe.query \
         .filter(InstructionInRecipe.pk == key)
 
-
-    return jsonify(instruction = query.first())
+    return jsonify(instruction=query.first())
 
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_ingredients")
@@ -300,18 +285,15 @@ def recipe_ingredients():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = IngredientInRecipe.query \
         .filter(IngredientInRecipe.recipe_key == key)
 
-
-    return jsonify(ingredients = query.all())
+    return jsonify(ingredients=query.all())
 
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_ingredient")
@@ -323,18 +305,15 @@ def single_recipe_ingredient():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = IngredientInRecipe.query \
         .filter(IngredientInRecipe.pk == key)
 
-
-    return jsonify(ingredient = query.first())
+    return jsonify(ingredient=query.first())
 
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_kitchenware")
@@ -346,18 +325,15 @@ def recipe_kitchenware():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = KitchenwareInRecipe.query \
         .filter(KitchenwareInRecipe.recipe_key == key)
 
-
-    return jsonify(kitchenware = query.all())
+    return jsonify(kitchenware=query.all())
 
 
 @bp.route("/api/v1.0.0/public/recipe/get_single_recipe_kitchenware")
@@ -369,18 +345,16 @@ def single_recipe_kitchenware():
 
     key = request.args.get("pk")
 
-
     # error handling --- improve later
     if not key:
 
         return jsonify([])
 
-
     query = KitchenwareInRecipe.query \
         .filter(KitchenwareInRecipe.pk == key)
 
+    return jsonify(kitchenware=query.first())
 
-    return jsonify(kitchenware = query.first())
 
 @bp.route("/api/v1.0.0/public/recipe/search_recipes")
 def search_recipes():
@@ -393,7 +367,7 @@ def search_recipes():
         return jsonify([])
     else:
         query = query.lower()
-        return jsonify(recipes = Recipe.query.filter(Recipe.title.like("%" + query + "%")).all())
+        return jsonify(recipes=Recipe.query.filter(Recipe.title.like("%" + query + "%")).all())
 
 
 @bp.route("/api/v1.0.0/public/recipe/upload_recipe", methods=['GET', 'POST'])
@@ -426,14 +400,17 @@ def upload_recipe():
 
         for ingredient in request.json["recipe"]["ingredients"]:
             # Check to see if ingredient already exists in database
-            ingredient_in_db = Ingredient.query.filter(Ingredient.name == ingredient["name"], Ingredient.unit_of_measure == ingredient["units"]).first()
+            ingredient_in_db = Ingredient.query.filter(
+                Ingredient.name == ingredient["name"], Ingredient.unit_of_measure == ingredient["units"]).first()
             if ingredient_in_db:
                 ingredient["ingredient_key"] = ingredient_in_db.pk
             else:
                 if int(ingredient["count"]) > 1:
-                    new_ingredient = Ingredient(name=ingredient["name"], units_plural=ingredient["units"])
+                    new_ingredient = Ingredient(
+                        name=ingredient["name"], units_plural=ingredient["units"])
                 else:
-                    new_ingredient = Ingredient(name=ingredient["name"], unit_of_measure=ingredient["units"])
+                    new_ingredient = Ingredient(
+                        name=ingredient["name"], unit_of_measure=ingredient["units"])
                 db.session.add(new_ingredient)
                 db.session.commit()
                 ingredient["ingredient_key"] = new_ingredient.pk

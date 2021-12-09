@@ -32,6 +32,7 @@ class InteractionMixin(object):
     __tablename__ = "interaction"
 
     pk = db.Column(db.Integer, primary_key=True)
+
     @declared_attr
     def uid(self):
         """

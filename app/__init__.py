@@ -50,7 +50,8 @@ def create_app():
 
     # Sign into our MariaDB database
     if os.getenv('SQLALCHEMY_DATABASE_URI') is not None:
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+            'SQLALCHEMY_DATABASE_URI')
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+mariadbconnector://{0}:{1}@{2}:{3}/{4}".format(
             os.getenv("MARIADB_USER"),

@@ -85,6 +85,7 @@ class Recipe(db.Model):
     uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
                             nullable=False)
 
+
 @dataclass
 class InstructionInRecipe(db.Model):
     """
@@ -148,7 +149,7 @@ class IngredientInRecipe(db.Model):
     ingredient_key = db.Column(db.Integer, db.ForeignKey("ingredient.pk"),
                                nullable=False)
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
-                               nullable=False)
+                           nullable=False)
     optional = db.Column(db.Boolean, nullable=False)
     count = db.Column(db.Integer, nullable=True)
 
@@ -182,6 +183,7 @@ class KitchenwareInRecipe(db.Model):
     recipe_key = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                            nullable=False)
     optional = db.Column(db.Boolean, nullable=False)
+
 
 @dataclass
 class MediaInRecipe(db.Model):

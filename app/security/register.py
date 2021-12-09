@@ -15,7 +15,7 @@ def username_exists(username):
                         False otherwise.
     """
 
-    return User.query.filter(User.username==username).first() != None
+    return User.query.filter(User.username == username).first() != None
 
 
 def email_exists(email):
@@ -31,7 +31,7 @@ def email_exists(email):
                         False otherwise.
     """
 
-    return User.query.filter(User.email==email).first() != None
+    return User.query.filter(User.email == email).first() != None
 
 
 def register_user(db, user):
