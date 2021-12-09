@@ -30,7 +30,7 @@
         <input type="text" id="recipeName" name="recipeName"><br><br>
 
         <label for="recipeDescription">Recipe Subtitle</label><br>
-        <input type="tet" id="recipeDescription" name="recipeDescription"><br><br>
+        <input type="text" id="recipeDescription" name="recipeDescription"><br><br>
 
         <label for="recipeType">Recipe Type</label><br>
         <select id="recipeType" name="recipeType">
@@ -51,14 +51,14 @@
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
             <div class="recipe-ingredient-div" id="recipe-ingredient-1">
-                <input type="text" id="recipe-ingredient-quantity-1"><input type="text" id="recipe-ingredient-ingredient-1"><input type="text" id="recipe-ingredient-units-1"><br>
+                <input type="text" id="recipe-ingredient-quantity-1"><input type="text" id="recipe-ingredient-ingredient-1"><input type="text" id="recipe-ingredient-units-1"><input type="checkbox" id="ingredient-1-optional"> Optional?<br>
             </div>
         </div>
         <button onclick="addIngredient()">Add ingredient field</button><br><br>
 
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <div id="recipeInstructionSelector">
-            <input type="text" id="recipeInstructions" name="recipeInstructions" placeholder="Instruction 1"><br>
+            <input type="text" id="recipeInstructions" name="recipeInstructions" placeholder="Instruction 1"><input type="checkbox" id="instruction-1-optional"> Optional?<br>
         </div>
         <button onclick="addInstruction()">Add instruction field</button><br><br>
 
@@ -120,40 +120,42 @@
         });
     });
 
-    var mediaCount = 1;
-    var ingredientCount = 1;
-    var instructionCount = 1;
+    var count = {
+        media: 1,
+        ingredient: 1,
+        instruction: 1
+    }
 
     function addMedia() {
-        mediaCount++;
+        count.media++;
         var html = `
-        <div class="recipe-media-div" id="recipe-media-` + mediaCount + `">
+        <div class="recipe-media-div" id="recipe-media-` + count.media + `">
             <select id="recipeType" name="recipeType">
                 <option value="image">Image URL</option>
                 <option value="video">YouTube Video URL</option>
             </select>
-            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + mediaCount + `").remove()'>X</button><br>
+            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + count.media + `").remove()'>X</button><br>
         </div>
         `;
         $("#recipeMediaSelector").append(html);
     }
 
     function addIngredient() {
-        ingredientCount++;
+        count.ingredient++;
         const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
         var html = `
-            <div class="recipe-ingredient-div" id="recipe-ingredient-` + ingredientCount + `">
-                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><button onclick='$("#recipe-ingredient-` + ingredientCount + `").remove()'>X</button><br>
+            <div class="recipe-ingredient-div" id="recipe-ingredient-` + count.ingredient + `">
+                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional"> Optional instruction?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeIngredientSelector").append(html);
     }
 
     function addInstruction() {
-        instructionCount++;
+        count.instruction++;
         var html = `
-            <div class="recipe-instruction-div" id="recipe-instruction-` + instructionCount + `">
-                <input type="text" placeholder="Instruction ` + instructionCount + `"><button onclick='$("#recipe-instruction-` + instructionCount + `").remove()'>X</button><br>
+            <div class="recipe-instruction-div" id="recipe-instruction-` + count.instruction + `">
+                <input type="text" placeholder="Instruction ` + count.instruction + `"><input type="checkbox" id="instruction-` + count.instruction + `-optional"> Optional?<button onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeInstructionSelector").append(html);
