@@ -24,6 +24,14 @@ def get_ingredient():
     query = Ingredient.query.filter(Ingredient.pk == key)
     return jsonify(ingredient=query.first())
 
+@bp.route("/api/v1.0.0/public/food/get_all_ingredients")
+def get_all_ingredients():
+    """
+        Create a blueprint to get all ingredients as a JSON file.
+    """
+
+    query = Ingredient.query.all()
+    return jsonify(ingredients=query)
 
 @bp.route("/api/v1.0.0/public/food/get_kitchenware")
 def get_kitchenware():
@@ -41,3 +49,12 @@ def get_kitchenware():
 
     query = Kitchenware.query.filter(Kitchenware.pk == key)
     return jsonify(kitchenware=query.first())
+
+@bp.route("/api/v1.0.0/public/food/get_all_kitchenware")
+def get_all_kitchenware():
+    """
+        Create a blueprint to get all kitchenware items as a JSON file.
+    """
+
+    query = Kitchenware.query.all()
+    return jsonify(kitchenware=query)
