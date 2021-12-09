@@ -56,7 +56,11 @@ $(document).ready(function() {
                         break;
                     case 'media':
                         $.each(val, function(i, media) {
-                            media.is_video ? $('#media-container').append('<iframe width="420" height="315" src="https://www.youtube.com/embed/' + media.media_link + '"></iframe>') : $('#media-container').append('<div class="col-sm-4"><img class="img-fluid" src="' + media.media_link + '"></div>');
+                            if (media.is_video) {
+                                $('#media-container').append('<div class="col-sm-7"><iframe style="display: block;border-style:none;" width="420" height="315" src="https://www.youtube.com/embed/' + media.media_link + '"></iframe></div>');
+                            } else {
+                                $('#media-container').append('<div class="col-sm-7"><img class="img-fluid" src="' + media.media_link + '"></div>');
+                            }
                         });
                         break;
                 }
