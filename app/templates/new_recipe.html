@@ -145,7 +145,7 @@
         const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
         var html = `
             <div class="recipe-ingredient-div" id="recipe-ingredient-` + count.ingredient + `">
-                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional"> Optional instruction?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
+                <input type="text" placeholder="` + thisIngredient.quantity + `"><input type="text" placeholder="` + thisIngredient.ingredient + `"><input type="text" placeholder="` + thisIngredient.units + `"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional"> Optional?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeIngredientSelector").append(html);
