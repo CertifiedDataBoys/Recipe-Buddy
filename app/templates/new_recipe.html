@@ -118,7 +118,7 @@
             for (let i = 0; i < data.ingredients.length; i++) {
                 ingredientsHTML += "<option value='" + data.ingredients[i].pk + "'>" + data.ingredients[i].name + "</option>";
             }
-            $("select#recipe-ingredient-ingredient-1").append(ingredientsHTML);
+            $("#recipe-ingredient-ingredient-1").append(ingredientsHTML);
         });
     });
 
