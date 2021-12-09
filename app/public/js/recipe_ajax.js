@@ -7,7 +7,11 @@ $(document).ready(function() {
                 switch (key) {
                     case 'title':
                         $('#recipe_title').html(val);
+                        $('#recipe_title_top').html(val);
                         $(document).attr('title', $(document).find("title").text() + ' - ' + val);
+                        break;
+                    case 'subtitle':
+                        $('#recipe_subtitle').html(val);
                         break;
                     case 'user':
                         $('#username').html(val.username);
