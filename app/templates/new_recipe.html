@@ -123,17 +123,12 @@
     });
 
     function updateIngredient(ingredient_id) {
-        console.log("hit", ingredient_id);
         const quantity = $("#recipe-ingredient-quantity-" + ingredient_id)[0].value;
         const ingredient_pk = $("#recipe-ingredient-ingredient-" + ingredient_id)[0].value;
-        console.log("qunaity", quantity);
-        console.log("ingredient_pk", ingredient_pk);
         var units;
         for (var i = 0; i < glob_ingredients.length; i++) {
-            if (glob_ingredients[i].pk == ingredient_pk) {
-                console.log("found ing", glob_ingredients[i]);
+            if (glob_ingredients[i].pk == ingredient_pk)
                 units = (quantity <= 1) ? glob_ingredients[i].unit_of_measure : glob_ingredients[i].units_plural;
-            }
         }
         $("#recipe-ingredient-units-" + ingredient_id)[0].value = units;
     }
