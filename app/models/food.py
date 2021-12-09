@@ -25,7 +25,7 @@ class Ingredient(db.Model):
     units_plural: str
 
     pk = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True, nullable=False)
+    name = db.Column(db.String(64), unique=False, nullable=False)
     unit_of_measure = db.Column(db.String(32), unique=False, nullable=True)
     units_plural = db.Column(db.String(32), unique=False, nullable=True)
 
