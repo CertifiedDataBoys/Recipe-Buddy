@@ -450,5 +450,5 @@ def upload_recipe():
         return jsonify(recipe={
             "uid": uid,
             "pk": new_recipe.pk,
-            "upload_successful": False
+            "upload_successful": True
         })
