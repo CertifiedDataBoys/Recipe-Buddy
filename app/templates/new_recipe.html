@@ -24,8 +24,12 @@
 <div id="main">
     <div class="container">
         <h1>New Recipe</h1>
+
         <label for="recipeName">Recipe Name</label><br>
-        <input type="text" id="recipeName" name="recipeName" placeholder="Soggy Sodexo French Fries"><br><br>
+        <input type="text" id="recipeName" name="recipeName"><br><br>
+
+        <label for="recipeDescription">Recipe Subtitle</label><br>
+        <input type="tet" id="recipeDescription" name="recipeDescription"><br><br>
 
         <label for="recipeType">Recipe Type</label><br>
         <select id="recipeType" name="recipeType">
@@ -43,13 +47,10 @@
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Immersion Blender">Immersion Blender<br>
         <input type="checkbox" id="recipeKitchenware" name="recipeKitchenware" value="Wok">Wok<br><br>
 
-        <label for="recipeDescription">Recipe Description</label><br>
-        <textarea id="recipeDescription" name="recipeDescription" placeholder="mmmmmyes french frIEs!"></textarea><br><br>
-
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
             <div class="recipe-ingredient-div" id="recipe-ingredient-1">
-                <input type="text" placeholder="1"><input type="text" placeholder="Lettuce"><input type="text" placeholder="Head"><br>
+                <input type="text" id="recipe-ingredient-quantity-1"><input type="text" id="recipe-ingredient-ingredient-1"><input type="text" id="recipe-ingredient-units-1"><br>
             </div>
         </div>
         <button onclick="addIngredient()">Add ingredient field</button><br><br>
@@ -104,7 +105,20 @@
         "quantity": "2",
         "ingredient": "Lettuce",
         "units": "Leaves"
-    }]
+    }];
+
+    $(document).ready(function() {
+        const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
+        $("#recipe-ingredient-quantity-1").attr("placeholder", thisIngredient.quantity);
+        $("#recipe-ingredient-ingredient-1").attr("placeholder", thisIngredient.ingredient);
+        $("#recipe-ingredient-units-1").attr("placeholder", thisIngredient.units);
+
+        $.getJSON("/api/v1.0.0./public/recipe/get_random?quantity=1", function(data) {
+            $("#recipeName").attr("placeholder", data.recipes[0].title);
+            $("#recipeDescription").attr("placeholder", data.recipes[0].subtitle);
+        });
+    });
+
     var mediaCount = 1;
     var ingredientCount = 1;
     var instructionCount = 1;
