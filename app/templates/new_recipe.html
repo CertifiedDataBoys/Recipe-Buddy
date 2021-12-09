@@ -48,13 +48,34 @@
         <textarea id="recipeInstructions" name="recipeInstructions" placeholder="🔪"></textarea><br>
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
-            Image 1:
-            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br> Image 2:
-            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br> Video 1:
-            <input type="text" class="recipeMedia" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <div class="recipe-media-div" id="recipe-media-1">
+                <select id="recipeType" name="recipeType">
+                    <option value="image">Image URL</option>
+                    <option value="video">YouTube Video URL</option>
+                </select>
+                <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
+            </div>
         </div>
-
+        <button onclick="addMedia()">Add media field</button>
+        <br><br>
         <button id="submitRecipe">Submit Recipe</button>
     </div>
 </div>
+<script>
+    var mediaCount = 1;
+
+    function addMedia() {
+        mediaCount++;
+        var html = `
+        <div class="recipe-media-div" id="recipe-media-` + mediaCount + `">
+            <select id="recipeType" name="recipeType">
+                <option value="image">Image URL</option>
+                <option value="video">YouTube Video URL</option>
+            </select>
+            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + mediaCount + `").remove()'>X</button><br>
+        </div>
+        `;
+        $("#recipeMediaSelector").append(html);
+    }
+</script>
 {{ render_partial('partials/footer.html') }}
