@@ -94,6 +94,75 @@
                 });
                 $("#home-container").append(html);
             });
+            $.getJSON("/api/v1.0.0./public/recipe/get_random?quantity=4", function(data) {
+                var html = `
+                    <div class="row mt-4">
+                    <div class="col-lg-7 col-md-6 mt-4 mb-4">
+                    <h2>Popular</h2>
+                    <hr>
+                    </div>
+                    </div>
+                `;
+                html += `
+                    <div class="row mt-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="container-fluid">
+                                <div class="row mt-4">
+                                    <div class="col-lg-10 col-md-10">
+                                        <div class="display-card card w-500 shadow-sm border-0" onclick="window.location.href = '/recipe/` + data.recipes[0].pk + `';">
+                                            <img class="display-card-img card-img-top" id="recipe-image-popular-` + data.recipes[0].pk + `">
+                                            <div class="card-body" id="recipe-body">
+                                                <h4 class="card-title text-center" id="recipe_title">` + data.recipes[0].title + `</h4>
+                                                <p class="text-center">` + data.recipes[0].subtitle + `</p>
+                                            </div>
+                                        </div>
+                                        <div class="display-card card w-500 shadow-sm border-0" onclick="window.location.href = '/recipe/` + data.recipes[1].pk + `';">
+                                            <img class="display-card-img card-img-top" id="recipe-image-popular-` + data.recipes[1].pk + `">
+                                            <div class="card-body" id="recipe-body">
+                                                <h4 class="card-title text-center" id="recipe_title">` + data.recipes[1].title + `</h4>
+                                                <p class="text-center">` + data.recipes[1].subtitle + `</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="container-fluid">
+                                <div class="row mt-4">
+                                    <div class="col-lg-10 col-md-10">
+                                        <div class="display-card card w-500 shadow-sm border-0" onclick="window.location.href = '/recipe/` + data.recipes[2].pk + `';">
+                                            <img class="display-card-img card-img-top" id="recipe-image-popular-` + data.recipes[2].pk + `">
+                                            <div class="card-body" id="recipe-body">
+                                                <h4 class="card-title text-center" id="recipe_title">` + data.recipes[2].title + `</h4>
+                                                <p class="text-center">` + data.recipes[2].subtitle + `</p>
+                                            </div>
+                                        </div>
+                                        <div class="display-card card w-500 shadow-sm border-0" onclick="window.location.href = '/recipe/` + data.recipes[3].pk + `';">
+                                            <img class="display-card-img card-img-top" id="recipe-image-popular-` + data.recipes[3].pk + `">
+                                            <div class="card-body" id="recipe-body">
+                                                <h4 class="card-title text-center" id="recipe_title">` + data.recipes[3].title + `</h4>
+                                                <p class="text-center">` + data.recipes[3].subtitle + `</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                data.recipes.forEach(function(recipe) {
+                    $.getJSON("/api/v1.0.0/public/recipe/get_single_recipe_details?pk=" + recipe.pk, function(rdata) {
+                        for (var i = 0; i < rdata.recipe.media.length; i++) {
+                            if (!rdata.recipe.media[i].is_video) {
+                                $("#recipe-image-popular-" + recipe.pk).attr("src", rdata.recipe.media[i].media_link);
+                                break;
+                            }
+                        }
+                    });
+                });
+                $("#home-container").append(html);
+            });
         });
     </script>
     {{ render_partial('partials/footer.html') }}
