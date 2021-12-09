@@ -43,7 +43,12 @@
         <label for="recipeDescription">Recipe Description</label><br>
         <textarea id="recipeDescription" name="recipeDescription" placeholder="mmmmmyes french frIEs!"></textarea><br>
         <label for="recipeIngredients">Recipe Ingredients</label><br>
-        <input type="text" id="recipe-ingredient-1" placeholder="Lettuce"></textarea><br>
+        <div id="recipeIngredientSelector">
+            <div class="recipe-ingredient-div" id="recipe-ingredient-1">
+                <input type="text" placeholder="1"><input type="text" placeholder="Lettuce"><input type="text" placeholder="Head"><br>
+            </div>
+        </div>
+        <button onclick="addIngredient()">Add ingredient field</button><br>
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <textarea id="recipeInstructions" name="recipeInstructions" placeholder="🔪"></textarea><br>
         <label>Recipe Media</label><br>
@@ -63,6 +68,7 @@
 </div>
 <script>
     var mediaCount = 1;
+    var ingredientCount = 1;
 
     function addMedia() {
         mediaCount++;
@@ -76,6 +82,16 @@
         </div>
         `;
         $("#recipeMediaSelector").append(html);
+    }
+
+    function addIngredient() {
+        ingredientCount++;
+        var html = `
+            <div class="recipe-ingredient-div" id="recipe-ingredient-` + ingredientCount + `">
+                <input type="text" placeholder="1"><input type="text" placeholder="Lettuce"><input type="text" placeholder="Head"><button onclick='$("#recipe-ingredient-` + ingredientCount + `").remove()'>X</button><br>
+            </div>
+        `;
+        $("#recipeIngredientSelector").append(html);
     }
 </script>
 {{ render_partial('partials/footer.html') }}
