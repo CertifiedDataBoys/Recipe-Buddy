@@ -28,16 +28,6 @@
     </div>
 </div>
 <script>
-    function searchQuery() {
-        window.location.href = '/search?q=' + encodeURIComponent(document.getElementById("recipe-search").value);
-    }
-    $("#recipe-search").on("keydown", function search(e) {
-        if (e.code == "Enter")
-            searchQuery();
-    });
-    $(".search-btn").on("click", function() {
-        searchQuery();
-    });
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
