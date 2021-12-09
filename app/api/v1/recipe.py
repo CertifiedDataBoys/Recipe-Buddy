@@ -395,7 +395,7 @@ def search_recipes():
 
 
 @bp.route("/api/v1.0.0/public/recipe/upload_recipe", methods=['GET', 'POST'])
-def upload_user_recipe():
+def upload_recipe():
     # Is this user not logged in?
     if not current_user.is_authenticated:
         return jsonify(recipe=[])
