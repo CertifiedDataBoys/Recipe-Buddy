@@ -91,7 +91,7 @@ def create_db_test_data(app, db):
                  verified=True)
         ]
         users[0].set_password("CS350-Project")
-        users[1].set_password("RecipeBuddyPassword")
+        users[1].set_password("RecipeBuddyPassword1!")
         ingredients = [
             Ingredient(pk=1, name="Bread 🍞",
                        unit_of_measure="slice", units_plural="slices"),
@@ -118,18 +118,22 @@ def create_db_test_data(app, db):
             Recipe(pk=1, title="BLT 🥪",
                    subtitle="Bacon lettuce & tomato sandwich",
                    description="MM...FOOD\nYummy BLT!",
+                   type="Sandwich",
                    uploaded=datetime.now(), uploaded_by=1),
             Recipe(pk=2, title="Bread sandwich",
                    subtitle="Traditional British bread sandwich",
                    description="Enjoy this traditional British lunch sandwich!",
+                   type="Sandwich",
                    uploaded=datetime.now(), uploaded_by=2),
-            Recipe(pk=3, title="Salad",
+            Recipe(pk=3, title="Side salad",
                    subtitle="Gross",
                    description="I hate salad",
+                   type="Side",
                    uploaded=datetime.now(), uploaded_by=1),
             Recipe(pk=4, title="Sodexo Platter",
                    subtitle="This is a platter",
                    description="Image definately not taken at Clarkson.",
+                   type="Mystery",
                    uploaded=datetime.now(), uploaded_by=1)
         ]
         ingredients_in_recipe = [

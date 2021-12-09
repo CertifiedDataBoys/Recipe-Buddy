@@ -68,6 +68,7 @@ def get_single_recipe_details():
         .join(User, User.uid == Recipe.uploaded_by)
         .with_entities(
             Recipe.title, Recipe.subtitle, Recipe.description, Recipe.uploaded,
+            Recipe.type,
             User.uid, User.username
         )
         .filter(Recipe.pk == key)
@@ -138,6 +139,7 @@ def get_single_recipe_details():
         "subtitle": recipe_details.subtitle,
         "description": recipe_details.description,
         "uploaded": recipe_details.uploaded,
+        "type": recipe_details.type,
         "user": {
             "uid": recipe_details.uid,
             "username": recipe_details.username
@@ -392,6 +394,7 @@ def upload_recipe():
         new_recipe = Recipe(title=request.json["recipe"]["title"],
                             subtitle=request.json["recipe"]["subtitle"],
                             description=request.json["recipe"]["description"],
+                            type=request.json["recipe"]["type"],
                             uploaded=datetime.now(),
                             uploaded_by=uid)
 

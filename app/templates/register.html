@@ -9,12 +9,12 @@
             background-color: #262927;
             color: white;
         }
-        
+
         .main-head {
             height: 150px;
             background: #FFF;
         }
-        
+
         .sidenav {
             z-index: 2;
             height: 100%;
@@ -22,18 +22,18 @@
             overflow-x: hidden;
             padding-top: 20px;
         }
-        
+
         .main {
             padding: 0px 10px;
         }
-        
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
                 z-index: 2;
             }
         }
-        
+
         @media screen and (max-width: 450px) {
             .login-form {
                 margin-top: 10%;
@@ -42,7 +42,7 @@
                 margin-top: 10%;
             }
         }
-        
+
         @media screen and (min-width: 768px) {
             .main {
                 margin-left: 40%;
@@ -56,28 +56,28 @@
                 z-index: 2;
             }
             .login-form {
-                margin-top: 80%;
+                margin-top: 15%;
             }
             .register-form {
                 margin-top: 20%;
             }
         }
-        
+
         .login-main-text {
             margin-top: 20%;
             padding: 60px;
             color: #000;
         }
-        
+
         .login-main-text h2 {
             font-weight: 300;
         }
-        
+
         .btn-black {
             background: linear-gradient(to right, #fcba03, #fc9003) !important;
             color: #000;
         }
-        
+
         .restriction-color {
             color: red;
         }
@@ -96,6 +96,15 @@
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="login-form">
+                <div class="py-1">
+                    {% with messages = get_flashed_messages()%} {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li> {{message}} </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %} {% endwith %}
+                </div>
                 <form action="" method="post">
                     {{ form.hidden_tag() }}
                     <div style="width: 200%;">
@@ -162,15 +171,6 @@
                     </div>
                     <button type="submit" class="btn btn-black" id="submit" disabled>Next</button>
                 </form>
-            </div>
-            <div class="py-2">
-                {% with messages = get_flashed_messages()%} {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                    <li> {{message}} </li>
-                    {% endfor %}
-                </ul>
-                {% endif %} {% endwith %}
             </div>
         </div>
     </div>

@@ -64,6 +64,8 @@ class Recipe(db.Model):
             description (db.String(4096)):
                         The description of the recipe. Instructions are
                             separate.
+            type (db.String(64)):
+                        The type of dish for this recipe.
             uploaded (db.DateTime):
                         A DateTime object showing when this recipe was uploaded
             uploaded_by (db.Integer):
@@ -74,6 +76,7 @@ class Recipe(db.Model):
     title: str
     subtitle: str
     description: str
+    type: str
     uploaded: timedelta
     uploaded_by: int
 
@@ -81,6 +84,7 @@ class Recipe(db.Model):
     title = db.Column(db.String(64), unique=False, nullable=False)
     subtitle = db.Column(db.String(64), unique=False, nullable=True)
     description = db.Column(db.String(4096), unique=False, nullable=False)
+    type = db.Column(db.String(64), unique=False, nullable=False)
     uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
     uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
                             nullable=False)
