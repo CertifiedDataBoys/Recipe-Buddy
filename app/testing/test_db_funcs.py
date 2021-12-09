@@ -164,8 +164,8 @@ def create_db_test_data(app, db):
                                 optional=False),
             InstructionInRecipe(pk=3, recipe_key=1,
                                 description="Place bacon, whole lettuce, and" +
-                                             " whole tomatos on your bread in" +
-                                             " that specific order.",
+                                " whole tomatos on your bread in" +
+                                " that specific order.",
                                 instruction_number=3,
                                 optional=False),
             InstructionInRecipe(pk=4, recipe_key=1,
@@ -236,7 +236,10 @@ def create_db_test_data(app, db):
                           is_video=False),
             MediaInRecipe(pk=5, recipe_key=4,
                           media_link="GhTjEk9nr3Q",
-                          is_video=True)
+                          is_video=True),
+            MediaInRecipe(pk=6, recipe_key=4,
+                          media_link="https://content-service.sodexomyway.com/media/healthy-food-background-autumn-fresh-vegetables-dark-stone-table-with-copy-space-top-view_127032-1954_tcm984-128711.jpg?url=https://clarksondining.com/",
+                          is_video=False)
         ]
 
         user_profiles = [
