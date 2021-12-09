@@ -392,3 +392,65 @@ def search_recipes():
     else:
         query = query.lower()
         return jsonify(recipes = Recipe.query.filter(Recipe.title.like("%" + query + "%")).all())
+
+
+@bp.route("/api/v1.0.0/public/recipe/upload_recipe", methods=['GET', 'POST'])
+def upload_user_recipe():
+    # Is this user not logged in?
+    if not current_user.is_authenticated:
+        return jsonify(recipe=[])
+
+    if request.method == "POST":
+
+        uid = current_user.get_id()
+
+        # No recipe data uploaded
+        if "recipe" not in request.json:
+
+            return jsonify(recipe={
+                "uid": uid,
+                "pk": -1,
+                "upload_successful": False
+            })
+
+        new_recipe = Recipe(title=request.json["recipe"]["title"],
+                            subtitle=request.request.json["recipe"]["subtitle"],
+                            description=request.json["recipe"]["description"])
+        new_ingredients = [
+            IngredientInRecipe(
+                ingredient_key=ingredient["ingredient_key"],
+                recipe_key=ingredient["recipe_key"],
+                optional=ingredient["optional"],
+                count=ingredient["count"]
+            )
+            for ingredient in request.json["recipe"]["ingredients"]
+        ]
+        new_instructions = [
+            InstructionInRecipe(
+                recipe_key=instruction["recipe_key"],
+                description=instruction["description"],
+                instruction_number=instruction["instruction_number"],
+                optional=instruction["optional"]
+            )
+            for instruction in request.json["recipe"]["instructions"]
+        ]
+        new_media = [
+            MediaInRecipe(
+                recipe_key=media["recipe_key"],
+                media_link=media["media_link"],
+                is_video=media["is_video"]
+            )
+        ]
+
+        db.session.add(new_recipe)
+        db.session.add_all(new_ingredients)
+        db.session.add_all(new_instructions)
+        db.session.add_all(new_media)
+
+        db.session.commit()
+
+        return jsonify(recipe={
+            "uid": uid,
+            "pk": new_recipe.pk,
+            "upload_successful": False
+        })
