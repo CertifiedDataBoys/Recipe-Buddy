@@ -368,8 +368,34 @@ def search_recipes():
     if not query:
         return jsonify([])
     else:
-        query = query.lower()
-        return jsonify(recipes=Recipe.query.filter(Recipe.title.like("%" + query + "%")).all())
+        queries = query.lower().split(",")
+        queries = ["%" + term + "%" for term in queries]
+        recipes_query = db.session.query(Recipe)
+        term_queries = [ ]
+        results = dict()
+
+        for term in queries:
+
+            term_queries.append(
+                recipes_query.filter(
+                    Recipe.title.like(term) | Recipe.subtitle.like(term)
+                    | Recipe.description.like(term) | Recipe.type.like(term)
+                )
+            )
+
+        for tq in term_queries:
+
+            for recipe in tq:
+
+                if not recipe.pk in results:
+
+                    results[recipe.pk] = {"recipe": recipe, "score": 1}
+
+                else:
+
+                    results[recipe.pk]["score"] += 1
+
+        return jsonify(recipes=results)
 
 
 @bp.route("/api/v1.0.0/public/recipe/upload_recipe", methods=['GET', 'POST'])

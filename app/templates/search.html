@@ -49,10 +49,15 @@
             $("#recipe-search").val(getUrlParameter("q"));
             $("#search-term").html(getUrlParameter("q"));
             $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + getUrlParameter("q"), function(data) {
-                var recipes = data.recipes;
+                var recipes = Object.values(data.recipes);
+                console.log(recipes[0]);
+                recipes.sort(function (a, b) {
+                    return a["score"] < b["score"];
+                });
+                console.log(recipes);
                 var html = "";
                 for (var i = 0; i < recipes.length; i++) {
-                    html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].subtitle + "</p><a href='/recipe/" + recipes[i].pk + "' class='btn search-btn'>View Recipe</a></div></div></div>";
+                    html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].recipe.title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].recipe.subtitle + "</p><a href='/recipe/" + recipes[i].recipe.pk + "' class='btn search-btn'>View Recipe</a><p class='card-text' style='color: black;'>Relevance score: <i>" + recipes[i].score + "</i></p></div></div></div>";
                 }
                 $("#search-results").html(html);
             });
