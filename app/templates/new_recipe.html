@@ -82,6 +82,7 @@
         <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
     </div>
 </div>
+<script src="https://cdn.tiny.cloud/1/39s8w9qb5wq587ewdwdkwuo0rsa04j5igwwq95srbty2c141/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     const ingredientExamples = [{
         "quantity": "3",
@@ -122,6 +123,16 @@
         $.getJSON("/api/v1.0.0./public/recipe/get_random?quantity=1", function(data) {
             $("#recipeName").attr("placeholder", data.recipes[0].title);
             $("#recipeSubtitle").attr("placeholder", data.recipes[0].subtitle);
+        });
+
+        tinymce.init({
+            selector: '#recipeDescription',
+            body_id: 'post-content-editor',
+            toolbar: 'bold italic underline emoticons link image media table',
+            plugins: 'emoticons image, table, link, imagetools, media',
+            toolbar_mode: 'floating',
+            menubar: false,
+            branding: false
         });
     });
 
@@ -201,7 +212,9 @@
             validity.valid = false;
             validity.msg += "Recipe subtitle cannot be empty.\n";
         }
-        if ($("#recipeDescription").val() == "") {
+        if (tinymce.get('recipeDescription').getContent({
+                format: 'raw'
+            }) == '') {
             validity.valid = false;
             validity.msg += "Recipe description cannot be empty.\n";
         }
@@ -257,7 +270,9 @@
             var recipe = {
                 "title": $("#recipeName").val(),
                 "subtitle": $("#recipeSubtitle").val(),
-                "description": $("#recipeDescription").val(),
+                "description": tinymce.get('recipeDescription').getContent({
+                    format: 'raw'
+                }),
                 "ingredients": [],
                 "instructions": [],
                 "media": []
