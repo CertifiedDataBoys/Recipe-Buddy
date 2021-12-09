@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, jsonify, request
 from ...models import (
     db,
@@ -415,11 +416,17 @@ def upload_recipe():
 
         new_recipe = Recipe(title=request.json["recipe"]["title"],
                             subtitle=request.request.json["recipe"]["subtitle"],
-                            description=request.json["recipe"]["description"])
+                            description=request.json["recipe"]["description"],
+                            uploaded=datetime.now(),
+                            uploaded_by=uid)
+
+        db.session.add(new_recipe)
+        db.session.commit()
+
         new_ingredients = [
             IngredientInRecipe(
                 ingredient_key=ingredient["ingredient_key"],
-                recipe_key=ingredient["recipe_key"],
+                recipe_key=new_recipe.pk,
                 optional=ingredient["optional"],
                 count=ingredient["count"]
             )
@@ -427,7 +434,7 @@ def upload_recipe():
         ]
         new_instructions = [
             InstructionInRecipe(
-                recipe_key=instruction["recipe_key"],
+                recipe_key=new_recipe.pk,
                 description=instruction["description"],
                 instruction_number=instruction["instruction_number"],
                 optional=instruction["optional"]
@@ -436,17 +443,15 @@ def upload_recipe():
         ]
         new_media = [
             MediaInRecipe(
-                recipe_key=media["recipe_key"],
+                recipe_key=new_recipe.pk,
                 media_link=media["media_link"],
                 is_video=media["is_video"]
             )
         ]
 
-        db.session.add(new_recipe)
         db.session.add_all(new_ingredients)
         db.session.add_all(new_instructions)
         db.session.add_all(new_media)
-
         db.session.commit()
 
         return jsonify(recipe={
