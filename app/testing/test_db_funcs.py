@@ -101,18 +101,34 @@ def create_db_test_data(app, db):
                        unit_of_measure="leaf", units_plural="leaves"),
             Ingredient(pk=4, name="Tomato 🍅",
                        unit_of_measure="slice", units_plural="slices"),
-            Ingredient(pk=5, name="Garnish 🌸")
+            Ingredient(pk=5, name="Garnish 🌸"),
+            Ingredient(pk=6, name="Loose leaf green tea 🍵",
+                       unit_of_measure="teaspoon", units_plural="teaspoons"),
+            Ingredient(pk=7, name="Genmai rice 🍚",
+                       unit_of_measure="grain", units_plural="grains"),
+            Ingredient(pk=8, name="Popcorn 🍿",
+                       unit_of_measure="bag", units_plural="bags"),
         ]
-        kitchenware = Kitchenware(pk=1, name="Knife")
+        kitchenware = [
+            Kitchenware(pk=1, name="Knife"),
+            Kitchenware(pk=2, name="Wok"),
+            Kitchenware(pk=3, name="Immersion Blender"),
+            Kitchenware(pk=4, name="Air Fryer"),
+            Kitchenware(pk=5, name="Electric kettle")
+        ]
         kitchenware_in_recipe = [
             KitchenwareInRecipe(pk=1, kitchenware_key=1,
                                 recipe_key=1, optional=False),
-            KitchenwareInRecipe(pk=2, kitchenware_key=1,
-                                recipe_key=2, optional=True),
+            KitchenwareInRecipe(pk=2, kitchenware_key=4,
+                                recipe_key=1, optional=True),
             KitchenwareInRecipe(pk=3, kitchenware_key=1,
-                                recipe_key=3, optional=False),
+                                recipe_key=2, optional=True),
             KitchenwareInRecipe(pk=4, kitchenware_key=1,
+                                recipe_key=3, optional=False),
+            KitchenwareInRecipe(pk=5, kitchenware_key=1,
                                 recipe_key=4, optional=False),
+            KitchenwareInRecipe(pk=6, kitchenware_key=5,
+                                recipe_key=5, optional=False)
         ]
         recipes = [
             Recipe(pk=1, title="BLT 🥪",
@@ -133,8 +149,13 @@ def create_db_test_data(app, db):
             Recipe(pk=4, title="Sodexo Platter",
                    subtitle="This is a platter",
                    description="Image definately not taken at Clarkson.",
-                   type="Mystery",
-                   uploaded=datetime.now(), uploaded_by=1)
+                   type="Vegan",
+                   uploaded=datetime.now(), uploaded_by=1),
+            Recipe(pk=5, title="Poopcorn Tea",
+                   subtitle="Also known as Genmaicha Tea",
+                   description="A popular type of Japanese Tea, Popcorn Tea is genamicha tea (green tea with popped brown rice) brewed with popcorn!",
+                   type="Drink",
+                   uploaded=datetime.now(), uploaded_by=2)
         ]
         ingredients_in_recipe = [
             IngredientInRecipe(pk=1, ingredient_key=1, recipe_key=1,
@@ -146,15 +167,21 @@ def create_db_test_data(app, db):
             IngredientInRecipe(pk=4, ingredient_key=4, recipe_key=1,
                                optional=False, count=1),
             IngredientInRecipe(pk=5, ingredient_key=5, recipe_key=1,
-                               optional=True),
+                               optional=True, count=1),
             IngredientInRecipe(pk=6, ingredient_key=1, recipe_key=2,
-                               optional=False),
+                               optional=False, count=3),
             IngredientInRecipe(pk=7, ingredient_key=3, recipe_key=3,
-                               optional=False),
+                               optional=False, count=5),
             IngredientInRecipe(pk=8, ingredient_key=4, recipe_key=3,
-                               optional=False),
+                               optional=False, count=1),
             IngredientInRecipe(pk=9, ingredient_key=3, recipe_key=4,
-                               optional=False)
+                               optional=False, count=1),
+            IngredientInRecipe(pk=10, ingredient_key=6, recipe_key=5,
+                               optional=False, count=1),
+            IngredientInRecipe(pk=11, ingredient_key=7, recipe_key=5,
+                               optional=False, count=150),
+            IngredientInRecipe(pk=12, ingredient_key=8, recipe_key=5,
+                               optional=False, count=1),
         ]
         instructions = [
             InstructionInRecipe(pk=1, recipe_key=1,
@@ -201,6 +228,26 @@ def create_db_test_data(app, db):
                                 description="Ready to go, consume",
                                 instruction_number=1,
                                 optional=False),
+            InstructionInRecipe(pk=11, recipe_key=5,
+                                description="Toast your genmai rice until dark",
+                                instruction_number=1,
+                                optional=False),
+            InstructionInRecipe(pk=12, recipe_key=5,
+                                description="Mix your rice with your green tea leaves",
+                                instruction_number=2,
+                                optional=False),
+            InstructionInRecipe(pk=13, recipe_key=5,
+                                description="Throw your tea and rice mixture into boiling water for 3 to 5 minutes, depending on preference.",
+                                instruction_number=3,
+                                optional=False),
+            InstructionInRecipe(pk=14, recipe_key=5,
+                                description="Add ice to cool down your tea faster",
+                                instruction_number=4,
+                                optional=True),
+            InstructionInRecipe(pk=15, recipe_key=5,
+                                description="Enjoy! :D",
+                                instruction_number=5,
+                                optional=False)
         ]
         rating = RecipeRating(pk=1, uid=1, recipe_key=1, rating=4.5)
         comments = [
@@ -243,6 +290,9 @@ def create_db_test_data(app, db):
                           is_video=True),
             MediaInRecipe(pk=6, recipe_key=4,
                           media_link="https://content-service.sodexomyway.com/media/healthy-food-background-autumn-fresh-vegetables-dark-stone-table-with-copy-space-top-view_127032-1954_tcm984-128711.jpg?url=https://clarksondining.com/",
+                          is_video=False),
+            MediaInRecipe(pk=7, recipe_key=5,
+                          media_link="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F789031.jpg",
                           is_video=False)
         ]
 
@@ -255,7 +305,7 @@ def create_db_test_data(app, db):
         db.session.commit()
 
         db.session.add_all(ingredients)
-        db.session.add(kitchenware)
+        db.session.add_all(kitchenware)
         db.session.add_all(recipes)
         db.session.commit()
 
