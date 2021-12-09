@@ -368,7 +368,8 @@ def search_recipes():
     if not query:
         return jsonify([])
     else:
-        queries = query.lower().split(",")
+        # limit of 512 characters per search query
+        queries = query[:512].lower().split(",")
         queries = ["%" + term + "%" for term in queries]
         recipes_query = db.session.query(Recipe)
         term_queries = [ ]
