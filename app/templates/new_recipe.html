@@ -55,7 +55,7 @@
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
             <div class="recipe-ingredient-div" id="recipe-ingredient-1">
-                <input type="text" class="recipe-ingredient-quantity" id="recipe-ingredient-quantity-1"><input type="text" class="recipe-ingredient-ingredient" id="recipe-ingredient-ingredient-1"><input type="text" class="recipe-ingredient-units" id="recipe-ingredient-units-1">
+                <input type="number" class="recipe-ingredient-quantity" id="recipe-ingredient-quantity-1"><input type="text" class="recipe-ingredient-ingredient" id="recipe-ingredient-ingredient-1"><input type="text" class="recipe-ingredient-units" id="recipe-ingredient-units-1">
                 <input type="checkbox" class="recipe-ingredient-optional" id="ingredient-1-optional"> Optional?<br>
             </div>
         </div>
@@ -70,7 +70,7 @@
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
             <div class="recipe-media-div" id="recipe-media-1">
-                <select id="recipeType" name="recipeType">
+                <select id="recipeMediaType" class="recipeMediaType">
                     <option value="image">Image URL</option>
                     <option value="video">YouTube Video URL</option>
                 </select>
@@ -135,7 +135,7 @@
         count.media++;
         var html = `
         <div class="recipe-media-div" id="recipe-media-` + count.media + `">
-            <select id="recipeType" name="recipeType">
+            <select id="recipeMediaType" class="recipeMediaType">
                 <option value="image">Image URL</option>
                 <option value="video">YouTube Video URL</option>
             </select>
@@ -150,7 +150,7 @@
         const thisIngredient = ingredientExamples[Math.floor(Math.random() * ingredientExamples.length)];
         var html = `
             <div class="recipe-ingredient-div" id="recipe-ingredient-` + count.ingredient + `">
-                <input type="text" placeholder="` + thisIngredient.quantity + `" class="recipe-ingredient-quantity"><input type="text" placeholder="` + thisIngredient.ingredient + `" class="recipe-ingredient-ingredient"><input type="text" placeholder="` + thisIngredient.units + `" class="recipe-ingredient-units"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional" class="recipe-ingredient-optional">Optional?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
+                <input type="number" placeholder="` + thisIngredient.quantity + `" class="recipe-ingredient-quantity"><input type="text" placeholder="` + thisIngredient.ingredient + `" class="recipe-ingredient-ingredient"><input type="text" placeholder="` + thisIngredient.units + `" class="recipe-ingredient-units"><input type="checkbox" id="ingredient-` + count.ingredient + `-optional" class="recipe-ingredient-optional">Optional?<button onclick='$("#recipe-ingredient-` + count.ingredient + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeIngredientSelector").append(html);
@@ -166,55 +166,140 @@
         $("#recipeInstructionSelector").append(html);
     }
 
-    function submitRecipe() {
-        var recipe = {
-            "title": $("#recipeName").val(),
-            "subtitle": $("#recipeSubtitle").val(),
-            "description": $("#recipeDescription").val(),
-            "ingredients": [],
-            "instructions": [],
-            "media": []
-        };
+    function youtubeGetId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
 
+        return (match && match[2].length === 11) ?
+            match[2] :
+            null;
+    }
+
+    function isValidHttpUrl(string) {
+        let url;
+
+        try {
+            url = new URL(string);
+        } catch (_) {
+            return false;
+        }
+
+        return url.protocol === "http:" || url.protocol === "https:";
+    }
+
+    function formValid() {
+        var validity = {
+            valid: true,
+            msg: ""
+        }
+        if ($("#recipeName").val() == "") {
+            validity.valid = false;
+            validity.msg += "Recipe name cannot be empty.\n";
+        }
+        if ($("#recipeSubtitle").val() == "") {
+            validity.valid = false;
+            validity.msg += "Recipe subtitle cannot be empty.\n";
+        }
+        if ($("#recipeDescription").val() == "") {
+            validity.valid = false;
+            validity.msg += "Recipe description cannot be empty.\n";
+        }
         for (var i = 0; i < $(".recipe-ingredient-quantity").length; i++) {
-            var ingredient = {
-                "count": $(".recipe-ingredient-quantity")[i].value,
-                "name": $(".recipe-ingredient-ingredient")[i].value,
-                "units": $(".recipe-ingredient-units")[i].value,
-                "optional": $(".recipe-ingredient-optional")[i].checked
-            };
-            recipe.ingredients.push(ingredient);
-        }
-
-        for (var i = 0; i < $(".recipe-instruction").length; i++) {
-            var instruction = {
-                "description": $(".recipe-instruction")[i].value,
-                "optional": $(".recipe-instruction-optional")[i].checked,
-                "instruction_number": i + 1
-            };
-            recipe.instructions.push(instruction);
-        }
-
-        for (var i = 0; i < $(".recipeMedia").length; i++) {
-            var media = {
-                "is_video": $("#recipeType")[i].value == "video",
-                "media_link": $(".recipeMedia")[i].value
-            };
-            recipe.media.push(media);
-        }
-
-        $.ajax({
-            url: "/api/v1.0.0/public/recipe/upload_recipe",
-            type: "POST",
-            data: JSON.stringify({
-                recipe: recipe
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
+            if ($($(".recipe-ingredient-quantity")[i]).val() == "") {
+                validity.valid = false;
+                validity.msg += "Ingredient(" + i + ") quantity cannot be empty.\n";
             }
-        });
+            if ($($(".recipe-ingredient-ingredient")[i]).val() == "") {
+                validity.valid = false;
+                validity.msg += "Ingredient(" + i + ") ingredient cannot be empty.\n";
+            }
+            if ($($(".recipe-ingredient-units")[i]).val() == "") {
+                validity.valid = false;
+                validity.msg += "Ingredient(" + i + ") units cannot be empty.\n";
+            }
+        }
+        for (var i = 0; i < $(".recipe-instruction").length; i++) {
+            if ($($(".recipe-instruction")[i]).val() == "") {
+                validity.valid = false;
+                validity.msg += "Instruction(" + i + ") cannot be empty.\n";
+            }
+        }
+        for (var i = 0; i < $(".recipeMedia").length; i++) {
+            if ($($(".recipeMedia")[i]).val() == "") {
+                validity.valid = false;
+                validity.msg += "Media(" + i + ") cannot be empty.\n";
+            }
+            if ($(".recipeMediaType")[i].value == "image") {
+                if (isValidHttpUrl($($(".recipeMedia")[i]).val()) == false) {
+                    validity.valid = false;
+                    validity.msg += "Media(" + i + ") must be a valid image URL.\n";
+                }
+            }
+            if ($(".recipeMediaType")[i].value == "video") {
+                if (!$(".recipeMedia")[i].value.includes("youtube.com") || !$(".recipeMedia")[i].value.includes("youtub.be")) {
+                    validity.valid = false;
+                }
+            }
+            return validity;
+        }
+    }
+
+    function submitRecipe() {
+        $.LoadingOverlay("show");
+        var formValidity = formValid();
+        if (formValidity.valid) {
+            var recipe = {
+                "title": $("#recipeName").val(),
+                "subtitle": $("#recipeSubtitle").val(),
+                "description": $("#recipeDescription").val(),
+                "ingredients": [],
+                "instructions": [],
+                "media": []
+            };
+
+            for (var i = 0; i < $(".recipe-ingredient-quantity").length; i++) {
+                var ingredient = {
+                    "count": $(".recipe-ingredient-quantity")[i].value,
+                    "name": $(".recipe-ingredient-ingredient")[i].value,
+                    "units": $(".recipe-ingredient-units")[i].value,
+                    "optional": $(".recipe-ingredient-optional")[i].checked
+                };
+                recipe.ingredients.push(ingredient);
+            }
+
+            for (var i = 0; i < $(".recipe-instruction").length; i++) {
+                var instruction = {
+                    "description": $(".recipe-instruction")[i].value,
+                    "optional": $(".recipe-instruction-optional")[i].checked,
+                    "instruction_number": i + 1
+                };
+                recipe.instructions.push(instruction);
+            }
+
+            for (var i = 0; i < $(".recipeMedia").length; i++) {
+                var media = {
+                    "is_video": $("#recipeType")[i].value == "video",
+                    "media_link": $("#recipeType")[i].value == "video" ? youtubeGetId($(".recipeMedia")[i].value) : $(".recipeMedia")[i].value
+                };
+                recipe.media.push(media);
+            }
+
+            $.ajax({
+                url: "/api/v1.0.0/public/recipe/upload_recipe",
+                type: "POST",
+                data: JSON.stringify({
+                    recipe: recipe
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    window.location.href = "/recipe/" + data.recipe.pk;
+                }
+            });
+        } else {
+            $.LoadingOverlay("hide");
+            alert(formValidity.msg);
+        }
     }
 </script>
 {{ render_partial('partials/footer.html') }}
