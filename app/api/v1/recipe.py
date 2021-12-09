@@ -447,6 +447,7 @@ def upload_recipe():
                 media_link=media["media_link"],
                 is_video=media["is_video"]
             )
+            for media in request.json["recipe"]["media"]
         ]
 
         db.session.add_all(new_ingredients)
