@@ -82,6 +82,7 @@
         <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script>
     const ingredientExamples = [{
         "quantity": "3",
@@ -190,7 +191,8 @@
     function formValid() {
         var validity = {
             valid: true,
-            msg: ""
+            msg: "",
+            containsImg: false
         }
         if ($("#recipeName").val() == "") {
             validity.valid = false;
@@ -230,18 +232,24 @@
                 validity.msg += "Media(" + i + ") cannot be empty.\n";
             }
             if ($(".recipeMediaType")[i].value == "image") {
+                validity.containsImg = true;
                 if (isValidHttpUrl($($(".recipeMedia")[i]).val()) == false) {
                     validity.valid = false;
                     validity.msg += "Media(" + i + ") must be a valid image URL.\n";
                 }
             }
             if ($(".recipeMediaType")[i].value == "video") {
-                if (!$(".recipeMedia")[i].value.includes("youtube.com") || !$(".recipeMedia")[i].value.includes("youtub.be")) {
+                if (!$(".recipeMedia")[i].value.includes("youtube.com") && !$(".recipeMedia")[i].value.includes("youtub.be")) {
                     validity.valid = false;
+                    validity.msg += "Media(" + i + ") must be a valid YouTube URL.\n";
                 }
             }
-            return validity;
         }
+        if (!validity.containsImg) {
+            validity.valid = false;
+            validity.msg += "Recipe must contain at least one image.\n";
+        }
+        return validity;
     }
 
     function submitRecipe() {
@@ -278,8 +286,8 @@
 
             for (var i = 0; i < $(".recipeMedia").length; i++) {
                 var media = {
-                    "is_video": $("#recipeType")[i].value == "video",
-                    "media_link": $("#recipeType")[i].value == "video" ? youtubeGetId($(".recipeMedia")[i].value) : $(".recipeMedia")[i].value
+                    "is_video": $(".recipeMediaType")[i].value == "video",
+                    "media_link": $(".recipeMediaType")[i].value == "video" ? youtubeGetId($(".recipeMedia")[i].value) : $(".recipeMedia")[i].value
                 };
                 recipe.media.push(media);
             }
