@@ -83,15 +83,15 @@ def create_db_test_data(app, db):
     with app.app_context():
 
         users = [
-            User(uid=1, username="big_sean_banerjee",
+            User(uid=1, username="ProfessorBanerjee",
                  email="sean@k.banerjee.net",
                  verified=True),
-            User(uid=2, username="KingoFan",
-                 email="kingo@fan.club",
+            User(uid=2, username="RecipeBuddyUser",
+                 email="user@recipebuddy.com",
                  verified=True)
         ]
         users[0].set_password("CS350-Project")
-        users[1].set_password("IL0veKingo!")
+        users[1].set_password("RecipeBuddyPassword")
         ingredients = [
             Ingredient(pk=1, name="Bread 🍞",
                        unit_of_measure="slice", units_plural="slices"),
