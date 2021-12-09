@@ -3,10 +3,6 @@
 <script>
     function searchQuery() {
         var q = document.getElementById("recipe-search").value;
-        if (q.length > 512) {
-            alert("Query is too long, please limit your query to 512 characters");
-            return false;
-        }
         window.location.href = '/search?q=' + encodeURIComponent(q);
     }
     $("#recipe-search").on("keydown", function search(e) {

@@ -24,6 +24,7 @@
 <div id="main">
     <div class="container">
         <strong>Recipes</strong><br>Search: <span id="search-term"></span>
+        <div id="search-limit"></div>
         <div id="search-results"></div>
     </div>
 </div>
@@ -46,12 +47,17 @@
     $(document).ready(function() {
         // Search page
         if (getUrlParameter("q")) {
-            $("#recipe-search").val(getUrlParameter("q"));
-            $("#search-term").html(getUrlParameter("q"));
-            $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + getUrlParameter("q"), function(data) {
+            var query = getUrlParameter("q");
+            if (getUrlParameter("q").length > 512) {
+                $("#search-limit").html("<i>Your search query was limited to 512 characters</i> (Characters after \"" + query.substring(502, 512) + "\" were ignored)");
+                query = getUrlParameter("q").substring(0, 512);
+            }
+            $("#recipe-search").val(query);
+            $("#search-term").html(query);
+            $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + query, function(data) {
                 var recipes = Object.values(data.recipes);
                 console.log(recipes[0]);
-                recipes.sort(function (a, b) {
+                recipes.sort(function(a, b) {
                     return a["score"] < b["score"];
                 });
                 console.log(recipes);
