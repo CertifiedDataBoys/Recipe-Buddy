@@ -27,16 +27,16 @@
         <hr>
 
         <label for="recipeName">Recipe Name</label><br>
-        <input type="text" id="recipeName" name="recipeName"><br><br>
+        <input type="text" class="form-control" id="recipeName" name="recipeName"><br><br>
 
         <label for="recipeSubtitle">Recipe Subtitle</label><br>
-        <input type="text" id="recipeSubtitle" name="recipeSubtitle"><br><br>
+        <input type="text" class="form-control" id="recipeSubtitle" name="recipeSubtitle"><br><br>
 
         <label for="recipeDescription">Recipe Description</label><br>
         <textarea id="recipeDescription" name="recipeDescription" rows="10" cols="50"></textarea><br><br>
 
         <label for="recipeType">Recipe Type</label><br>
-        <select id="recipeType" name="recipeType">
+        <select class="form-control" id="recipeType" name="recipeType">
             <option value="Sandwich">Sandwich</option>
             <option value="Side">Pasta</option>
             <option value="Grilled">Drink</option>
@@ -62,23 +62,23 @@
 
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <div id="recipeInstructionSelector">
-            <input type="text" id="recipeInstructions" placeholder="Instruction 1" class="recipe-instruction"><input type="checkbox" id="instruction-1-optional" class="recipe-instruction-optional"> Optional?<br>
+            <input type="text" id="recipeInstructions" placeholder="Instruction 1" class="recipe-instruction form-control"><input type="checkbox" id="instruction-1-optional" class="recipe-instruction-optional"> Optional?<br>
         </div>
         <button onclick="addInstruction();">Add instruction field</button><br><br>
 
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
             <div class="recipe-media-div" id="recipe-media-1">
-                <select id="recipeMediaType" class="recipeMediaType">
+                <select id="recipeMediaType" class="form-control recipeMediaType">
                     <option value="image">Image URL</option>
                     <option value="video">YouTube Video URL</option>
                 </select>
-                <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
+                <input type="text" class="form-control recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
             </div>
         </div>
         <button onclick="addMedia();">Add media field</button>
         <br><br>
-        <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
+        <button id="submitRecipe" onclick="submitRecipe();" class="btn">Submit Recipe</button>
     </div>
 </div>
 <script src="https://cdn.tiny.cloud/1/39s8w9qb5wq587ewdwdkwuo0rsa04j5igwwq95srbty2c141/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -143,11 +143,11 @@
         count.media++;
         var html = `
         <div class="recipe-media-div" id="recipe-media-` + count.media + `">
-            <select id="recipeMediaType" class="recipeMediaType">
+            <select id="recipeMediaType" class="form-control recipeMediaType">
                 <option value="image">Image URL</option>
                 <option value="video">YouTube Video URL</option>
             </select>
-            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + count.media + `").remove()'>X</button><br>
+            <input type="text" class="form-control recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + count.media + `").remove()'>X</button><br>
         </div>
         `;
         $("#recipeMediaSelector").append(html);
@@ -172,7 +172,7 @@
         count.instruction++;
         var html = `
             <div class="recipe-instruction-div" id="recipe-instruction-` + count.instruction + `">
-                <input type="text" placeholder="Instruction ` + count.instruction + `" class="recipe-instruction"><input type="checkbox" id="instruction-` + count.instruction + `-optional" class="recipe-instruction-optional"> Optional?<button onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
+                <input type="text" placeholder="Instruction ` + count.instruction + `" class="recipe-instruction form-control"><input type="checkbox" id="instruction-` + count.instruction + `-optional" class="recipe-instruction-optional"> Optional?<button class="btn" onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeInstructionSelector").append(html);
