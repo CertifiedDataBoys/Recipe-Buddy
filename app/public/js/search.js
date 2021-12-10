@@ -32,7 +32,7 @@ $(document).ready(function() {
         }
         $("#recipe-search").val(query);
         $("#search-term").html(query);
-        $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + query, function(data) {
+        $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + encodeURIComponent(query), function(data) {
             var recipes = Object.values(data.recipes);
             console.log(recipes[0]);
             recipes.sort(function(a, b) {

@@ -446,12 +446,21 @@ def search_recipes():
 
         for term in queries:
 
-            term_queries.append(
-                recipes_query.filter(
-                    Recipe.title.like(term) | Recipe.subtitle.like(term)
-                    | Recipe.description.like(term) | Recipe.type.like(term)
+            if term.lower()[1:].startswith("title:"):
+                term_queries.append(recipes_query.filter(Recipe.title.like("%" + term[7:len(term) - 1] + "%")))
+            elif term.lower()[1:].startswith("subtitle:"):
+                term_queries.append(recipes_query.filter(Recipe.subtitle.like("%" + term[10:len(term) - 1] + "%")))
+            elif term.lower()[1:].startswith("description:"):
+                term_queries.append(recipes_query.filter(Recipe.description.like("%" + term[13:len(term) - 1] + "%")))
+            elif term.lower()[1:].startswith("type:"):
+                term_queries.append(recipes_query.filter(Recipe.type.like("%" + term[6:len(term) - 1] + "%")))
+            else:
+                term_queries.append(
+                    recipes_query.filter(
+                        Recipe.title.like(term) | Recipe.subtitle.like(term)
+                        | Recipe.description.like(term) | Recipe.type.like(term)
+                    )
                 )
-            )
 
         for tq in term_queries:
 
