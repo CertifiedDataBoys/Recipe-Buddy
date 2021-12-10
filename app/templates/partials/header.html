@@ -95,7 +95,8 @@
             border-color: darkgrey;
         }
         
-        .sidebar a {
+        .sidebar a,
+        .sidebar span {
             padding: 8px 8px 8px 4px;
             text-decoration: none;
             background-color: #262927;
@@ -115,6 +116,10 @@
             background-color: #262927;
             color: #fcba03;
             text-align: center;
+        }
+        
+        .sideBarButtonActive {
+            color: #fff !important;
         }
         
         .sideBarButton:hover {
@@ -179,6 +184,9 @@
                 </li>
                 <li class="navbar-item active">
                     <a class="nav-link" href='/new_recipe'>New Recipe</a>
+                </li>
+                <li class="navbar-item active">
+                    <a class="nav-link" href='/my_pantry'>My Pantry</a>
                 </li>
             </ul>
             <div class="col-md-10">
