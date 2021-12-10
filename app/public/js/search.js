@@ -2,9 +2,11 @@ var lastQuery = "";
 
 function loadRecipes(query, typeFilters, kitchenwareFilters) {
     lastQuery = query;
-    console.log("Searchg for: " + query + " with typeFilters: " + typeFilters + " and kitchenwareFilters: " + kitchenwareFilters);
     if (typeof typeFilters !== 'undefined' && typeFilters !== '') {
         query += "&&type:" + typeFilters;
+    }
+    if (typeof kitchenwareFilters !== 'undefined' && kitchenwareFilters.length !== 0) {
+        query += '&&kitchenware:' + kitchenwareFilters.join('&&kitchenware:');
     }
     $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + encodeURIComponent(query), function(data) {
         displaySearch(query);
