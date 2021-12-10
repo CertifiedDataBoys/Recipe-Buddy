@@ -8,11 +8,9 @@ function loadRecipes(query, typeFilters, kitchenwareFilters) {
     }
     $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + encodeURIComponent(query), function(data) {
         var recipes = Object.values(data.recipes);
-        console.log(recipes[0]);
         recipes.sort(function(a, b) {
             return a["score"] < b["score"];
         });
-        console.log(recipes);
         var html = "";
         for (var i = 0; i < recipes.length; i++) {
             html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].recipe.title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].recipe.subtitle + "</p><a href='/recipe/" + recipes[i].recipe.pk + "' class='btn search-btn'>View Recipe</a><p class='card-text' style='color: black;'>Relevance score: <i>" + recipes[i].score + "</i></p></div></div></div>";
@@ -27,9 +25,7 @@ function reloadFilters(buttonElemId) {
         buttonElem.removeClass('sideBarButtonActive');
     } else if (buttonElem.hasClass('typeFilter')) {
         $('.typeFilter').removeClass('sideBarButtonActive');
-        console.log(buttonElem.attr("class"));
         buttonElem.addClass('sideBarButtonActive');
-        console.log(buttonElem.attr("class"));
     } else if (buttonElem.hasClass('kitchenwareFilter')) {
         buttonElem.hasClass('sideBarButtonActive') ? buttonElem.removeClass('sideBarButtonActive') : buttonElem.addClass('sideBarButtonActive');
     }

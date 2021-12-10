@@ -4,9 +4,7 @@ function reloadFilters(buttonElemId) {
         buttonElem.removeClass('sideBarButtonActive');
     } else if (buttonElem.hasClass('typeFilter')) {
         $('.typeFilter').removeClass('sideBarButtonActive');
-        console.log(buttonElem.attr("class"));
         buttonElem.addClass('sideBarButtonActive');
-        console.log(buttonElem.attr("class"));
     } else if (buttonElem.hasClass('kitchenwareFilter')) {
         buttonElem.hasClass('sideBarButtonActive') ? buttonElem.removeClass('sideBarButtonActive') : buttonElem.addClass('sideBarButtonActive');
     }
