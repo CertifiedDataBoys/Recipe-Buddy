@@ -6,7 +6,7 @@ function loadRecipes(query, typeFilters, kitchenwareFilters) {
         query += "&&type:" + typeFilters;
     }
     if (typeof kitchenwareFilters !== 'undefined' && kitchenwareFilters.length !== 0) {
-        query += '&&kitchenware:' + kitchenwareFilters.join('&&kitchenware:');
+        query += '&&kitchenware:' + kitchenwareFilters.join(',');
     }
     $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + encodeURIComponent(query), function(data) {
         displaySearch(query);
@@ -70,6 +70,8 @@ function displaySearch(query) {
     $("#search-term").html(query);
     $("#recipe-search").val(query);
 }
+
+
 
 $(document).ready(function() {
     // Kitchenware Filters
