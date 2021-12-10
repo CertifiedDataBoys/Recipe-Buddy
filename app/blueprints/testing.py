@@ -35,9 +35,3 @@ def err_page():
 def upload_profile_photo():
 
     return render_template("testing_image_uploads.html")
-
-
-@bp.route("/testing/main_boy")
-def main_boy():
-
-    return render_template("index.html")

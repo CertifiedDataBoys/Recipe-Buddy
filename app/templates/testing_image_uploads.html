@@ -1,0 +1,100 @@
+<!doctype html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" integrity="sha512-zxBiDORGDEAYDdKLuYU9X/JaJo/DPzE42UubfBw9yg8Qvb2YRRIQ8v4KsGHOx2H1/+sdSXyXxLXv5r7tHc9ygg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <title>Recipe</title>
+    <!--link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"-->
+</head>
+
+{% block content %}
+
+<body>
+    <div class="py-5 d-flex justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card w-50 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        Upload image
+                    </div>
+                    <div class="card-body" id="recipe-body">
+                        <input id="image_field" name="image_field" required="" type="file">
+                        <button id="upload_button" class="btn btn-primary" onclick="upload_image();">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function upload_image() {
+            if ($(".croppie-container")[0]) {
+                $('#image_preview').croppie('result', {
+                    type: 'base64',
+                    size: 'viewport',
+                    format: 'png'
+                }).then(function(resp) {
+                    $.ajax({
+                        url: "{{ url_for('api_v1_users.upload_user_profile_photo') }}",
+                        type: "POST",
+                        data: JSON.stringify({
+                            profile_image: resp
+                        }),
+                        processData: false,
+                        contentType: "application/json",
+                        success: function(data) {
+                            alert(JSON.stringify(data));
+                        }
+                    });
+                });
+            } else {
+                alert("Please select an image first");
+            }
+        }
+
+        function getBase64(file, cb) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                console.log(reader.result);
+                cb(reader.result);
+            };
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        document.getElementById('image_field').addEventListener('change', (event) => {
+            getBase64(event.target.files[0], function(base64Result) {
+                var img = document.createElement('img');
+                img.src = base64Result;
+                img.id = 'image_preview';
+                console.log(img.src);
+                $(".container")[0].appendChild(img);
+                $('#image_preview').croppie({
+                    enableZoom: true,
+                    enforceBoundary: true,
+                    mouseWheelZoom: true,
+                    showZoomer: true,
+                    enableExif: true,
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'square'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+{% endblock %}
+
+</html>
