@@ -16,6 +16,7 @@ function loadRecipes(query, typeFilters, kitchenwareFilters) {
             html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].recipe.title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].recipe.subtitle + "</p><a href='/recipe/" + recipes[i].recipe.pk + "' class='btn search-btn'>View Recipe</a><p class='card-text' style='color: black;'>Relevance score: <i>" + recipes[i].score + "</i></p></div></div></div>";
         }
         $("#search-results").html(html);
+        displaySearch(query)
     });
 }
 
@@ -55,6 +56,14 @@ var getUrlParameter = function getUrlParameter(sParam) {
     return false;
 };
 
+function displaySearch(query) {
+    if (query.length > 512) {
+        $("#search-limit").html("<i>Your search query was limited to 512 characters</i> (Characters after \"" + query.substring(502, 512) + "\" were ignored)");
+        query = getUrlParameter("q").substring(0, 512);
+    }
+    $("#search-term").html(query);
+}
+
 $(document).ready(function() {
     // Kitchenware Filters
     $.getJSON("/api/v1.0.0/public/food/get_all_kitchenware", function(data) {
@@ -68,12 +77,8 @@ $(document).ready(function() {
     // Search page
     if (getUrlParameter("q")) {
         var query = getUrlParameter("q");
-        if (getUrlParameter("q").length > 512) {
-            $("#search-limit").html("<i>Your search query was limited to 512 characters</i> (Characters after \"" + query.substring(502, 512) + "\" were ignored)");
-            query = getUrlParameter("q").substring(0, 512);
-        }
+        displaySearch(query);
         $("#recipe-search").val(query);
-        $("#search-term").html(query);
         loadRecipes(query, "", []);
     }
 });
