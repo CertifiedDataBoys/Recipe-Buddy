@@ -68,6 +68,7 @@ function displaySearch(query) {
         query = getUrlParameter("q").substring(0, 512);
     }
     $("#search-term").html(query);
+    $("#recipe-search").val(query);
 }
 
 $(document).ready(function() {
@@ -84,7 +85,6 @@ $(document).ready(function() {
     if (getUrlParameter("q")) {
         var query = getUrlParameter("q");
         displaySearch(query);
-        $("#recipe-search").val(query);
         loadRecipes(query, "", []);
     }
 });
