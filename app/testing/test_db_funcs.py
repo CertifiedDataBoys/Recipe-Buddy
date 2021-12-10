@@ -110,6 +110,12 @@ def create_db_test_data(app, db):
                        unit_of_measure="grain", units_plural="grains"),
             Ingredient(pk=8, name="Popcorn 🍿",
                        unit_of_measure="bag", units_plural="bags"),
+            Ingredient(pk=9, name="Butter 🧈",
+                       unit_of_measure="stick", units_plural="sticks"),
+            Ingredient(pk=10, name="Salt 🧂",
+                       unit_of_measure="Tablespoon", units_plural="Tablespoons"),
+            Ingredient(pk=11, name="Ice 🧊",
+                       unit_of_measure="cube", units_plural="cubes"),
         ]
         kitchenware = [
             Kitchenware(pk=1, name="Knife"),
