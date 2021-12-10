@@ -32,7 +32,7 @@ def register():
                 return redirect(url_for("register.register"))
 
             user = User(username=form.username.data,
-                        email=form.email.data, verified=True)
+                        email=form.email.data, verified=True, is_manager=False)
             user.set_password(form.password.data)
             # Need to add user to database, then send verification email
             # ... Maybe. We'll get to email verification later.

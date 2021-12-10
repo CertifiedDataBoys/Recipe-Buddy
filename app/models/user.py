@@ -21,6 +21,9 @@ class User(UserMixin, db.Model):
                         Boolean representing if this user is verified or not
             password_hash (db.String(256)):
                         The hash of a user's password
+            is_manager (db.Boolean):
+                        A boolean representing whether or not this user is a
+                        manager (can access manage page, for testing purposes).
     """
 
     uid: int
@@ -28,12 +31,14 @@ class User(UserMixin, db.Model):
     email: str
     verified: bool
     password_hash: str
+    is_manager: bool
 
     uid = db.Column(db.Integer, primary_key=True, nullable=False)
     username = db.Column(db.String(32), unique=True, nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     verified = db.Column(db.Boolean, nullable=False)
     password_hash = db.Column(db.String(256), unique=False, nullable=False)
+    is_manager = db.Column(db.Boolean, unique=False, nullable=False)
 
     def _hash(self, password, salt):
         """

@@ -85,10 +85,12 @@ def create_db_test_data(app, db):
         users = [
             User(uid=1, username="ProfessorBanerjee",
                  email="sean@k.banerjee.net",
-                 verified=True),
+                 verified=True,
+                 is_manager=True),
             User(uid=2, username="RecipeBuddyUser",
                  email="user@recipebuddy.com",
-                 verified=True)
+                 verified=True,
+                 is_manager=True),
         ]
         users[0].set_password("CS350-Project")
         users[1].set_password("RecipeBuddyPassword1!")
