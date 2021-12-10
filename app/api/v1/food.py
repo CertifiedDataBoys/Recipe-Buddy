@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
+from flask_login import current_user
 from ...models import (
-    db, Ingredient, Kitchenware
+    User, db, Ingredient, Kitchenware
 )
 
 
@@ -11,6 +12,15 @@ def create_ingredient():
     """
         Create a blueprint to create a single recipe
     """
+    if not current_user.is_anonymous:
+        uid = current_user.get_id()
+        # Check if user is manager
+        userDetails = User.query.filter(uid == User.uid).first()
+        if not userDetails.is_manager:
+            return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+    else:
+        return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+
     data = request.get_json()
 
     if not data or not data.get("name") or not data.get("unit_of_measure") or not data.get("units_plural"):
@@ -30,6 +40,14 @@ def update_ingredient():
     """
         Create a blueprint to update a single recipe
     """
+    if not current_user.is_anonymous:
+        uid = current_user.get_id()
+        # Check if user is manager
+        userDetails = User.query.filter(uid == User.uid).first()
+        if not userDetails.is_manager:
+            return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+    else:
+        return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
 
     data = request.get_json()
     key = request.args.get("pk")
@@ -77,6 +95,15 @@ def create_kitchenware():
     """
         Create a blueprint to create a single recipe
     """
+    if not current_user.is_anonymous:
+        uid = current_user.get_id()
+        # Check if user is manager
+        userDetails = User.query.filter(uid == User.uid).first()
+        if not userDetails.is_manager:
+            return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+    else:
+        return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+
     data = request.get_json()
 
     if not data or not data.get("name"):
@@ -94,6 +121,14 @@ def update_kitchenware():
     """
         Create a blueprint to update a single recipe
     """
+    if not current_user.is_anonymous:
+        uid = current_user.get_id()
+        # Check if user is manager
+        userDetails = User.query.filter(uid == User.uid).first()
+        if not userDetails.is_manager:
+            return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
+    else:
+        return jsonify({"success": False, "error": "You are not authorized to perform this action"}), 401
 
     data = request.get_json()
     key = request.args.get("pk")
