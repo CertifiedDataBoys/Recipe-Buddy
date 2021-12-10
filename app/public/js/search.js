@@ -7,16 +7,20 @@ function loadRecipes(query, typeFilters, kitchenwareFilters) {
         query += "&&type:" + typeFilters;
     }
     $.getJSON("/api/v1.0.0/public/recipe/search_recipes?q=" + encodeURIComponent(query), function(data) {
-        var recipes = Object.values(data.recipes);
-        recipes.sort(function(a, b) {
-            return a["score"] < b["score"];
-        });
-        var html = "";
-        for (var i = 0; i < recipes.length; i++) {
-            html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].recipe.title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].recipe.subtitle + "</p><a href='/recipe/" + recipes[i].recipe.pk + "' class='btn search-btn'>View Recipe</a><p class='card-text' style='color: black;'>Relevance score: <i>" + recipes[i].score + "</i></p></div></div></div>";
+        displaySearch(query);
+        if (typeof data.recipes == 'undefined' || Object.keys(data.recipes).length === 0 || data.recipes.length == 0) {
+            $("#search-results").html("<h3>No recipes found</h3>");
+        } else {
+            var recipes = Object.values(data.recipes);
+            recipes.sort(function(a, b) {
+                return a["score"] < b["score"];
+            });
+            var html = "";
+            for (var i = 0; i < recipes.length; i++) {
+                html += "<div class='col-md-4'><div class='card'><div class='card-body' style='background: linear-gradient(to right, #fcba03, #fc9003);'><h5 class='card-title' style='color: black;'>" + recipes[i].recipe.title + "</h5><p class='card-text' style='color: black;'>" + recipes[i].recipe.subtitle + "</p><a href='/recipe/" + recipes[i].recipe.pk + "' class='btn search-btn'>View Recipe</a><p class='card-text' style='color: black;'>Relevance score: <i>" + recipes[i].score + "</i></p></div></div></div>";
+            }
+            $("#search-results").html(html);
         }
-        $("#search-results").html(html);
-        displaySearch(query)
     });
 }
 
@@ -37,7 +41,7 @@ function reloadFilters(buttonElemId) {
     });
     typeof typeFilters == 'undefined' ? typeFilters = '' : typeFilters = typeFilters;
     typeof kitchenwareFilters == 'undefined' ? kitchenwareFilters = '' : kitchenwareFilters = kitchenwareFilters;
-    loadRecipes(lastQuery, typeFilters, kitchenwareFilters)
+    loadRecipes(lastQuery, typeFilters, kitchenwareFilters);
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
