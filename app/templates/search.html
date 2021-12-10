@@ -13,12 +13,8 @@
     <div class="sideBarCategory">
         <p>Filter by Kitchenware</p>
     </div>
-    <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
-    <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
-    <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
-    <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
-    <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
-    <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
+    <div id="kitchenwareContainer">
+    </div>
     <div class="sidebarBreakLine"></div>
 </div>
 <div id="main">
@@ -45,6 +41,12 @@
         return false;
     };
     $(document).ready(function() {
+        // Kitchenware Filters
+        $.getJSON("/api/v1.0.0/public/food/get_all_kitchenware", function(data) {
+            for (let i = 0; i < data.kitchenware.length; i++) {
+                $("#kitchenwareContainer").append('<a class="sideBarButton" href="#">' + data.kitchenware[i].name.replace(/\s/g, '') + '</a>');
+            }
+        });
         // Search page
         if (getUrlParameter("q")) {
             var query = getUrlParameter("q");

@@ -13,18 +13,19 @@
     <div class="sideBarCategory">
         <p>Filter by Kitchenware</p>
     </div>
-    <a class="sideBarButton" id="kitchenwareBtn1" href="#">Knife</a>
-    <a class="sideBarButton" id="kitchenwareBtn2" href="#">Wok</a>
-    <a class="sideBarButton" id="kitchenwareBtn3" href="#">Immersion Blender</a>
-    <a class="sideBarButton" id="kitchenwareBtn4" href="#">Air Fryer</a>
-    <a class="sideBarButton" id="kitchenwareBtn5" href="#">Electric Kettle</a>
-    <!-- <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a> -->
+    <div id="kitchenwareContainer">
+    </div>
     <div class="sidebarBreakLine"></div>
 </div>
 <div id="main">
     <div id="home-container" class="container-fluid py-4"></div>
     <script>
         $(document).ready(function() {
+            $.getJSON("/api/v1.0.0/public/food/get_all_kitchenware", function(data) {
+                for (let i = 0; i < data.kitchenware.length; i++) {
+                    $("#kitchenwareContainer").append('<a class="sideBarButton" href="#">' + data.kitchenware[i].name.replace(/\s/g, '') + '</a>');
+                }
+            });
             $.getJSON("/api/v1.0.0./public/recipe/get_random?quantity=4", function(data) {
                 var html = `
                     <div class="row mt-4">
