@@ -6,6 +6,7 @@ from ...models import (
     InstructionInRecipe, IngredientInRecipe, KitchenwareInRecipe, MediaInRecipe,
     Ingredient, Kitchenware,
     RecipeComment,
+    DietaryRestriction, RestrictionOnIngredient,
     User
 )
 from sqlalchemy.sql import func
@@ -330,6 +331,60 @@ def single_recipe_ingredient():
         .filter(IngredientInRecipe.pk == key)
 
     return jsonify(ingredient=query.first())
+
+
+@bp.route("/api/v1.0.0/public/recipe/get_recipe_restrictions")
+def get_recipe_restrictions():
+    """
+        Using a recipe's ingredients, fetch all of the restrictions this
+        recipe complies with.
+    """
+
+    key = request.args.get("pk")
+
+    # error handling --- improve later
+    if not key:
+
+        return jsonify([])
+
+
+    ingredients_count = IngredientInRecipe.query \
+        .filter(IngredientInRecipe.recipe_key == key) \
+        .filter(IngredientInRecipe.optional == False) \
+        .with_entities(func.count(IngredientInRecipe.pk)) \
+        .scalar()
+
+    ingredients_query = Ingredient.query \
+        .join(IngredientInRecipe, IngredientInRecipe.recipe_key == key) \
+        .filter(IngredientInRecipe.ingredient_key == Ingredient.pk) \
+        .filter(IngredientInRecipe.optional == False) \
+        .with_entities(Ingredient.pk)
+
+    restrictions_count = dict()
+
+    for ingredient in ingredients_query.all():
+
+        restrictions_on_ingredient = RestrictionOnIngredient.query \
+            .filter(RestrictionOnIngredient.ingredient_key == ingredient.pk) \
+            .with_entities(RestrictionOnIngredient.restriction_key)
+
+        for restriction in restrictions_on_ingredient.all():
+
+            restriction_key = restriction.restriction_key
+
+            if restriction_key in restrictions_count:
+                restrictions_count[restriction_key] += 1
+            else:
+                restrictions_count[restriction_key] = 1
+
+    # Build a list of all restrictions where each restriction is used by every
+    # single non-optional ingredient
+    restrictions_list = [
+                            restriction for restriction in restrictions_count
+                            if restrictions_count[restriction] == ingredients_count
+                        ]
+
+    return jsonify(restrictions=restrictions_list)
 
 
 @bp.route("/api/v1.0.0/public/recipe/recipe_kitchenware")
