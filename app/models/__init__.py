@@ -12,6 +12,8 @@ from .interactions import *
 ALL_TABLES = (
     food.Ingredient,
     food.Kitchenware,
+    food.DietaryRestriction,
+    food.RestrictionOnIngredient,
     food.Recipe,
     food.InstructionInRecipe,
     food.InstructionInRecipe,
@@ -42,6 +44,9 @@ DROP_ORDER = (
     interactions.RecipeComment,                 # depends on user.User,
                                                 # food.Recipe
 
+    food.RestrictionOnIngredient,               # depends on food.Ingredient,
+                                                # food.DietaryRestriction
+
     interactions.UserInteractionKitchenware,    # depends on user.User,
                                                 # food.Kitchenware
 
@@ -67,5 +72,6 @@ DROP_ORDER = (
     food.Recipe,
     food.Ingredient,
     food.Kitchenware,
+    food.DietaryRestriction,
     user.User
 )
