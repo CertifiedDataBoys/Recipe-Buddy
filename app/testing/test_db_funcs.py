@@ -3,7 +3,8 @@ from ..models import (
     User, UserProfile,
     Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
     Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment,
-    MediaInRecipe, DietaryRestriction, RestrictionOnIngredient
+    MediaInRecipe, DietaryRestriction, RestrictionOnIngredient,
+    UserDietaryRestriction
 )
 from datetime import datetime
 import hashlib
@@ -116,8 +117,8 @@ def create_db_test_data(app, db):
                        unit_of_measure="Tablespoon", units_plural="Tablespoons"),
             Ingredient(pk=11, name="Ice 🧊",
                        unit_of_measure="cube", units_plural="cubes"),
-           Ingredient(pk=12, name="Cheese 🧀",
-                      unit_of_measure="slice", units_plural="slices"),
+            Ingredient(pk=12, name="Cheese 🧀",
+                       unit_of_measure="slice", units_plural="slices"),
         ]
         kitchenware = [
             Kitchenware(pk=1, name="Knife"),
@@ -151,6 +152,15 @@ def create_db_test_data(app, db):
             DietaryRestriction(pk=8, name="Lactose-free"),
             DietaryRestriction(pk=9, name="Nut-free"),
             DietaryRestriction(pk=10, name="Low carb")
+        ]
+        user_dietary_restrictions = [
+            UserDietaryRestriction(pk=1, uid=1, restriction_key=3),
+            UserDietaryRestriction(pk=2, uid=1, restriction_key=7),
+            UserDietaryRestriction(pk=3, uid=2, restriction_key=1),
+            UserDietaryRestriction(pk=4, uid=2, restriction_key=2),
+            UserDietaryRestriction(pk=5, uid=2, restriction_key=3),
+            UserDietaryRestriction(pk=6, uid=2, restriction_key=5),
+            UserDietaryRestriction(pk=7, uid=2, restriction_key=10),
         ]
         ingredient_restrictions = [
             RestrictionOnIngredient(pk=1, ingredient_key=1, restriction_key=1),
@@ -436,6 +446,7 @@ def create_db_test_data(app, db):
         db.session.add_all(restrictions)
         db.session.commit()
 
+        db.session.add_all(user_dietary_restrictions)
         db.session.add_all(ingredient_restrictions)
         db.session.add_all(instructions)
         db.session.add_all(ingredients_in_recipe)

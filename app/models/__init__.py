@@ -22,6 +22,7 @@ ALL_TABLES = (
     food.MediaInRecipe,
     user.User,
     user.UserProfile,
+    user.UserDietaryRestriction,
     pantry.PantryIngredient,
     pantry.PantryKitchenware,
     interactions.RecipeRating,
@@ -43,6 +44,9 @@ DROP_ORDER = (
                                                 # food.Recipe
     interactions.RecipeComment,                 # depends on user.User,
                                                 # food.Recipe
+
+    user.UserDietaryRestriction,               # depends on user.User,
+                                                # food.DietaryRestriction
 
     food.RestrictionOnIngredient,               # depends on food.Ingredient,
                                                 # food.DietaryRestriction

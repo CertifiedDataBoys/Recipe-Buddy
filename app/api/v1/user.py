@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
-from ...models import db, User, UserProfile
+from ...models import db, User, UserProfile, UserDietaryRestriction
 from werkzeug.utils import secure_filename
 import os
 import base64
@@ -53,8 +53,7 @@ def get_single_user():
         "verified": u.verified,
         "favorite_recipe": u.favorite_recipe,
         "has_profile_photo": u.has_profile_photo
-    }
-    )
+    })
 
 
 @bp.route("/api/v1.0.0/public/user/get_user_profile_photo")
@@ -170,3 +169,28 @@ def upload_user_profile_photo():
             "has_profile_photo": user_profile.has_profile_photo,
             "upload_successful": True
         })
+
+@bp.route("/api/v1.0.0/public/user/get_user_dietary_restrictions")
+def get_user_dietary_restrictions():
+    """
+        Create a blueprint to get a single user's dietary restrictions
+        as a JSON file.
+        This takes in a user's uid (?uid=<...>).
+    """
+
+    key = request.args.get("uid")
+
+    # error handling --- improve later
+    if not key:
+
+        return jsonify(restrictions=[])
+
+    query = db.session.query(UserDietaryRestriction) \
+        .filter(UserDietaryRestriction.uid == key)
+
+    return jsonify(restrictions=[
+        {
+            "pk": r.pk,
+            "restriction_key": r.restriction_key
+        } for r in query.all()
+    ])

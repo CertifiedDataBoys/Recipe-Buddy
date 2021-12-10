@@ -115,3 +115,29 @@ class UserProfile(db.Model):
     favorite_recipe = db.Column(db.Integer, db.ForeignKey("recipe.pk"),
                                 nullable=False)
     has_profile_photo = db.Column(db.Boolean, nullable=False)
+
+
+@dataclass
+class UserDietaryRestriction(db.Model):
+    """
+        This model represents a Recipe Buddy user's dietarry restrictions
+
+        Attributes:
+            pk (db.Integer):
+                        The primary key of this user dietary restriction row.
+            uid (db.Integer):
+                        A foreign key pointing to user.uid. This is the
+                            user whose profile we are representing.
+            restriction_key (db.Integer):
+                        A foreign key pointing to dietary_restriction.pk. This
+                            is the dietary restriction that a user has.
+    """
+
+    pk: int
+    uid: int
+    restriction_key: int
+
+    pk = db.Column(db.Integer, primary_key=True, nullable=False)
+    uid = db.Column(db.Integer, db.ForeignKey("user.uid"), nullable=False)
+    restriction_key = db.Column(db.Integer, db.ForeignKey("dietary_restriction.pk"),
+                                nullable=False)
