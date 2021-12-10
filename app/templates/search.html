@@ -3,12 +3,12 @@
     <div class="sideBarCategory">
         <p>Filter by Type</p>
     </div>
-    <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
-    <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
-    <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
-    <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
-    <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
-    <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
+    <span class="sideBarButton" id="sideBarRecipeTypeFilter-1" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-1'));">Sandwich</span>
+    <span class="sideBarButton" id="sideBarRecipeTypeFilter-2" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-2'));">Pasta</span>
+    <span class="sideBarButton" id="sideBarRecipeTypeFilter-3" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-3'));">Drink</span>
+    <span class="sideBarButton" id="sideBarRecipeTypeFilter-4" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-4'));">Seafood</span>
+    <span class="sideBarButton" id="sideBarRecipeTypeFilter-5" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-5'));">Vegan</span>
+    <!-- <a class="sideBarButton" id="typeBtnMore" href="#">More...</a> -->
     <div class="sidebarBreakLine"></div>
     <div class="sideBarCategory">
         <p>Filter by Kitchenware</p>
@@ -44,7 +44,10 @@
         // Kitchenware Filters
         $.getJSON("/api/v1.0.0/public/food/get_all_kitchenware", function(data) {
             for (let i = 0; i < data.kitchenware.length; i++) {
-                $("#kitchenwareContainer").append('<a class="sideBarButton" href="#">' + data.kitchenware[i].name.replace(/\s/g, '') + '</a>');
+                const html = `
+                        <span id="sideBarKitchenwareFilter-` + i + `" class="sideBarButton" onclick="toggleKitchenwareFilter($('#sideBarKitchenwareFilter-` + i + `'));">` + data.kitchenware[i].name.replace(/\s/g, '') + `</span>
+                    `;
+                $("#kitchenwareContainer").append(html);
             }
         });
         // Search page
