@@ -86,5 +86,7 @@ $(document).ready(function() {
         var query = getUrlParameter("q");
         displaySearch(query);
         loadRecipes(query, "", []);
+    } else {
+        $("#search-results").html("<h3>No recipes found</h3>");
     }
 });
