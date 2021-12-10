@@ -1,4 +1,25 @@
 {{ render_partial('partials/header.html') }}
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <title>new_recipe</title>
+  <style>
+    body {
+        background-color: #262927;
+        color: white;
+    }
+    .btn-default{
+      background-color: #fc9003;
+      color: black;
+    }
+
+    .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+      background-color: #fcba03;
+      color: black;
+    }
+  </style>
+
+</head>
+
 <div id="main">
     <div class="container">
         <h1>New Recipe</h1>
@@ -24,7 +45,7 @@
 
         <label>Recipe Kitchenware</label><br>
         <div id="kitchenware">
-        </div>
+        </div><br>
 
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
@@ -36,7 +57,7 @@
                 <input type="checkbox" class="recipe-ingredient-optional" id="ingredient-1-optional"> Optional?<br>
             </div>
         </div>
-        <button onclick="addIngredient();">Add ingredient field</button><br><br>
+        <button type="button" class="btn btn-default" onclick="addIngredient();">Add ingredient field</button><br><br>
 
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <div id="recipeInstructionSelector">
