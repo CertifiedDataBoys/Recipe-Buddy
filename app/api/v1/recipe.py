@@ -439,7 +439,8 @@ def search_recipes():
     else:
         # limit of 512 characters per search query
         queries = query[:512].lower().split("||")
-        # queries = ["%" + term + "%" for term in queries]
+        # sanitize input
+        queries = [term.replace("%","").replace("_","") for term in queries]
         # recipes_query = db.session.query(Recipe)
         term_queries = [ ]
         results = dict()
@@ -450,7 +451,7 @@ def search_recipes():
 
             for t in term.split("&&"):
 
-                full_search_term = "%" + t + "%"
+                full_search_term = "%" + t.strip() + "%"
                 # split on the first ":"
                 current_search = t.lower().split(":", 1)
 
@@ -458,7 +459,7 @@ def search_recipes():
                 if len(current_search) == 2:
 
                     search_category = current_search[0]
-                    search_string = "%" + current_search[1] + "%"
+                    search_string = "%" + current_search[1].strip() + "%"
                     # What are we searching for?
                     if search_category == "title":
                         this_query = this_query.filter(Recipe.title.like(search_string))
@@ -476,16 +477,20 @@ def search_recipes():
                             | Recipe.description.like(full_search_term)
                             | Recipe.type.like(full_search_term)
                         )
-                # No colon found, look at all categories
-                else:
-                    this_query = this_query.filter(
-                        Recipe.title.like(full_search_term)
-                        | Recipe.subtitle.like(full_search_term)
-                        | Recipe.description.like(full_search_term)
-                        | Recipe.type.like(full_search_term)
-                    )
 
-            term_queries.append(this_query)
+                    term_queries.append(this_query)
+
+                # No colon found. . .
+                else:
+                    # If no search term was given, skip! Otherwise . . .
+                    if full_search_term != "%%":
+                        this_query = this_query.filter(
+                            Recipe.title.like(full_search_term)
+                            | Recipe.subtitle.like(full_search_term)
+                            | Recipe.description.like(full_search_term)
+                            | Recipe.type.like(full_search_term)
+                        )
+                        term_queries.append(this_query)
 
 
         for tq in term_queries:
