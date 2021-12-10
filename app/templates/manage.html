@@ -5,11 +5,11 @@
         <hr>
         <h3>Ingredients</h3>
         <div id="ingredients-div"></div>
-        <button class="btn btn-primary" onclick="addIngredientRow();">Add Ingredient</button>
+        <button class="btn btn-default" onclick="addIngredientRow();">Add Ingredient</button>
         <hr>
         <h3>Kitchenware</h3>
         <div id="kitchenware-div"></div>
-        <button class="btn btn-primary" onclick="addKitchenwareRow();">Add Kitchenware</button>
+        <button class="btn btn-default" onclick="addKitchenwareRow();">Add Kitchenware</button>
         <hr>
     </div>
 </div>
@@ -33,7 +33,7 @@
                     <input type="text" class="form-control" id="kitchenware-name-` + counts.kitchenware + `" placeholder="` + randomKitchenware.name + `">
                 </td>
                 <td>
-                    <button class="btn btn-primary" id="kitchenware-update-` + counts.kitchenware + `" onclick="updateKitchenware(` + counts.kitchenware + `, -1);">Submit</button>
+                    <button class="btn btn-default" id="kitchenware-update-` + counts.kitchenware + `" onclick="updateKitchenware(` + counts.kitchenware + `, -1);">Submit</button>
                 </td>
             </tr>
         `;
@@ -60,7 +60,7 @@
                             <input type="text" class="form-control" id="ingredient-units-` + counts.ingredients + `" placeholder="` + randomIngredient.units_plural + `">
                         </td>
                         <td>
-                            <button class="btn btn-primary" id="ingredient-update-` + counts.ingredients + `" onclick="updateIngredient(` + counts.ingredients + `, -1);">Submit</button>
+                            <button class="btn btn-default" id="ingredient-update-` + counts.ingredients + `" onclick="updateIngredient(` + counts.ingredients + `, -1);">Submit</button>
                         </td>
                     </tr>
                 `;
@@ -169,7 +169,7 @@
                             <input type="text" class="form-control" id="ingredient-units-` + counts.ingredients + `" value="` + data.ingredients[i].units_plural + `">
                         </td>
                         <td>
-                            <button class="btn btn-primary" id="ingredient-update-` + counts.ingredients + `" onclick="updateIngredient(` + counts.ingredients + `, ` + data.ingredients[i].pk + `);">Update</button>
+                            <button class="btn btn-default" id="ingredient-update-` + counts.ingredients + `" onclick="updateIngredient(` + counts.ingredients + `, ` + data.ingredients[i].pk + `);">Update</button>
                         </td>
                     </tr>
                 `;
@@ -187,7 +187,7 @@
                             <input type="text" class="form-control" id="kitchenware-name-` + counts.kitchenware + `" value="` + data.kitchenware[i].name + `">
                         </td>
                         <td>
-                            <button class="btn btn-primary" id="kitchenware-update-` + counts.kitchenware + `" onclick="updateKitchenware(` + counts.kitchenware + `, ` + data.kitchenware[i].pk + `);">Update</button>
+                            <button class="btn btn-default" id="kitchenware-update-` + counts.kitchenware + `" onclick="updateKitchenware(` + counts.kitchenware + `, ` + data.kitchenware[i].pk + `);">Update</button>
                         </td>
                     </tr>
                 `;

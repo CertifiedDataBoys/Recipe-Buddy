@@ -3,7 +3,7 @@ from ..models import (
     User, UserProfile,
     Ingredient, Recipe, IngredientInRecipe, InstructionInRecipe,
     Kitchenware, KitchenwareInRecipe, RecipeRating, RecipeComment,
-    MediaInRecipe
+    MediaInRecipe, DietaryRestriction, RestrictionOnIngredient
 )
 from datetime import datetime
 import hashlib
@@ -137,6 +137,93 @@ def create_db_test_data(app, db):
                                 recipe_key=4, optional=False),
             KitchenwareInRecipe(pk=6, kitchenware_key=5,
                                 recipe_key=5, optional=False)
+        ]
+        restrictions = [
+            DietaryRestriction(pk=1, name="Vegan"),
+            DietaryRestriction(pk=2, name="Vegetarian"),
+            DietaryRestriction(pk=3, name="Dairy-free"),
+            DietaryRestriction(pk=4, name="Pescatarian"),
+            DietaryRestriction(pk=5, name="Gluten-free"),
+            DietaryRestriction(pk=6, name="Keto"),
+            DietaryRestriction(pk=7, name="Kosher"),
+            DietaryRestriction(pk=8, name="Lactose-free"),
+            DietaryRestriction(pk=9, name="Nut-free"),
+            DietaryRestriction(pk=10, name="Low carb")
+        ]
+        ingredient_restrictions = [
+            RestrictionOnIngredient(pk=1, ingredient_key=1, restriction_key=1),
+            RestrictionOnIngredient(pk=2, ingredient_key=1, restriction_key=2),
+            RestrictionOnIngredient(pk=3, ingredient_key=1, restriction_key=3),
+            RestrictionOnIngredient(pk=4, ingredient_key=1, restriction_key=4),
+            RestrictionOnIngredient(pk=5, ingredient_key=1, restriction_key=7),
+            RestrictionOnIngredient(pk=6, ingredient_key=1, restriction_key=8),
+            RestrictionOnIngredient(pk=7, ingredient_key=1, restriction_key=9),
+            RestrictionOnIngredient(pk=8, ingredient_key=2, restriction_key=3),
+            RestrictionOnIngredient(pk=9, ingredient_key=2, restriction_key=5),
+            RestrictionOnIngredient(pk=10, ingredient_key=2, restriction_key=6),
+            RestrictionOnIngredient(pk=11, ingredient_key=2, restriction_key=8),
+            RestrictionOnIngredient(pk=12, ingredient_key=2, restriction_key=9),
+            RestrictionOnIngredient(pk=13, ingredient_key=2, restriction_key=10),
+            RestrictionOnIngredient(pk=14, ingredient_key=3, restriction_key=1),
+            RestrictionOnIngredient(pk=15, ingredient_key=3, restriction_key=2),
+            RestrictionOnIngredient(pk=16, ingredient_key=3, restriction_key=3),
+            RestrictionOnIngredient(pk=17, ingredient_key=3, restriction_key=4),
+            RestrictionOnIngredient(pk=18, ingredient_key=3, restriction_key=5),
+            RestrictionOnIngredient(pk=19, ingredient_key=3, restriction_key=6),
+            RestrictionOnIngredient(pk=20, ingredient_key=3, restriction_key=7),
+            RestrictionOnIngredient(pk=21, ingredient_key=3, restriction_key=8),
+            RestrictionOnIngredient(pk=22, ingredient_key=3, restriction_key=9),
+            RestrictionOnIngredient(pk=23, ingredient_key=3, restriction_key=10),
+            RestrictionOnIngredient(pk=24, ingredient_key=4, restriction_key=1),
+            RestrictionOnIngredient(pk=25, ingredient_key=4, restriction_key=2),
+            RestrictionOnIngredient(pk=26, ingredient_key=4, restriction_key=3),
+            RestrictionOnIngredient(pk=27, ingredient_key=4, restriction_key=4),
+            RestrictionOnIngredient(pk=28, ingredient_key=4, restriction_key=5),
+            RestrictionOnIngredient(pk=29, ingredient_key=4, restriction_key=6),
+            RestrictionOnIngredient(pk=30, ingredient_key=4, restriction_key=7),
+            RestrictionOnIngredient(pk=31, ingredient_key=4, restriction_key=8),
+            RestrictionOnIngredient(pk=32, ingredient_key=4, restriction_key=9),
+            RestrictionOnIngredient(pk=33, ingredient_key=4, restriction_key=10),
+            RestrictionOnIngredient(pk=34, ingredient_key=5, restriction_key=1),
+            RestrictionOnIngredient(pk=35, ingredient_key=5, restriction_key=2),
+            RestrictionOnIngredient(pk=36, ingredient_key=5, restriction_key=3),
+            RestrictionOnIngredient(pk=37, ingredient_key=5, restriction_key=4),
+            RestrictionOnIngredient(pk=38, ingredient_key=5, restriction_key=5),
+            RestrictionOnIngredient(pk=39, ingredient_key=5, restriction_key=6),
+            RestrictionOnIngredient(pk=40, ingredient_key=5, restriction_key=7),
+            RestrictionOnIngredient(pk=41, ingredient_key=5, restriction_key=8),
+            RestrictionOnIngredient(pk=42, ingredient_key=5, restriction_key=9),
+            RestrictionOnIngredient(pk=43, ingredient_key=5, restriction_key=10),
+            RestrictionOnIngredient(pk=44, ingredient_key=6, restriction_key=1),
+            RestrictionOnIngredient(pk=45, ingredient_key=6, restriction_key=2),
+            RestrictionOnIngredient(pk=46, ingredient_key=6, restriction_key=3),
+            RestrictionOnIngredient(pk=47, ingredient_key=6, restriction_key=4),
+            RestrictionOnIngredient(pk=48, ingredient_key=6, restriction_key=5),
+            RestrictionOnIngredient(pk=49, ingredient_key=6, restriction_key=6),
+            RestrictionOnIngredient(pk=50, ingredient_key=6, restriction_key=7),
+            RestrictionOnIngredient(pk=51, ingredient_key=6, restriction_key=8),
+            RestrictionOnIngredient(pk=52, ingredient_key=6, restriction_key=9),
+            RestrictionOnIngredient(pk=53, ingredient_key=6, restriction_key=10),
+            RestrictionOnIngredient(pk=54, ingredient_key=7, restriction_key=1),
+            RestrictionOnIngredient(pk=55, ingredient_key=7, restriction_key=2),
+            RestrictionOnIngredient(pk=56, ingredient_key=7, restriction_key=3),
+            RestrictionOnIngredient(pk=57, ingredient_key=7, restriction_key=4),
+            RestrictionOnIngredient(pk=58, ingredient_key=7, restriction_key=5),
+            RestrictionOnIngredient(pk=59, ingredient_key=7, restriction_key=6),
+            RestrictionOnIngredient(pk=60, ingredient_key=7, restriction_key=7),
+            RestrictionOnIngredient(pk=61, ingredient_key=7, restriction_key=8),
+            RestrictionOnIngredient(pk=62, ingredient_key=7, restriction_key=9),
+            RestrictionOnIngredient(pk=63, ingredient_key=7, restriction_key=10),
+            RestrictionOnIngredient(pk=64, ingredient_key=8, restriction_key=1),
+            RestrictionOnIngredient(pk=65, ingredient_key=8, restriction_key=2),
+            RestrictionOnIngredient(pk=66, ingredient_key=8, restriction_key=3),
+            RestrictionOnIngredient(pk=67, ingredient_key=8, restriction_key=4),
+            RestrictionOnIngredient(pk=68, ingredient_key=8, restriction_key=5),
+            RestrictionOnIngredient(pk=69, ingredient_key=8, restriction_key=6),
+            RestrictionOnIngredient(pk=70, ingredient_key=8, restriction_key=7),
+            RestrictionOnIngredient(pk=71, ingredient_key=8, restriction_key=8),
+            RestrictionOnIngredient(pk=72, ingredient_key=8, restriction_key=9),
+            RestrictionOnIngredient(pk=73, ingredient_key=8, restriction_key=10),
         ]
         recipes = [
             Recipe(pk=1, title="BLT 🥪",
@@ -315,8 +402,10 @@ def create_db_test_data(app, db):
         db.session.add_all(ingredients)
         db.session.add_all(kitchenware)
         db.session.add_all(recipes)
+        db.session.add_all(restrictions)
         db.session.commit()
 
+        db.session.add_all(ingredient_restrictions)
         db.session.add_all(instructions)
         db.session.add_all(ingredients_in_recipe)
         db.session.add_all(kitchenware_in_recipe)

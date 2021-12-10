@@ -50,6 +50,50 @@ class Kitchenware(db.Model):
 
 
 @dataclass
+class DietaryRestriction(db.Model):
+    """
+        This model represents kitchenware.
+
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            name (db.String(64)):
+                        The name of the restriction
+    """
+
+    pk: int
+    name: str
+
+    pk = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+
+
+@dataclass
+class RestrictionOnIngredient(db.Model):
+    """
+        This model represents dietary restrictions on ingredients. It links
+        ingredients with dietary restrictions that they comply with.
+
+        Attributes:
+            pk (db.Integer):
+                        Primary key
+            ingredient_key (db.Integer):
+                        Primary key of an ingredient
+            restriction_key (db.Integer):
+                        Primary key of the dietary restriction
+    """
+
+    pk: int
+    ingredient_key: int
+    restriction_key: int
+
+    pk = db.Column(db.Integer, primary_key=True)
+    ingredient_key = db.Column(db.Integer, db.ForeignKey("ingredient.pk"),
+                               nullable=False)
+    restriction_key = db.Column(db.Integer, db.ForeignKey("dietary_restriction.pk"),
+                               nullable=False)
+
+@dataclass
 class Recipe(db.Model):
     """
         This model represents a recipe.
