@@ -21,10 +21,24 @@ def get_random():
     """
 
     quantity = request.args.get("quantity", default=10, type=int)
+    typeFilter = request.args.get("typeFilter", type=str)
+    kitchenwareFilter = request.args.get("kitchenwareFilter", type=str)
 
     if request.method == "GET":
         try:
-            recipes = Recipe.query.order_by(func.rand()).limit(quantity).all()
+            if not typeFilter and not kitchenwareFilter:
+                recipes = Recipe.query.order_by(func.rand()).limit(quantity).all()
+            elif typeFilter and not kitchenwareFilter:
+                recipes = Recipe.query.filter(Recipe.type == typeFilter).order_by(func.rand()).limit(quantity).all()
+            elif not typeFilter and kitchenwareFilter:
+                #if "," in typeFilter:
+                #    typeFilterArr = typeFilter.split(",")
+                #    recipes = Recipe.query.filter(Recipe.kitchenware.any(Kitchenware.name.in_(typeFilter))).order_by(func.rand()).limit(quantity).all()
+                #else:
+                #    recipes = Recipe.query.filter_by(Recipe.kitchenware.any(Kitchenware.name == kitchenwareFilter)).order_by(func.rand()).limit(quantity).all()
+                recipes = {}
+            else:
+                recipes = {}
             return jsonify({"recipes": recipes})
         except Exception as e:
             return jsonify({"error": str(e)}), 500

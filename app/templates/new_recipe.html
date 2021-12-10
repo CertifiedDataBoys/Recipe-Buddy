@@ -1,42 +1,32 @@
 {{ render_partial('partials/header.html') }}
-<!--div class="sidebar">
-    <div class="sideBarCategory">
-        <p>Filter by Type</p>
-    </div>
-    <a class="sideBarButton" id="typeBtn1" href="#">BBQ</a>
-    <a class="sideBarButton" id="typeBtn2" href="#">Pasta</a>
-    <a class="sideBarButton" id="typeBtn3" href="#">Roasts</a>
-    <a class="sideBarButton" id="typeBtn4" href="#">Seafood</a>
-    <a class="sideBarButton" id="typeBtn5" href="#">Vegan</a>
-    <a class="sideBarButton" id="typeBtnMore" href="#">More...</a>
-    <div class="sidebarBreakLine"></div>
-    <div class="sideBarCategory">
-        <p>Filter by Kitchenware</p>
-    </div>
-    <a class="sideBarButton" id="kitchenwareBtn1" href="#">Air Fryer</a>
-    <a class="sideBarButton" id="kitchenwareBtn2" href="#">Electric Mixer</a>
-    <a class="sideBarButton" id="kitchenwareBtn3" href="#">Food Processor</a>
-    <a class="sideBarButton" id="kitchenwareBtn4" href="#">Immersion Blender</a>
-    <a class="sideBarButton" id="kitchenwareBtn5" href="#">Wok</a>
-    <a class="sideBarButton" id="kitchenwareBtnMore" href="#">More...</a>
-    <div class="sidebarBreakLine"></div>
-</div-->
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <title>new_recipe</title>
+  <style>
+    body {
+        background-color: #262927;
+        color: white;
+    }
+  </style>
+
+</head>
+
 <div id="main">
     <div class="container">
         <h1>New Recipe</h1>
         <hr>
 
         <label for="recipeName">Recipe Name</label><br>
-        <input type="text" id="recipeName" name="recipeName"><br><br>
+        <input type="text" class="form-control" id="recipeName" name="recipeName"><br><br>
 
         <label for="recipeSubtitle">Recipe Subtitle</label><br>
-        <input type="text" id="recipeSubtitle" name="recipeSubtitle"><br><br>
+        <input type="text" class="form-control" id="recipeSubtitle" name="recipeSubtitle"><br><br>
 
         <label for="recipeDescription">Recipe Description</label><br>
         <textarea id="recipeDescription" name="recipeDescription" rows="10" cols="50"></textarea><br><br>
 
         <label for="recipeType">Recipe Type</label><br>
-        <select id="recipeType" name="recipeType">
+        <select class="form-control" id="recipeType" name="recipeType">
             <option value="Sandwich">Sandwich</option>
             <option value="Side">Pasta</option>
             <option value="Grilled">Drink</option>
@@ -46,7 +36,7 @@
 
         <label>Recipe Kitchenware</label><br>
         <div id="kitchenware">
-        </div>
+        </div><br>
 
         <label for="recipeIngredients">Recipe Ingredients</label><br>
         <div id="recipeIngredientSelector">
@@ -58,27 +48,27 @@
                 <input type="checkbox" class="recipe-ingredient-optional" id="ingredient-1-optional"> Optional?<br>
             </div>
         </div>
-        <button onclick="addIngredient();">Add ingredient field</button><br><br>
+        <button type="button" class="btn btn-default" onclick="addIngredient();">Add ingredient field</button><br><br>
 
         <label for="recipeInstructions">Recipe Instructions</label><br>
         <div id="recipeInstructionSelector">
-            <input type="text" id="recipeInstructions" placeholder="Instruction 1" class="recipe-instruction"><input type="checkbox" id="instruction-1-optional" class="recipe-instruction-optional"> Optional?<br>
+            <input type="text" id="recipeInstructions" placeholder="Instruction 1" class="recipe-instruction form-control"><input type="checkbox" id="instruction-1-optional" class="recipe-instruction-optional"> Optional?<br>
         </div>
-        <button onclick="addInstruction();">Add instruction field</button><br><br>
+        <button type="button" class="btn btn-default" onclick="addInstruction();">Add instruction field</button><br><br>
 
         <label>Recipe Media</label><br>
         <div id="recipeMediaSelector">
             <div class="recipe-media-div" id="recipe-media-1">
-                <select id="recipeMediaType" class="recipeMediaType">
+                <select id="recipeMediaType" class="form-control recipeMediaType">
                     <option value="image">Image URL</option>
                     <option value="video">YouTube Video URL</option>
                 </select>
-                <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
+                <input type="text" class="form-control recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><br>
             </div>
         </div>
-        <button onclick="addMedia();">Add media field</button>
+        <button type="button" class="btn btn-default" onclick="addMedia();">Add media field</button>
         <br><br>
-        <button id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
+        <button type="button" class="btn btn-default" id="submitRecipe" onclick="submitRecipe();">Submit Recipe</button>
     </div>
 </div>
 <script src="https://cdn.tiny.cloud/1/39s8w9qb5wq587ewdwdkwuo0rsa04j5igwwq95srbty2c141/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -123,17 +113,12 @@
     });
 
     function updateIngredient(ingredient_id) {
-        console.log("hit", ingredient_id);
         const quantity = $("#recipe-ingredient-quantity-" + ingredient_id)[0].value;
         const ingredient_pk = $("#recipe-ingredient-ingredient-" + ingredient_id)[0].value;
-        console.log("qunaity", quantity);
-        console.log("ingredient_pk", ingredient_pk);
         var units;
         for (var i = 0; i < glob_ingredients.length; i++) {
-            if (glob_ingredients[i].pk == ingredient_pk) {
-                console.log("found ing", glob_ingredients[i]);
+            if (glob_ingredients[i].pk == ingredient_pk)
                 units = (quantity <= 1) ? glob_ingredients[i].unit_of_measure : glob_ingredients[i].units_plural;
-            }
         }
         $("#recipe-ingredient-units-" + ingredient_id)[0].value = units;
     }
@@ -148,11 +133,11 @@
         count.media++;
         var html = `
         <div class="recipe-media-div" id="recipe-media-` + count.media + `">
-            <select id="recipeMediaType" class="recipeMediaType">
+            <select id="recipeMediaType" class="form-control recipeMediaType">
                 <option value="image">Image URL</option>
                 <option value="video">YouTube Video URL</option>
             </select>
-            <input type="text" class="recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + count.media + `").remove()'>X</button><br>
+            <input type="text" class="form-control recipeMedia" placeholder="https://i.imgur.com/GbA4xZx.jpeg"><button onclick='$("#recipe-media-` + count.media + `").remove()'>X</button><br>
         </div>
         `;
         $("#recipeMediaSelector").append(html);
@@ -177,7 +162,7 @@
         count.instruction++;
         var html = `
             <div class="recipe-instruction-div" id="recipe-instruction-` + count.instruction + `">
-                <input type="text" placeholder="Instruction ` + count.instruction + `" class="recipe-instruction"><input type="checkbox" id="instruction-` + count.instruction + `-optional" class="recipe-instruction-optional"> Optional?<button onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
+                <input type="text" placeholder="Instruction ` + count.instruction + `" class="recipe-instruction form-control"><input type="checkbox" id="instruction-` + count.instruction + `-optional" class="recipe-instruction-optional"> Optional?<button class="btn" onclick='$("#recipe-instruction-` + count.instruction + `").remove()'>X</button><br>
             </div>
         `;
         $("#recipeInstructionSelector").append(html);
