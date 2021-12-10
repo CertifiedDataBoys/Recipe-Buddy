@@ -72,7 +72,7 @@ function displaySearch(query) {
 }
 
 function stripQuery(query) {
-    return query.replace(/_/g, "").replace(/%/g, "");
+    return query.replace(/_/g, "").replace(/%/g, "").replace(/\s\s+/g, ' ').trim();
 }
 
 $(document).ready(function() {
