@@ -201,6 +201,15 @@ function startTimer(inputTime) {
     timerObj.timerRunning = true;
     $("#set-timer").addClass("timer-hidden");
     timerObj.timerTimestamp = time;
+
+    var now = Math.round(new Date().getTime() / 1000);
+    var distance = time - now;
+
+    var minutes = Math.floor(distance / 60);
+    var seconds = Math.floor(distance % 60);
+
+    $("#timer-time").html(padTime(minutes) + ":" + padTime(seconds));
+
     timerObj.timerInterval = setInterval(function() {
         var now = Math.round(new Date().getTime() / 1000);
         var distance = time - now;
