@@ -15,21 +15,34 @@ $(document).ready(function() {
             <h4 class="text-center">Timer ⏱️</h4>
             <h6 id="timer-time" class="text-center timer-hidden">00:00</h6>
             <div id="timer-input-group" class="timer-input-group input-group">
-                <input type="number" id="timer-minutes" class="text-center form-control form-control-sm" placeholder="mm" min="0" max="59" onchange="this.value = formatInput(this.value);">
+                <input type="number" id="timer-minutes" class="timer-input text-center form-control form-control-sm" placeholder="mm" min="0" max="59">
                 <span class="input-group-addon">&nbsp;:&nbsp;</span>
-                <input type="number" id="timer-seconds" class="text-center form-control form-control-sm" placeholder="ss" min="0" max="59" onchange="this.value = formatInput(this.value);">
+                <input type="number" id="timer-seconds" class="timer-input text-center form-control form-control-sm" placeholder="ss" min="0" max="59">
             </div>
+            <input class="play-sound-chk form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="play-sound-chk form-check-label" for="flexCheckChecked">
+                Play sound?
+            </label><br class="play-sound-chk">
             <a href="#" id="start-timer" class="btn timer-primary-btn timer-hidden">Start</a>
             <a href="#" id="set-timer" class="btn timer-primary-btn">Set Timer</a>
+            <audio controls loop="true" preload="auto" id="timer-audio" class="timer-hidden">
+                <source src="/timer.mp3" type="audio/mpeg">
+            </audio>
         </div>
     `;
     $("#main").append(html);
+
+    if (SessionStorageHelper.get('timer-play-sound') !== {} && SessionStorageHelper.get('timer-play-sound') !== null) {
+        $("#flexCheckChecked").prop('checked', SessionStorageHelper.get('timer-play-sound').val);
+    } else {
+        $("#flexCheckChecked").prop('checked', true);
+    }
 
     if (SessionStorageHelper.get('timer') !== {} && SessionStorageHelper.get('timer') !== null) {
         detectTimerObj(SessionStorageHelper.get('timer'));
     }
 
-    $("#start-timer").on("click", function() {
+    $("#start-timer").click(function() {
         if (timerObj.timerEnded && !timerObj.timerRunning) {
             $("#start-timer").text("Start");
             $("#set-timer").removeClass("timer-hidden");
@@ -50,9 +63,10 @@ $(document).ready(function() {
         }
     });
 
-    $("#set-timer").on("click", function() {
+    $("#set-timer").click(function() {
         if (!timerObj.timerBeingSet) {
             $("#timer-input-group").removeClass("timer-hidden");
+            $(".play-sound-chk").removeClass("timer-hidden");
             $("#timer-time").addClass("timer-hidden");
             $("#set-timer").removeClass("timer-set-btn");
             $("#set-timer").addClass("timer-primary-btn");
@@ -93,6 +107,7 @@ $(document).ready(function() {
 
             $("#timer-time").html(padTime(minutes) + ":" + padTime(seconds));
             $("#timer-input-group").addClass("timer-hidden");
+            $(".play-sound-chk").addClass("timer-hidden");
             $("#timer-time").removeClass("timer-hidden");
             $("#set-timer").removeClass("timer-primary-btn");
             $("#set-timer").addClass("timer-set-btn");
@@ -101,17 +116,22 @@ $(document).ready(function() {
         }
         timerObj.timerBeingSet = !timerObj.timerBeingSet;
     });
-});
 
-function formatInput(input) {
-    if (input > 59) {
-        return 59;
-    }
-    if (input.length == 1) {
-        return '0' + input;
-    }
-    return input;
-}
+    $(".timer-input").change(function() {
+        if ($(this).val() > 59) {
+            $(this).val(59);
+            return;
+        }
+        if ($(this).val().length == 1) {
+            $(this).val('0' + $(this).val());
+            return;
+        }
+    });
+
+    $("#flexCheckChecked").change(function() {
+        SessionStorageHelper.save('timer-play-sound', { val: $(this).prop('checked') });
+    });
+});
 
 function detectTimerObj(obj) {
     const now = Math.round(new Date().getTime() / 1000);
@@ -119,6 +139,7 @@ function detectTimerObj(obj) {
         // If timer ended animation is still running
         $("#timer-time").html("00:00");
         $("#timer-input-group").addClass("timer-hidden");
+        $(".play-sound-chk").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
         $("#set-timer").addClass("timer-set-btn");
@@ -139,6 +160,7 @@ function detectTimerObj(obj) {
         startTimer(distance);
         timerObj.timerBeingSet = false;
         $("#timer-input-group").addClass("timer-hidden");
+        $(".play-sound-chk").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
         $("#set-timer").addClass("timer-set-btn");
@@ -152,6 +174,7 @@ function detectTimerObj(obj) {
         timerObj.timerRunning = false;
         $("#timer-time").text(padTime(Math.floor(obj.pausedSeconds / 60)) + ":" + padTime(Math.floor(obj.pausedSeconds % 60)));
         $("#timer-input-group").addClass("timer-hidden");
+        $(".play-sound-chk").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
         $("#set-timer").addClass("timer-set-btn");
@@ -213,6 +236,8 @@ function endTimerEndedAnimation() {
     $("#start-timer").removeClass("timer-anim-btn");
     $("#start-timer").text("Start");
     timerObj.timerEnded = false;
+    $("#timer-audio")[0].pause();
+    $("#timer-audio")[0].currentTime = 0;
     SessionStorageHelper.clear();
 }
 
@@ -222,5 +247,8 @@ function startTimerEndedAnimation() {
         $("#start-timer").toggleClass("timer-anim-btn");
     }, 1000);
     $("#start-timer").text("Stop");
-    SessionStorageHelper.save('timer', timerObj);
+    if ($("#flexCheckChecked").is(':checked') || (SessionStorageHelper.get('timer-play-sound') !== null && SessionStorageHelper.get('timer-play-sound').val)) {
+        $("#timer-audio")[0].play();
+        SessionStorageHelper.save('timer', timerObj);
+    }
 }
