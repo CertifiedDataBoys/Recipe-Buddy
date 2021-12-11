@@ -160,3 +160,13 @@ body {
 hr {
     border: 1px solid white;
 }
+
+.timer-body {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    color: #000000;
+    padding: 1vw;
+    margin: 1vw;
+}
