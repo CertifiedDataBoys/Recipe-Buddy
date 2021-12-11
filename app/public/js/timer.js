@@ -15,9 +15,9 @@ $(document).ready(function() {
             <h4 class="text-center">Timer ⏱️</h4>
             <h6 id="timer-time" class="text-center timer-hidden">00:00</h6>
             <div id="timer-input-group" class="timer-input-group input-group">
-                <input type="number" id="timer-minutes" class="text-center form-control form-control-sm" placeholder="mm" min="0" max="59">
+                <input type="number" id="timer-minutes" class="text-center form-control form-control-sm" placeholder="mm" min="0" max="59" onchange="this.value = formatInput(this.value);">
                 <span class="input-group-addon">&nbsp;:&nbsp;</span>
-                <input type="number" id="timer-seconds" class="text-center form-control form-control-sm" placeholder="ss" min="0" max="59">
+                <input type="number" id="timer-seconds" class="text-center form-control form-control-sm" placeholder="ss" min="0" max="59" onchange="this.value = formatInput(this.value);">
             </div>
             <a href="#" id="start-timer" class="btn timer-primary-btn timer-hidden">Start</a>
             <a href="#" id="set-timer" class="btn timer-primary-btn">Set Timer</a>
@@ -102,6 +102,16 @@ $(document).ready(function() {
         timerObj.timerBeingSet = !timerObj.timerBeingSet;
     });
 });
+
+function formatInput(input) {
+    if (input > 59) {
+        return 59;
+    }
+    if (input.length == 1) {
+        return '0' + input;
+    }
+    return input;
+}
 
 function detectTimerObj(obj) {
     const now = Math.round(new Date().getTime() / 1000);
