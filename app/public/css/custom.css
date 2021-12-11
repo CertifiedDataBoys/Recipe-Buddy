@@ -161,6 +161,9 @@ hr {
     border: 1px solid white;
 }
 
+
+/* TIMER START */
+
 .timer-body {
     position: fixed;
     bottom: 0;
@@ -169,4 +172,39 @@ hr {
     color: #000000;
     padding: 1vw;
     margin: 1vw;
+    border-radius: 0.5vw;
 }
+
+.timer-primary-btn {
+    background: linear-gradient(to right, #fcba03, #fc9003);
+    border: 0px;
+}
+
+.timer-primary-btn:hover,
+.timer-set-btn:hover {
+    color: #262927;
+}
+
+.timer-primary-btn,
+.timer-set-btn {
+    color: #000;
+}
+
+.timer-hidden {
+    display: none;
+}
+
+.timer-input-group {
+    margin: 0.5vw;
+}
+
+.timer-anim-bg {
+    background: linear-gradient(to right, #fcba03, #fc9003) !important;
+}
+
+.timer-anim-btn {
+    background: white !important;
+}
+
+
+/* TIMER END */
