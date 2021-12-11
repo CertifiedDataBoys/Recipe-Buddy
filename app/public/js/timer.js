@@ -118,7 +118,7 @@ function detectTimerObj(obj) {
         $("#set-timer").addClass("timer-set-btn");
         $("#start-timer").removeClass("timer-hidden");
         $("#set-timer").addClass("timer-hidden");
-        $("#start-timer").text("Stop");
+        $("#start-timer").text("Pause");
         startTimerEndedAnimation();
         timerObj.timerEnded = true;
         timerObj.timerRunning = false;
@@ -131,7 +131,7 @@ function detectTimerObj(obj) {
         timerObj.secondsLeft = distance;
         $("#timer-time").text(padTime(Math.floor(distance / 60)) + ":" + padTime(Math.floor(distance % 60)));
         startTimer(distance);
-        timerObj.timerBeingSet = false;
+        timerObj.timerBeingSet = true;
         $("#timer-input-group").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
@@ -187,7 +187,7 @@ function startTimer(inputTime) {
             timerObj.secondsLeft = 0;
         }
     }, 1000);
-    $("#start-timer").text("Stop");
+    $("#start-timer").text("Pause");
     SessionStorageHelper.save('timer', timerObj);
 }
 
