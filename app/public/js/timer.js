@@ -1,12 +1,11 @@
 var timerObj = {
-    timerBeingSet: false,
+    timerBeingSet: true,
     timerRunning: false,
     timerInterval: null,
     timerEndedInterval: null,
     timerTimestamp: null,
     timerEnded: false,
     pausedSeconds: null,
-    pausedMinutes: null,
     secondsLeft: null
 }
 
@@ -35,18 +34,16 @@ $(document).ready(function() {
             $("#start-timer").text("Start");
             $("#set-timer").removeClass("timer-hidden");
             endTimerEndedAnimation();
-            timerObj.timerBeingSet = true;
+            timerObj.timerBeingSet = false;
         } else {
             if (timerObj.timerRunning) {
                 $("#set-timer").removeClass("timer-hidden");
                 var now = Math.round(new Date().getTime() / 1000);
-                var distance = timerObj.timerTimestamp - now;
-                timerObj.pausedMinutes = Math.floor(distance / 60);
-                timerObj.pausedSeconds = Math.floor(distance % 60);
+                timerObj.pausedSeconds = timerObj.timerTimestamp - now;
                 stopTimer();
             } else {
-                if (timerObj.pausedMinutes !== null && timerObj.pausedSeconds !== null) {
-                    timerObj.secondsLeft = (timerObj.pausedMinutes * 60) + timerObj.pausedSeconds;
+                if (timerObj.pausedSeconds !== null) {
+                    timerObj.secondsLeft = timerObj.pausedSeconds;
                 }
                 startTimer(timerObj.secondsLeft);
             }
@@ -54,21 +51,20 @@ $(document).ready(function() {
     });
 
     $("#set-timer").on("click", function() {
-        if (timerObj.timerBeingSet) {
+        if (!timerObj.timerBeingSet) {
             $("#timer-input-group").removeClass("timer-hidden");
             $("#timer-time").addClass("timer-hidden");
             $("#set-timer").removeClass("timer-set-btn");
             $("#set-timer").addClass("timer-primary-btn");
             $("#start-timer").addClass("timer-hidden");
             timerObj = {
-                timerBeingSet: true,
+                timerBeingSet: false,
                 timerRunning: false,
                 timerInterval: null,
                 timerEndedInterval: null,
                 timerTimestamp: null,
                 timerEnded: false,
                 pausedSeconds: null,
-                pausedMinutes: null,
                 secondsLeft: null
             }
             SessionStorageHelper.clear();
@@ -122,7 +118,7 @@ function detectTimerObj(obj) {
         startTimerEndedAnimation();
         timerObj.timerEnded = true;
         timerObj.timerRunning = false;
-        timerObj.timerBeingSet = true;
+        timerObj.timerBeingSet = false;
     } else if (obj.timerRunning) {
         // If timer is running
         const now = Math.round(new Date().getTime() / 1000);
@@ -131,25 +127,28 @@ function detectTimerObj(obj) {
         timerObj.secondsLeft = distance;
         $("#timer-time").text(padTime(Math.floor(distance / 60)) + ":" + padTime(Math.floor(distance % 60)));
         startTimer(distance);
-        timerObj.timerBeingSet = true;
+        timerObj.timerBeingSet = false;
         $("#timer-input-group").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
         $("#set-timer").addClass("timer-set-btn");
         $("#start-timer").removeClass("timer-hidden");
         $("#set-timer").addClass("timer-hidden");
-    } else if (!obj.timerRunning && obj.pausedSeconds !== null && obj.pausedMinutes !== null) {
+    } else if (!obj.timerRunning && obj.pausedSeconds !== null) {
         // If timer is paused
-        timerObj.secondsLeft = (obj.pausedMinutes * 60) + obj.pausedSeconds;
-        timerObj.timerBeingSet = true;
+        timerObj.secondsLeft = obj.pausedSeconds;
+        timerObj.timerBeingSet = false;
         timerObj.timerEnded = false;
         timerObj.timerRunning = false;
-        $("#timer-time").text(padTime(obj.pausedMinutes) + ":" + padTime(obj.pausedSeconds));
+        $("#timer-time").text(padTime(Math.floor(obj.pausedSeconds / 60)) + ":" + padTime(Math.floor(obj.pausedSeconds % 60)));
         $("#timer-input-group").addClass("timer-hidden");
         $("#timer-time").removeClass("timer-hidden");
         $("#set-timer").removeClass("timer-primary-btn");
         $("#set-timer").addClass("timer-set-btn");
         $("#start-timer").removeClass("timer-hidden");
+    } else {
+        // Nothing found, clear timer session
+        SessionStorageHelper.clear();
     }
 }
 
@@ -202,6 +201,7 @@ function endTimerEndedAnimation() {
     clearInterval(timerObj.timerEndedInterval);
     $("#timer-body").removeClass("timer-anim-bg");
     $("#start-timer").removeClass("timer-anim-btn");
+    $("#start-timer").text("Start");
     timerObj.timerEnded = false;
     SessionStorageHelper.clear();
 }
@@ -211,5 +211,6 @@ function startTimerEndedAnimation() {
         $("#timer-body").toggleClass("timer-anim-bg");
         $("#start-timer").toggleClass("timer-anim-btn");
     }, 1000);
+    $("#start-timer").text("Stop");
     SessionStorageHelper.save('timer', timerObj);
 }
