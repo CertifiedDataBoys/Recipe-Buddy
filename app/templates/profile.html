@@ -5,9 +5,18 @@
         <hr> {% if current_user.is_anonymous %}
         <p>User is not currently logged in</p>
         {% else %}
-        <figure class="figure center-img">
-          <img src="res/Default_Profile.png" class="figure-img img-fluid center-img" alt='' style="object-fit: scale-down;">
-        </figure>
+        <div class="row">
+          <div class="col text-center">
+          </div>
+          <div class="col">
+            <figure class="figure">
+              <img src="res/Default_Profile.png" class="figure-img img-fluid" alt='' style="object-fit: scale-down;">
+            </figure>
+          </div>
+          <div class="col text-right">
+            <button type="button" class="btn btn-default btn-lg">Settings</button>
+          </div>
+        </div>
         <hr>
         <p>User is currently logged in</p>
         <div class="row">
