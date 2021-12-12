@@ -5,7 +5,12 @@
         <hr> {% if current_user.is_anonymous %}
         <p>User is not currently logged in</p>
         {% else %}
+        <figure class="figure center-img">
+          <img src="res/Default_Profile.png" class="figure-img img-fluid center-img" alt='' style="object-fit: scale-down;">
+        </figure>
+        <hr>
         <p>User is currently logged in</p>
+        <h2>Recipes</h2>
         {% endif %}
     </div>
 </div>

@@ -156,7 +156,13 @@ body {
     background-color: #fcba03;
     color: black;
 }
-
+.center-img {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 hr {
     border: 1px solid white;
 }
