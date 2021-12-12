@@ -1,7 +1,7 @@
 {{ render_partial('partials/header.html') }}
 <div id="main">
     <div class="container">
-        <h1>Profile</h1>
+        <h1 style="text-align: center;">Profile</h1>
         <hr> {% if current_user.is_anonymous %}
         <p>User is not currently logged in</p>
         {% else %}
@@ -10,7 +10,15 @@
         </figure>
         <hr>
         <p>User is currently logged in</p>
-        <h2>Recipes</h2>
+        <div class="row">
+          <div class="col border-right" style="text-align: center;">
+            <h2>Recipes</h2>
+            <p>get user's recipes and put them here :)</p>
+          </div>
+          <div class="col" style="text-align: center;">
+            <h2>My Pantry</h2>
+            <p>get user's pantry items and put them here :)</p>
+        </div>
         {% endif %}
     </div>
 </div>
