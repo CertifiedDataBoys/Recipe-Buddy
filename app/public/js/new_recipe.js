@@ -222,6 +222,8 @@ function submitRecipe() {
             recipe.media.push(media);
         }
 
+        recipe.is_private = $("#recipe-privacy").val() == 'private';
+
         $.ajax({
             url: "/api/v1.0.0/public/recipe/upload_recipe",
             type: "POST",
