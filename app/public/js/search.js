@@ -67,6 +67,8 @@ function displaySearch(query) {
         $("#search-limit").html("<i>Your search query was limited to 512 characters</i> (Characters after \"" + query.substring(502, 512) + "\" were ignored)");
         query = getUrlParameter("q").substring(0, 512);
     }
+    if ('/' + (location.pathname + location.search).substr(1) !== '/search?q=' + encodeURIComponent(query))
+        history.pushState(null, null, '/search?q=' + encodeURIComponent(query));
     $("#search-term").html(query);
     $("#recipe-search").val(query);
 }
