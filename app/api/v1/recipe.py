@@ -28,9 +28,17 @@ def get_random():
     if request.method == "GET":
         try:
             if not typeFilter and not kitchenwareFilter:
-                recipes = Recipe.query.order_by(func.rand()).limit(quantity).all()
+                recipes = Recipe.query \
+                    .order_by(func.rand()) \
+                    .filter(Recipe.is_private == False) \
+                    .limit(quantity) \
+                    .all()
             elif typeFilter and not kitchenwareFilter:
-                recipes = Recipe.query.filter(Recipe.type == typeFilter).order_by(func.rand()).limit(quantity).all()
+                recipes = Recipe.query \
+                    .filter(Recipe.is_private == False and Recipe.type == typeFilter) \
+                    .order_by(func.rand()) \
+                    .limit(quantity) \
+                    .all()
             elif not typeFilter and kitchenwareFilter:
                 #if "," in typeFilter:
                 #    typeFilterArr = typeFilter.split(",")
@@ -59,6 +67,11 @@ def get_single_recipe():
 
         return jsonify([])
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
+
     query = Recipe.query.filter(Recipe.pk == key)
 
     return jsonify(recipe=query.first())
@@ -78,16 +91,22 @@ def get_single_recipe_details():
 
         return jsonify({"error": True, "message": "No recipe key provided"})
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
+
     recipe_details_query = (
         db.session.query(Recipe)
         .join(User, User.uid == Recipe.uploaded_by)
         .with_entities(
             Recipe.title, Recipe.subtitle, Recipe.description, Recipe.uploaded,
-            Recipe.type,
+            Recipe.type, Recipe.is_private,
             User.uid, User.username
         )
         .filter(Recipe.pk == key)
     )
+
     recipe_details = recipe_details_query.first()
 
     # did we get anything?
@@ -155,6 +174,7 @@ def get_single_recipe_details():
         "description": recipe_details.description,
         "uploaded": recipe_details.uploaded,
         "type": recipe_details.type,
+        "is_private": recipe_details.is_private,
         "user": {
             "uid": recipe_details.uid,
             "username": recipe_details.username
@@ -240,6 +260,11 @@ def get_recipes():
 
         return jsonify([])
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
+
     query = Recipe.query
 
     if uploaded_by:
@@ -267,6 +292,11 @@ def recipe_instructions():
 
         return jsonify([])
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
+
     query = InstructionInRecipe.query \
         .filter(InstructionInRecipe.recipe_key == key)
 
@@ -287,8 +317,14 @@ def single_recipe_instruction():
 
         return jsonify([])
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
+
     query = InstructionInRecipe.query \
         .filter(InstructionInRecipe.pk == key)
+
 
     return jsonify(instruction=query.first())
 
@@ -304,6 +340,11 @@ def recipe_ingredients():
 
     # error handling --- improve later
     if not key:
+
+        return jsonify([])
+
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
 
         return jsonify([])
 
@@ -347,6 +388,10 @@ def get_recipe_restrictions():
 
         return jsonify([])
 
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
+
+        return jsonify([])
 
     ingredients_count = IngredientInRecipe.query \
         .filter(IngredientInRecipe.recipe_key == key) \
@@ -398,6 +443,11 @@ def recipe_kitchenware():
 
     # error handling --- improve later
     if not key:
+
+        return jsonify([])
+
+    # are we allowed to view this recipe?
+    if not user_can_view_recipe(key):
 
         return jsonify([])
 
@@ -478,6 +528,7 @@ def search_recipes():
                             | Recipe.type.like(full_search_term)
                         )
 
+
                     term_queries.append(this_query)
 
                 # No colon found. . .
@@ -496,6 +547,11 @@ def search_recipes():
         for tq in term_queries:
 
             for recipe in tq:
+
+                # are we allowed to view this recipe?
+                if not user_can_view_recipe(recipe.pk):
+
+                    continue
 
                 if not recipe.pk in results:
 
@@ -532,7 +588,8 @@ def upload_recipe():
                             description=request.json["recipe"]["description"],
                             type=request.json["recipe"]["type"],
                             uploaded=datetime.now(),
-                            uploaded_by=uid)
+                            uploaded_by=uid,
+                            is_private=request.json["recipe"]["is_private"])
 
         db.session.add(new_recipe)
         db.session.commit()
@@ -591,3 +648,35 @@ def upload_recipe():
             "pk": new_recipe.pk,
             "upload_successful": True
         })
+
+
+
+def user_can_view_recipe(key):
+    """
+        Checks to see if a user is allowed to view a recipe with a given key.
+    """
+
+    include_private = False
+    private_uid = -1
+    # if the current user logged in?
+    if current_user.is_authenticated:
+
+        include_private = True
+        private_uid = current_user.get_id()
+
+    query = Recipe.query.filter(Recipe.pk == key)
+    result = query.first()
+
+    # Are we logged in and allowed to view private recipes?
+    if include_private:
+
+        return (
+            (not result.is_private)
+            or (result.is_private and int(private_uid) == int(result.uploaded_by))
+        )
+    # If we aren't logged in . . .
+    else:
+
+        return (
+            not result.is_private
+        )

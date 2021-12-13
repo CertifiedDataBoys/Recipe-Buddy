@@ -10,7 +10,7 @@ bp = Blueprint("api_v1_food", __name__)
 @bp.route("/api/v1.0.0/public/food/create_ingredient", methods=["POST"])
 def create_ingredient():
     """
-        Create a blueprint to create a single recipe
+        Create a blueprint to create a single ingredient
     """
     if not current_user.is_anonymous:
         uid = current_user.get_id()
@@ -38,7 +38,7 @@ def create_ingredient():
 @bp.route("/api/v1.0.0/public/food/update_ingredient", methods=["POST"])
 def update_ingredient():
     """
-        Create a blueprint to update a single recipe
+        Create a blueprint to update a single ingredient
     """
     if not current_user.is_anonymous:
         uid = current_user.get_id()
@@ -57,7 +57,7 @@ def update_ingredient():
 
     if not key:
         return jsonify({"success": False, "error": "Missing key"})
-    
+
     Ingredient.query.\
         filter(Ingredient.pk == key).\
         update({Ingredient.name: data["name"], Ingredient.unit_of_measure: data["unit_of_measure"], Ingredient.units_plural: data["units_plural"]})
@@ -93,7 +93,7 @@ def get_all_ingredients():
 @bp.route("/api/v1.0.0/public/food/create_kitchenware", methods=["POST"])
 def create_kitchenware():
     """
-        Create a blueprint to create a single recipe
+        Create a blueprint to create a single kitchenware item
     """
     if not current_user.is_anonymous:
         uid = current_user.get_id()
@@ -119,7 +119,7 @@ def create_kitchenware():
 @bp.route("/api/v1.0.0/public/food/update_kitchenware", methods=["POST"])
 def update_kitchenware():
     """
-        Create a blueprint to update a single recipe
+        Create a blueprint to update a single kitchenware item
     """
     if not current_user.is_anonymous:
         uid = current_user.get_id()
@@ -138,7 +138,7 @@ def update_kitchenware():
 
     if not key:
         return jsonify({"success": False, "error": "Missing key"})
-    
+
     Kitchenware.query.\
         filter(Kitchenware.pk == key).\
         update({Kitchenware.name: data["name"]})

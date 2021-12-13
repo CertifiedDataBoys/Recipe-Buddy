@@ -114,6 +114,8 @@ class Recipe(db.Model):
                         A DateTime object showing when this recipe was uploaded
             uploaded_by (db.Integer):
                         The primary key of the user who uploaded this recipe
+            is_private (db.Boolean):
+                        Is this recipe private (only viewable by the uploader?)
     """
 
     pk: int
@@ -123,6 +125,7 @@ class Recipe(db.Model):
     type: str
     uploaded: timedelta
     uploaded_by: int
+    is_private: bool
 
     pk = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), unique=False, nullable=False)
@@ -132,6 +135,7 @@ class Recipe(db.Model):
     uploaded = db.Column(db.DateTime(), unique=False, nullable=False)
     uploaded_by = db.Column(db.Integer, db.ForeignKey("user.uid"),
                             nullable=False)
+    is_private = db.Column(db.Boolean, nullable=False)
 
 
 @dataclass
