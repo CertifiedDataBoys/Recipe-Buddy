@@ -3,11 +3,11 @@
     <div class="sideBarCategory">
         <p>Filter by Type</p>
     </div>
-    <span class="sideBarButton" id="sideBarRecipeTypeFilter-1" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-1'));">Sandwich</span>
-    <span class="sideBarButton" id="sideBarRecipeTypeFilter-2" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-2'));">Pasta</span>
-    <span class="sideBarButton" id="sideBarRecipeTypeFilter-3" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-3'));">Drink</span>
-    <span class="sideBarButton" id="sideBarRecipeTypeFilter-4" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-4'));">Seafood</span>
-    <span class="sideBarButton" id="sideBarRecipeTypeFilter-5" onclick="toggleTypeFilter($('#sideBarRecipeTypeFilter-5'));">Vegan</span>
+    <span class="typeFilter sideBarButton" id="sideBarRecipeTypeFilter-1" data-filter-type="Sandwich" onclick="reloadFilters(this.id);">Sandwich</span>
+    <span class="typeFilter sideBarButton" id="sideBarRecipeTypeFilter-2" data-filter-type="Pasta" onclick="reloadFilters(this.id);">Pasta</span>
+    <span class="typeFilter sideBarButton" id="sideBarRecipeTypeFilter-3" data-filter-type="Drink" onclick="reloadFilters(this.id);">Drink</span>
+    <span class="typeFilter sideBarButton" id="sideBarRecipeTypeFilter-4" data-filter-type="Seafood" onclick="reloadFilters(this.id);">Seafood</span>
+    <span class="typeFilter sideBarButton" id="sideBarRecipeTypeFilter-5" data-filter-type="Vegan" onclick="reloadFilters(this.id);">Vegan</span>
     <!-- <a class="sideBarButton" id="typeBtnMore" href="#">More...</a> -->
     <div class="sidebarBreakLine"></div>
     <div class="sideBarCategory">
@@ -19,7 +19,7 @@
 </div>
 <div id="main">
     <div class="container">
-        <strong>Recipes</strong><br>Search: <span id="search-term"></span>
+        <strong>Recipes</strong><br>Your Search Query: <span id="search-term"></span>
         <div id="search-limit"></div>
         <div id="search-results"></div>
     </div>

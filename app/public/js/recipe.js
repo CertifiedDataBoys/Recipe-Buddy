@@ -23,7 +23,7 @@ $(document).ready(function() {
                         $('#username').html(val.username);
                         break;
                     case 'uploaded':
-                        $('#uploaded').html(val);
+                        $('#uploaded').html(moment(val).format('MMMM Do YYYY, h:mm a'));
                         break;
                     case 'ingredients':
                         $.each(val, function(i, ingredient) {
