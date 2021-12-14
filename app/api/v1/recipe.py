@@ -175,9 +175,11 @@ def get_single_recipe_details():
         "uploaded": recipe_details.uploaded,
         "type": recipe_details.type,
         "is_private": recipe_details.is_private,
+        "pk": key,
         "user": {
             "uid": recipe_details.uid,
-            "username": recipe_details.username
+            "username": recipe_details.username,
+            "owner": True if not current_user.is_anonymous and recipe_details.uid == current_user.uid else False
         },
         "instructions": sorted([
             {
