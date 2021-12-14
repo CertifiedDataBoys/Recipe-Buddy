@@ -1,5 +1,5 @@
 from flask import current_app
-from ..models import User
+from ..models import User, UserProfile
 
 
 def username_exists(username):
@@ -42,4 +42,13 @@ def register_user(db, user):
     with current_app.app_context():
 
         db.session.add(user)
+        db.session.commit()
+        # build a user profile
+        db.session.add(
+            UserProfile(
+                uid = user.uid,
+                favorite_recipe = 1,
+                has_profile_photo = False
+            )
+        )
         db.session.commit()
