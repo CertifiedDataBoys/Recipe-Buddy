@@ -51,13 +51,13 @@ $(document).ready(function() {
                                 if ($('#comment-' + comment.reply_to + '-replies').length == 0) {
                                     $('#comment-' + comment.reply_to).append('<div class="border-left border-dark pl-4" id="comment-' + comment.reply_to + '-replies"></div>');
                                 }
-                                $('#comment-' + comment.reply_to + '-replies').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
+                                $('#comment-' + comment.reply_to + '-replies').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + moment(comment.uploaded).format('MMMM Do YYYY, h:mm a') + '</small><br><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
                             }
                             // Is this comment a suggestion?
                             else if (comment.suggestion) {
-                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><p class="text-center mb-2 text-muted">SUGGESTION</p><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + moment(comment.uploaded).format('MMMM Do YYYY, h:mm a') + '</small><br><p class="text-center mb-2 text-muted">SUGGESTION</p><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
                             } else {
-                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + comment.uploaded + '</small><br><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
+                                $('#comments').append('<div id="comment-' + comment.pk + '"><div id = "comment-' + comment.pk + '-username" style="font-weight: bold;"></div> <small>' + moment(comment.uploaded).format('MMMM Do YYYY, h:mm a') + '</small><br><div id = "comment-' + comment.pk + '-contents" style="white-space: pre-wrap;"></div><br></div>');
                             }
                             // Display our username and comment contents
                             $(document.createTextNode(
