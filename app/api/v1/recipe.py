@@ -7,7 +7,9 @@ from ...models import (
     Ingredient, Kitchenware,
     RecipeComment,
     DietaryRestriction, RestrictionOnIngredient,
-    User
+    User, UserProfile,
+    RecipeRating, RecipeComment,
+    UserInteractionRecipe
 )
 from sqlalchemy.sql import func
 from flask_login import current_user
@@ -678,7 +680,41 @@ def delete_recipe():
 
     if int(result.uploaded_by) == int(uid):
 
-        db.session.delete(result)
+        # User cannot delete their favorite recipe!
+        user_profile_query = UserProfile.query \
+            .filter(UserProfile.uid == uid) \
+            .first()
+
+        if user_profile_query.favorite_recipe == key:
+
+            return jsonify(recipe={
+                "pk": key,
+                "status": "cannot delete favorite recipe"
+            })
+
+        instruction_query = InstructionInRecipe.query \
+            .filter(InstructionInRecipe.recipe_key == key) \
+            .delete()
+        ingredient_query = IngredientInRecipe.query \
+            .filter(IngredientInRecipe.recipe_key == key) \
+            .delete()
+        kitchenware_query = KitchenwareInRecipe.query \
+            .filter(KitchenwareInRecipe.recipe_key == key) \
+            .delete()
+        media_query = MediaInRecipe.query \
+            .filter(MediaInRecipe.recipe_key == key) \
+            .delete()
+        comment_query = RecipeComment.query \
+            .filter(RecipeComment.recipe_key == key) \
+            .delete()
+        rating_query = RecipeRating.query \
+            .filter(RecipeRating.recipe_key == key) \
+            .delete()
+        user_interaction_query = UserInteractionRecipe.query \
+            .filter(UserInteractionRecipe.recipe_key == key) \
+            .delete()
+
+        query.delete()
         db.session.commit()
 
         return jsonify(recipe={
