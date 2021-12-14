@@ -119,7 +119,11 @@ $(document).ready(function() {
 
     $(".timer-input").change(function() {
         if ($(this).val() > 59) {
-            $(this).val(59);
+            $(this).val('59');
+            return;
+        }
+        if ($(this).val() < 0) {
+            $(this).val('00');
             return;
         }
         if ($(this).val().length == 1) {
