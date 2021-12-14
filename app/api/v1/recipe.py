@@ -674,7 +674,7 @@ def delete_recipe():
 
     result = query.first()
 
-    if result.uploaded_by == uid:
+    if int(result.uploaded_by) == int(uid):
 
         db.session.delete(result)
         db.session.commit()
