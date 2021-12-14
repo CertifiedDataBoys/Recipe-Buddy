@@ -650,6 +650,45 @@ def upload_recipe():
         })
 
 
+@bp.route("/api/v1.0.0/public/recipe/delete_recipe", methods=['GET', 'POST'])
+def delete_recipe():
+    """
+        Delete a recipe with the given PK, if the user is logged in
+    """
+    # Is this user not logged in?
+    if not current_user.is_authenticated:
+        return jsonify(recipe=[])
+
+    key = request.args.get("pk")
+
+    # error handling --- improve later
+    if not key:
+
+        return jsonify([])
+
+    uid = current_user.get_id()
+
+    # does this recipe belong to the user trying to delete it?
+    query = Recipe.query \
+        .filter(Recipe.pk == key)
+
+    result = query.first()
+
+    if result.uploaded_by == uid:
+
+        db.session.delete(result)
+        db.session.commit()
+
+        return jsonify(recipe={
+            "pk": key,
+            "status": "deleted"
+        })
+
+    return jsonify(recipe={
+        "pk": key,
+        "status": "not deleted"
+    })
+
 
 def user_can_view_recipe(key):
     """
