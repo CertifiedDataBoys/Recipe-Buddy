@@ -57,6 +57,10 @@
                             <div id="instructions"></div>
                         </p>
                         <hr>
+                        <div id="delete-button-div" class="text-center" style="display: none;">
+                            <button type="button" class="btn btn-danger" id="delete-recipe-button" onclick="deleteRecipe();">Delete Recipe</button>
+                            <hr>
+                        </div>
                         <h4 class="card-title text-center">Comments</h4>
                         <p class="card-text">
                             {% if not current_user.is_anonymous %}

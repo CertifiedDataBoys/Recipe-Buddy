@@ -21,6 +21,10 @@ $(document).ready(function() {
                         break;
                     case 'user':
                         $('#username').html(val.username);
+                        if (val.owner) {
+                            $('#delete-button-div').show();
+                            $('#delete-recipe-button').data('pk', data.recipe.pk);
+                        }
                         break;
                     case 'uploaded':
                         $('#uploaded').html(moment(val).format('MMMM Do YYYY, h:mm a'));
@@ -79,3 +83,12 @@ $(document).ready(function() {
         }
     });
 });
+
+function deleteRecipe() {
+    const pk = $('#delete-recipe-button').data().pk;
+    $.getJSON('/api/v1.0.0/public/recipe/delete_recipe?pk=' + pk, function(data) {
+        alert(data.recipe.status);
+        if (data.recipe.status == 'deleted')
+            window.location.href = '/';
+    });
+}
