@@ -14,8 +14,19 @@ Install Docker following [Docker's guide](https://docs.docker.com/get-docker/) f
 ## How to install docker-compose
 Comes by default Docker installation on Windows and macOS. Linux users [follow this guide](https://docs.docker.com/compose/install/#install-compose-on-linux-systems).
 
-## How to run Recipe Buddy
-Ensure Docker is running and docker-compose is installed, then:
+## How to Setup Recipe Buddy
+On first run, create a `.env` file in the same directory as `docker-compose.yml` with the following values:
+```
+SECRET_KEY=MySecretKey
+MARIADB_DATABASE=recipebuddy
+MARIADB_USER=recipebuddy
+MARIADB_PASSWORD=recipebuddy
+PASSWORD_SALT=MyPasswordSalt
+```
+Ensure that you substitute these variables for your own secure variables and do not change them after the database has been created. The database name, username and password are all arbitrary and shouldn't matter. By default, Docker secures your MariaDB installation so as long as the user does not port forward it using Docker, MariaDB is inaccessable to all applications besides the Recipe Buddy application itself.
+
+## How to Run Recipe Buddy
+To start the Recipe Buddy application, ensure Docker is running and docker-compose is installed, then:
 ```bash
 ./start.sh
 ```
