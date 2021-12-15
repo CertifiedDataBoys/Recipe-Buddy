@@ -1,5 +1,0 @@
-build:
-  docker:
-    web: app/Dockerfile
-run:
-  web: pip install mysqlclient==2.0.3 && /wait && flask run --host=0.0.0.0 --port=$PORT
