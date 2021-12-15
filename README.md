@@ -30,7 +30,10 @@ To start the Recipe Buddy application, ensure Docker is running and docker-compo
 ```bash
 docker-compose up -d
 ```
-This will start Recipe Buddy in daemon (background) mode.
+This will start Recipe Buddy in daemon (background) mode. If you want to run it in foreground mode, then use:
+```bash
+docker-compose up
+```
 
 To stop Recipe Buddy, run:
 ```bash
@@ -40,4 +43,9 @@ docker-compose down
 To view the logs of Recipe Buddy, run:
 ```bash
 docker-compose logs -f
+```
+
+To re-build and start Recipe Buddy, run:
+```bash
+docker-compose up --build -d
 ```
