@@ -28,5 +28,16 @@ Ensure that you substitute these variables for your own secure variables and do 
 ## How to Run Recipe Buddy
 To start the Recipe Buddy application, ensure Docker is running and docker-compose is installed, then:
 ```bash
-./start.sh
+docker-compose up -d
+```
+This will start Recipe Buddy in daemon (background) mode.
+
+To stop Recipe Buddy, run:
+```bash
+docker-compose down
+```
+
+To view the logs of Recipe Buddy, run:
+```bash
+docker-compose logs -f
 ```
